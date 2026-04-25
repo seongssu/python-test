@@ -26,6 +26,9 @@ def price_alert_system(ticker, high_target, low_target):
         
         if current_price >= high_target:
             print("상한가 도달")
+        elif current_price <= low_target:
+            print("하한가 도달")
+        
         
         
 
