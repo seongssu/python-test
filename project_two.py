@@ -13,6 +13,10 @@ def get_single_price_api(ticker):
     data = response.json()[0]
     return data['trade_price']
 
+def price_alert_system(ticker, high_target, low_target):
+    
+    
+
 ticker = "KRW-BTC"
 #현재 가격
 current_price = get_single_price_api(ticker)
