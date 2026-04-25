@@ -17,19 +17,19 @@ def price_alert_system(ticker, high_target, low_target):
     print(f"{"코인명":<10} {"상한가목표값":>20} {"하한가목표값":>20}")
     print("=" * 80)
     print(f"{ticker:<10} {high_target:>28.0f}원 {low_target:>23.0f}원 \n\n" )
-    print(f"{"조회시간"} {"현재가격":>25}" )
+    print(f"{"조회시간"} {"현재가격":>25} {"알림":>20}" )
     print("-" * 80)
     for num in range(1,20):
         current_price = get_single_price_api(ticker)
         current_time = datetime.now().strftime("%H%M%S")
-        print(f"{current_time} {current_price:>30,.0f}원 ")
+        print(f"{current_time} {current_price:>30,.0f}원", end = "")
         
         if current_price >= high_target:
-            print("상한가 도달")
+            print(f"{"상한가 도달":>20}")
         elif current_price <= low_target:
-            print("하한가 도달")
-        else: 
-            print("정상 범위")
+            print(f"{"하한가 도달":>20}")
+        else:
+            print(f"{"정상 범위":>20}")
         
         
 
