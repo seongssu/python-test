@@ -20,3 +20,7 @@ def get_historical_data_api(ticker, days_count):
         prices.append(data["trade_price"])
 
     return prices
+
+ticker = "KRW_BTC"
+day_invest = 30
+money_invest = 100
