@@ -14,5 +14,9 @@ def get_single_price_api(ticker):
     return data['trade_price']
 
 ticker = "KRW-BTC"
-get_single_price_api(ticker)
-print(f"뭐야이건{get_single_price_api(ticker)}")
+#현재 가격
+current_price = get_single_price_api(ticker)
+#현재가를 기준으로 상한가와 하한가를 계산합니다.
+high_target = current_price * 1.05
+low_target = current_price * 0.95
+
