@@ -21,7 +21,7 @@ def price_alert_system(ticker, high_target, low_target):
     print("-" * 80)
     for num in range(1,20):
         current_price = get_single_price_api(ticker)
-        current_time = datetime.now().strftime("%H%M%S")
+        current_time = datetime.now().strftime("%H:%M:%S")
         print(f"{current_time} {current_price:>30,.0f}원", end = "")
         
         if current_price >= high_target:
@@ -31,6 +31,8 @@ def price_alert_system(ticker, high_target, low_target):
         else:
             print(f"{"정상 범위":>20}")
         
+        if num < 18:
+            time.sleep(3)
         
 
 ticker = "KRW-BTC"
