@@ -21,6 +21,18 @@ def get_historical_data_api(ticker, days_count):
 
     return prices
 
+def get_single_price_api(ticker):
+    url = "https://api.upbit.com/v1/ticker"
+
+    params = {
+        "markets": ticker
+    }
+
+    response = requests.get(url, params=params)
+
+    data = response.json()[0]
+    return data['trade_price']
+
 ticker = "KRW_BTC"
 day_invest = 30
 money_invest = 100
