@@ -14,7 +14,7 @@ def get_single_price_api(ticker):
     return data['trade_price']
 
 def price_alert_system(ticker, high_target, low_target):
-    
+    print(f"{코인명}:<10 {상한가 목표값}:>20 {하한가 목표값}:>20")
     
 
 ticker = "KRW-BTC"
