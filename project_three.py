@@ -37,7 +37,9 @@ def calculate_investment_return(money_invest, ticker, day_invest):
     #과거투자시점 가격
     money_past = get_historical_data_api(ticker, day_invest)
     volumes = money_invest / money_past[-1]
-    print(f"구매량: {volumes}")
+    #현재 가치 계산
+    money_today = volumes * money_past[0]
+    print(f"현재가치: {money_today}")
     
     
 ticker = "KRW-BTC"
