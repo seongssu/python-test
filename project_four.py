@@ -57,4 +57,7 @@ for ticker, price in current_past.items():
 
 result.sort(key=lambda x: x["수익률"], reverse=True)
 
-      
+print(f"{"코인"} {"수익률":>21}")
+print("=" * 30)
+for item in result:
+    print(f"{item["ticker"]} {item["수익률"]:>20.2f}%")       
