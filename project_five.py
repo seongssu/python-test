@@ -44,8 +44,8 @@ pd_prices_date = pd.DataFrame(prices_date)
 five_data = pd_prices_date[1].rolling(5).mean()
 ten_data = pd_prices_date[1].rolling(10).mean()
 
-print(f"5일선 : {five_data.values[-1]}")
-print(f"10일선 : {ten_data.values[-1]}")
+#print(f"5일선 : {five_data.values[-1]}")
+#print(f"10일선 : {ten_data.values[-1]}")
 
 # 종가
 plt.plot(pd_prices_date[0], pd_prices_date[1], label="price")
@@ -58,4 +58,9 @@ plt.plot(pd_prices_date[0], ten_data, label="MA10")
 
 plt.show()
 
-
+if five_data.values[-1] > ten_data.values[-1]:
+    print("단기 상승 흐름")
+elif five_data.values[-1] < ten_data.values[-1]:
+    print("단기 하락 흐름")
+else:
+    print("변동 없음")
