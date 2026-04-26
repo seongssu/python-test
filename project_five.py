@@ -26,12 +26,14 @@ count = 30
 data = get_candle_data_api(ticker, count)
 #print(f"데이터 {data}")
 prices_date = []
+#순서 반대로
+data = data[::-1]
 
 for item in data:      
     date = item['candle_date_time_kst']
     prices = item['trade_price']
 
-    #print(f"종가 : {prices}, 날짜 : {date} ")
+    print(f"종가 : {prices}, 날짜 : {date} ")
     
     prices_date.append([date, prices])
 
@@ -55,3 +57,4 @@ plt.plot(pd_prices_date[0], five_data, label="MA5")
 plt.plot(pd_prices_date[0], ten_data, label="MA10")
 
 plt.show()
+
