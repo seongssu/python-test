@@ -24,7 +24,7 @@ ticker = "KRW-BTC"
 count = 30
 
 data = get_candle_data_api(ticker, count)
-print(f"데이터 {data}")
+#print(f"데이터 {data}")
 prices_date = []
 
 for item in data:      
@@ -36,11 +36,11 @@ for item in data:
     prices_date.append([date, prices])
 
 #print(f"날짜 종가 리스트 : {prices_date}")
-#pd_prices_date = pd.DataFrame(prices_date, columns=["날짜", "종가"])
+pd_prices_date = pd.DataFrame(prices_date)
 #print(pd_prices_date)
 
-#five_data = pd_prices_date.rolling(5).mean()
-#ten_data = pd_prices_date.rolling(10).mean()
+five_data = pd_prices_date[1].rolling(5).mean()
+ten_data = pd_prices_date[1].rolling(10).mean()
 
-#print(f"5일선 : {five_data}")
-#print(f"10일선 : {ten_data}")
+print(f"5일선 : {five_data}")
+print(f"10일선 : {ten_data}")
