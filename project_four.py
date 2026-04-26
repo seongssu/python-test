@@ -47,8 +47,10 @@ for ticker, price in current_past.items():
      
     #print(f"수익률{return_rate}")
     
-    result.append(return_rate)
+    result.append({
+        "ticker" : ticker,
+        "수익률" : return_rate
+    })
       
-print(f"결과{result}") 
-
+#print(f"결과{result}") 
        
