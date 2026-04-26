@@ -53,4 +53,8 @@ for ticker, price in current_past.items():
     })
       
 #print(f"결과{result}") 
-       
+
+
+result.sort(key=lambda x: x["수익률"], reverse=True)
+
+      
