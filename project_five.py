@@ -22,6 +22,16 @@ def get_candle_data_api(ticker, count):
 ticker = "KRW-BTC"
 count = 30
 
-price = get_candle_data_api(ticker, count)
+data = get_candle_data_api(ticker, count)
 
-print(f"무슨데이터일까 {price}")
+prices_date = []
+
+for item in data:  
+    prices = item['trade_price']
+    date = item['candle_acc_trade_volume']
+
+    #print(f"종가 : {prices}, 날짜 : {date} ")
+    
+    prices_date.append([date, prices])
+
+print(f"날짜 종가 리스트 : {prices_date}")
