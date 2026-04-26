@@ -42,5 +42,16 @@ pd_prices_date = pd.DataFrame(prices_date)
 five_data = pd_prices_date[1].rolling(5).mean()
 ten_data = pd_prices_date[1].rolling(10).mean()
 
-print(f"5일선 : {five_data}")
-print(f"10일선 : {ten_data}")
+#print(f"5일선 : {five_data}")
+#print(f"10일선 : {ten_data}")
+
+# 종가
+plt.plot(pd_prices_date[0], pd_prices_date[1], label="price")
+
+# 5일선
+plt.plot(pd_prices_date[0], five_data, label="MA5")
+
+# 10일선
+plt.plot(pd_prices_date[0], ten_data, label="MA10")
+
+plt.show()
