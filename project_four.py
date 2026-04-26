@@ -28,7 +28,10 @@ def get_historical_close_api(ticker, days_ago):
 tickers = ["KRW-BTC", "KRW-ETH", "KRW-XRP", "KRW-SOL"]
 days_ago = 30
 
+current_past = {}
 #호출 함수에서 ticker가 str타입으로 받아야해서 for문 돌림
 for item in tickers:
-    print(f"잘 작동하나? {get_historical_close_api(item, days_ago)}")
-    
+    price = get_historical_close_api(item, days_ago)
+    current_past[item] = price
+
+print(f"현재가와 과거가격: {current_past}")
