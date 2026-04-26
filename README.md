@@ -96,3 +96,6 @@
 - pandas DataFrame을 활용하여 데이터를 관리하는 방법
 - rolling().mean()으로 이동평균선을 계산하는 방법
 - matplotlib으로 가격 차트를 그리는 방법
+
+
+### **06 Daily Report Portfolio** 
