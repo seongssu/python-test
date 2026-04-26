@@ -26,12 +26,14 @@ data = get_candle_data_api(ticker, count)
 
 prices_date = []
 
-for item in data:  
-    prices = item['trade_price']
+for item in data:      
     date = item['candle_acc_trade_volume']
+    prices = item['trade_price']
 
     #print(f"종가 : {prices}, 날짜 : {date} ")
     
     prices_date.append([date, prices])
 
-print(f"날짜 종가 리스트 : {prices_date}")
+#print(f"날짜 종가 리스트 : {prices_date}")
+pd_prices_date = pd.DataFrame(prices_date)
+print(pd_prices_date)
