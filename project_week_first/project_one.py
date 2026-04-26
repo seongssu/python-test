@@ -41,8 +41,8 @@ def analyze_portfolio(portfolio):
     for stocks, volumes in portfolio.items():
 # 보유중인 주식들 현재가격 = 현재가격 X 각각의 주식들 수량
 # get(매개변수,0) = 키값에 해당하는 value값들을 가져오는데 없으면 0으로 반환
-#★get(변수,0) <-- 붙여서 쓰면안되냐?★
-      current_price = prices.get(stocks, 0)
+
+      current_price = prices.get(stocks,0)
       value = current_price * volumes
       stocks_name = stocks.split("-", 1)
 # portfolio_analysis 리스트에 코인명, 수량, 현재가, 가치 저장
@@ -63,7 +63,7 @@ def analyze_portfolio(portfolio):
         x["비중"] = (x["가치"]/total_value) * 100
 #총 포트폴리오 가치를 출력한다.
     print("=" *100)
-    print(f"총 포트폴리오의 가치: {total_value:,.0f}")
+    print(f"총 포트폴리오의 가치: {total_value:,.0f}원")
     print("=" *100)
     print(f"\n\n {"코인":<10} {"수량":>5} {"현재가":>21} {"가치":>20} {"비중":>14}")
     print("-" * 100)
