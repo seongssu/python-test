@@ -34,4 +34,11 @@ for item in tickers:
     price = get_historical_close_api(item, days_ago)
     current_past[item] = price
 
-print(f"현재가와 과거가격: {current_past}")
+
+for ticker, price in current_past.items():
+    current = price["current_price"]
+    past = price["past_price"]
+    
+    #print(f"종목 : {ticker}, 현재가격 : {current}, 과거가격 : {past}")
+    
+    
