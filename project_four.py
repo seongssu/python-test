@@ -34,11 +34,19 @@ for item in tickers:
     price = get_historical_close_api(item, days_ago)
     current_past[item] = price
 
-
+result = {}
+#중복딕셔너리 분리
 for ticker, price in current_past.items():
     current = price["current_price"]
     past = price["past_price"]
     
     #print(f"종목 : {ticker}, 현재가격 : {current}, 과거가격 : {past}")
     
+    #수익률 계산
+    return_rate = ((current - past) / past) * 100
+     
+    #print(f"수익률{return_rate}")
     
+    result[ticker] = return_rate
+      
+print(f"결과{result}")        
