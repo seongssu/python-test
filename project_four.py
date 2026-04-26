@@ -60,4 +60,12 @@ result.sort(key=lambda x: x["수익률"], reverse=True)
 print(f"{"코인"} {"수익률":>21}")
 print("=" * 30)
 for item in result:
-    print(f"{item["ticker"]} {item["수익률"]:>20.2f}%")       
+    print(f"{item["ticker"]} {item["수익률"]:>20.2f}%")
+    
+first = result[0]
+last = result[-1]
+print("\n")
+print("=" * 30)
+print(f"가장 많이 상승한 코인 : {first["ticker"]:>10}")
+print(f"가장 많이 하락한 코인 : {last["ticker"]:>10}")
+print("=" * 30)
