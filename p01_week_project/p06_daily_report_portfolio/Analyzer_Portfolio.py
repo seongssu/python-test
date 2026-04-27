@@ -5,16 +5,21 @@ import json
 import pandas as pd
 import matplotlib.pyplot as plt
 from UPbit_API import get_current_prices_api
-def analyze_portfolio(portfolio):
 
-    tickers = list(portfolio.keys())
+class Analyzer_Portfolio:
+    def __init__(self, portfolio):
+        self.portfolio = portfolio
+
+def analyze_portfolio(self):
+
+    tickers = list(self.keys())
 
     prices = get_current_prices_api(tickers)
 
     portfolio_analysis = []
     total_value = 0
 
-    for stocks, volumes in portfolio.items():
+    for stocks, volumes in self.items():
 
       current_price = prices.get(stocks,0)
       value = current_price * volumes
