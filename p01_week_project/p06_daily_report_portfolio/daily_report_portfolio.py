@@ -96,6 +96,20 @@ def get_historical_close_api(portfolio, days_ago):
         
 
     return result
+
+def get_candle_data_api(ticker, count):
+
+    url = "https://api.upbit.com/v1/candles/days"
+    headers = {"accept": "application/json"}
+    params = {
+        "market" : ticker,
+        "count" : count
+    }
+
+    response = requests.get(url, headers=headers, params=params)
+    data = response.json()
+
+    return data
        
 portfolio = {
     "KRW-BTC":0.1,
@@ -128,10 +142,27 @@ for ticker, price in price_past_today.items():
         "ticker": ticker,
         "profit": profit_ratio
     })
-    
+# max( 데이터, key=lambda x: x["키값"]) : max함수의 딕셔너리 활용  
 coin_profit = max(profit_rate, key=lambda x: x["profit"])
 print(f"최고수익코인 : {coin_profit["ticker"]}")
 
+#4 특정 코인 1개의 최근 7일 가격 추이 그래프
 
+ticker_item = "KRW-BTC"
 
+coin_price_change = get_candle_data_api(ticker_item, days_ago)
 
+coin_price_change = coin_price_change[::-1]
+coin_price = []
+coin_date = []
+
+for item in coin_price_change:
+    date = item["candle_date_time_kst"]
+    price = item["trade_price"]
+    
+    coin_price.append(price)
+    coin_date.append(date)
+
+#print(f"날짜가격 : {coin_date}")
+plt.plot(coin_date,coin_price, label="MA7")
+plt.show()
