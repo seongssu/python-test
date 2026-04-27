@@ -44,7 +44,7 @@ def analyze_portfolio(portfolio):
 
       current_price = prices.get(stocks,0)
       value = current_price * volumes
-      stocks_name = stocks.split("-", 1)
+      
 # portfolio_analysis 리스트에 코인명, 수량, 현재가, 가치 저장
       portfolio_analysis.append({
         "코인" : stocks,
@@ -77,6 +77,8 @@ def analyze_portfolio(portfolio):
 
         print(f"{stocks:<10} {volumes:>10}주 {current_price:>20}원 {value:>20}원 {ratio:>15.1f}%")
 
+        
+        
 
 # 1. 포트폴리오의 정의, 주어진 값
 portfolio = {
