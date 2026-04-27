@@ -34,7 +34,7 @@ class Analyzer_Portfolio:
             total_value += value
 
         for x in portfolio_analysis:
-            x["비중"] = (x["가치"]/total_value) * 100
+            x["비중"] = (x["가치"]/total_value) * 60
 
         print(f"\n\n {"코인":<10} {"수량":>5} {"현재가":>21} {"가치":>20} {"비중":>14}")
         print("-" * 100)
