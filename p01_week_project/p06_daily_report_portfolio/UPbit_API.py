@@ -5,7 +5,6 @@ import json
 import pandas as pd
 import matplotlib.pyplot as plt
 
-# 2. 현재가 조회 함수
 def get_current_prices_api(tickers):
 
     url = "https://api.upbit.com/v1/ticker"
@@ -35,15 +34,15 @@ def get_historical_close_api(portfolio, days_ago):
 
         response = requests.get(url, params=params)
         candle_data = response.json()
-    
+
         current_price = candle_data[0]["trade_price"]
         past_price = candle_data[-1]["trade_price"]
-        
+
         result[ticker] = {
             "current_price" : current_price,
             "past_price" : past_price
         }
-        
+
 
     return result
 
