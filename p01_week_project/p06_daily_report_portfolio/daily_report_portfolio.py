@@ -72,7 +72,31 @@ def analyze_portfolio(portfolio):
     
     #print(f"최대 비중인 코인 : {max_coin}")
     return max_coin
+
+def get_historical_close_api(portfolio, days_ago):
+    url = "https://api.upbit.com/v1/candles/days"
+
+    result = {}
+    for ticker in portfolio:
+        params = {
+            "market": ticker,
+            "count": days_ago
+        }
+
+        response = requests.get(url, params=params)
+        candle_data = response.json()
+    
+        current_price = candle_data[0]["trade_price"]
+        past_price = candle_data[-1]["trade_price"]
         
+        result[ticker] = {
+            "current_price" : current_price,
+            "past_price" : past_price
+        }
+        
+
+    return result
+       
 portfolio = {
     "KRW-BTC":0.1,
     "KRW-ETH":3,
@@ -80,4 +104,15 @@ portfolio = {
 }
 
 max_coin = analyze_portfolio(portfolio)
-print(f"보유 비중 상위 1개 코인 : {max_coin}")  
+print(f"보유 비중 상위 1개 코인 : {max_coin}")
+
+ticker = []
+#최근 7일중 가장 많이 오른 보유 코인
+ticker = [item for item in portfolio]
+days_ago = 7
+
+x = get_historical_close_api(ticker, days_ago)
+print(f"N일전과 현재 가격 : {x}")
+
+
+
