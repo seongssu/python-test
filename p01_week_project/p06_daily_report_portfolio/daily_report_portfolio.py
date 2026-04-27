@@ -102,17 +102,36 @@ portfolio = {
     "KRW-ETH":3,
     "KRW-XRP":1000
 }
-
+#1 오늘 기준 총 포트폴리오 가치
+#2 보유 비중 상위1개 코인
 max_coin = analyze_portfolio(portfolio)
 print(f"보유 비중 상위 1개 코인 : {max_coin}")
 
+#3 최근 7일 기준 가장 많이 오른 코인
 ticker = []
 #최근 7일중 가장 많이 오른 보유 코인
 ticker = [item for item in portfolio]
 days_ago = 7
 
-x = get_historical_close_api(ticker, days_ago)
-print(f"N일전과 현재 가격 : {x}")
+price_past_today = get_historical_close_api(ticker, days_ago)
+#print(f"N일전과 현재 가격 : {price_past_today}")
+
+profit_rate = []
+for ticker, price in price_past_today.items():
+    #print(f"ticker {ticker}, price {price}")
+    today = price["current_price"]
+    past = price["past_price"]
+    
+    profit_ratio = ((today - past) / past) * 100
+    
+    profit_rate.append({
+        "ticker": ticker,
+        "profit": profit_ratio
+    })
+    
+#coin_profit = max(profit_rate) 
+print(f"최고수익코인 : {profit_rate}")
+
 
 
 
