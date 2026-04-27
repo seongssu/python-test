@@ -129,8 +129,8 @@ for ticker, price in price_past_today.items():
         "profit": profit_ratio
     })
     
-#coin_profit = max(profit_rate) 
-print(f"최고수익코인 : {profit_rate}")
+coin_profit = max(profit_rate, key=lambda x: x["profit"])
+print(f"최고수익코인 : {coin_profit["ticker"]}")
 
 
 
