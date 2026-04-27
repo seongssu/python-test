@@ -163,6 +163,6 @@ for item in coin_price_change:
     coin_price.append(price)
     coin_date.append(date)
 
-print(f"날짜가격 : {coin_date}")
+#print(f"날짜가격 : {coin_date}")
 plt.plot(coin_date,coin_price, label="MA7")
 plt.show()
