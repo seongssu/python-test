@@ -48,11 +48,11 @@ def calculate_investment_return(money_invest, ticker, day_invest):
     rate_profit = (profit_loss / money_invest) * 100
     
     print(f"{"투자일자"}        : {day_invest}일전")
-    print(f"{"투자금액"}        : {money_invest}원")
-    print(f"{"투자시점가격"}    : {money_past[-1]:.0f}원")
-    print(f"{"구매수량"}        : {volumes:.5f}주")
-    print(f"{"현재가격"}        : {money_today:.0f}원  ")
-    print(f"{"손익"}            : {profit_loss:.0f}원")
+    print(f"{"투자금액"}        : {money_invest:,}원")
+    print(f"{"투자시점가격"}    : {money_past[-1]:,.0f}원")
+    print(f"{"구매수량"}        : {volumes:.5f}BTC")
+    print(f"{"현재가격"}        : {money_today:,.0f}원  ")
+    print(f"{"손익"}            : {profit_loss:,.0f}원")
     print(f"{"수익률"}          : {rate_profit:.2f}%")
     
     
