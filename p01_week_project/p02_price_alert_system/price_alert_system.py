@@ -16,7 +16,7 @@ def get_single_price_api(ticker):
 def price_alert_system(ticker, high_target, low_target):
     print(f"{"코인명":<10} {"상한가목표값":>20} {"하한가목표값":>20}")
     print("=" * 80)
-    print(f"{ticker:<10} {high_target:>28.0f}원 {low_target:>23.0f}원 \n\n" )
+    print(f"{ticker:<10} {high_target:>28,.0f}원 {low_target:>23,.0f}원 \n\n" )
     print(f"{"조회시간"} {"현재가격":>25} {"알림":>20}" )
     print("-" * 80)
     for num in range(1,20):
