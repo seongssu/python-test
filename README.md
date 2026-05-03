@@ -112,6 +112,16 @@
 - 최근 7일 기준 가장 많이 오른 코인 조회
 - 특정 코인 1개의 최근 7일 가격 추이 그래프 확인
 
+### 각 클래스의 역할
+
+| 클래스 | 역할 |
+|--------|------|
+| UPbit | API 데이터 수집 |
+| Analyzer_Portfolio | 포트폴리오 분석 및 계산 |
+| Print_Message | 결과 출력 |
+| Graph | 데이터 시각화 |
+| main | 전체 흐름 제어 및 실행 |
+
 #### **사용 기술**
 - Python
 - requests : HTTP API 요청
@@ -122,13 +132,6 @@
 - **객체 지향 프로그래밍(OOP)**
 : API를 이용한 데이터수집 / 분석 / 그래프 로 각각 5개의 클래스단위로 분리
 (UPbit/ Analyzer_Portfolio / Graph / Print_Message / main)
-
-##### **각 클래스의 역할**
-- UPbit → API 데이터 수집
-- Analyzer → 분석, 계산
-- Print_Message → 출력
-- Graph → 그래프
-- main → 각 클래스 조율 및 실행
 
 - **모듈화**
 : 기능별로 py파일을 분리, main.py에서 각 클래스 제어
