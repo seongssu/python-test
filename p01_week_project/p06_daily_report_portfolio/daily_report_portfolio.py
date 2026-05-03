@@ -20,6 +20,7 @@ portfolio = {
 #2 보유 비중 상위1개 코인
 analyzer = Analyzer_Portfolio(portfolio)
 max_coin = analyzer.analyze_portfolio()
+
 print(f"보유 비중 상위 1개 코인 : {max_coin}")
 
 #3 최근 7일 기준 가장 많이 오른 코인
@@ -29,5 +30,4 @@ ticker = [item for item in portfolio]
 days_ago = 7
 
 upbit = UPbit(ticker, days_ago)
-
 price_past_today = upbit.get_historical_close_api()

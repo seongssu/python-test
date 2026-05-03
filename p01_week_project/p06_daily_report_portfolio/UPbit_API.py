@@ -53,11 +53,13 @@ class UPbit:
         coin_profit = max(profit_rate, key=lambda x: x["profit"])
         print(f"최고수익코인 : {coin_profit["ticker"]}")
         
-        self.coin_profit_graph()
+        self.get_graph_coin_profit()
+        
+        return profit_rate
 
         #4 특정 코인 1개의 최근 7일 가격 추이 그래프
 
-    def coin_profit_graph(self):
+    def get_graph_coin_profit(self):
 
         coin_price_change = self.get_candle_data_api()[::-1]
         coin_price = []
@@ -66,9 +68,11 @@ class UPbit:
         for item in coin_price_change:
             date = item["candle_date_time_kst"]
             price = item["trade_price"]
+            split_date = date.split("T")[0]
+            slice_date = split_date[2:]
             
             coin_price.append(price)
-            coin_date.append(date)
+            coin_date.append(slice_date)
 
         #print(f"날짜가격 : {coin_date}")
         plt.plot(coin_date,coin_price, label="MA7")
