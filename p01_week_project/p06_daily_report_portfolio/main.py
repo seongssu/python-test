@@ -29,6 +29,7 @@ price_past_today = upbit.get_historical_close_api()
 analyzer = Analyzer_Portfolio(portfolio, prices)
 
 max_coin = analyzer.analyze_portfolio()
+analyzer.print_message()
 analyzer.get_profit_max_coin(price_past_today)
 
 print(f"보유 비중 상위 1개 코인 : {max_coin}")
