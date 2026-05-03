@@ -60,7 +60,7 @@ def analyze_portfolio(portfolio):
         value = x["가치"]
         ratio = x["비중"]
 
-        print(f"{stocks:<10} {volumes:>10}BTC {current_price:>20.0f}원 {value:>20.0f}원 {ratio:>15.1f}%")
+        print(f"{stocks:<10} {volumes:>10}BTC {current_price:>20,.0f}원 {value:>20,.0f}원 {ratio:>15.1f}%")
 
 portfolio = {
     "KRW-BTC":0.1,
