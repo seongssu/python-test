@@ -123,12 +123,12 @@
 : API를 이용한 데이터수집 / 분석 / 그래프 로 각각 5개의 클래스단위로 분리
 (UPbit/ Analyzer_Portfolio / Graph / Print_Message / main)
 
-▶ 각 클래스의 역할 ◀
-UPbit → API 데이터 수집
-Analyzer → 분석, 계산
-Print_Message → 출력
-Graph → 그래프
-main → 각 클래스 조율 및 실행
+##### **각 클래스의 역할**
+- UPbit → API 데이터 수집
+- Analyzer → 분석, 계산
+- Print_Message → 출력
+- Graph → 그래프
+- main → 각 클래스 조율 및 실행
 
 - **모듈화**
 : 기능별로 py파일을 분리, main.py에서 각 클래스 제어
