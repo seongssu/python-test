@@ -37,8 +37,8 @@ def get_historical_close_api(portfolio, days_ago):
 
         current_price = candle_data[0]["trade_price"]
         past_price = candle_data[-1]["trade_price"]
-
-        result[ticker] = {
+        ticker_name = ticker.split("-")[1]
+        result[ticker_name] = {
             "current_price" : current_price,
             "past_price" : past_price
         }

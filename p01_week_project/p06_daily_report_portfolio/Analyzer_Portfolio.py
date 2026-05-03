@@ -48,10 +48,10 @@ class Analyzer_Portfolio:
             current_price = x["현재가격"]
             value = x["가치"]
             ratio = x["비중"]
-
-            print(f"{stocks:<10} {volumes:>10}주 {current_price:>20}원 {value:>20}원 {ratio:>15.1f}%")
+            stocks_name = stocks.split("-")[1]
+            print(f"{stocks_name:<10} {volumes:>10}주 {current_price:>20}원 {value:>20}원 {ratio:>15.1f}%")
             all_ratio.append(ratio)
-            ratio_coin[ratio] = stocks
+            ratio_coin[ratio] = stocks_name
             
         max_ratio_coin = max(all_ratio)
         max_coin = ratio_coin[max_ratio_coin]
