@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 from Analyzer_Portfolio import Analyzer_Portfolio
 #from UPbit_API import get_historical_close_api
 #from UPbit_API import get_candle_data_api
-from UPbit_API import UPbit
+from UPbit import UPbit
 
 # 2. 현재가 조회 함수
        
