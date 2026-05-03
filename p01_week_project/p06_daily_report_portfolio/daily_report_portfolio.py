@@ -5,8 +5,9 @@ import json
 import pandas as pd
 import matplotlib.pyplot as plt
 from Analyzer_Portfolio import Analyzer_Portfolio
-from UPbit_API import get_historical_close_api
-from UPbit_API import get_candle_data_api
+#from UPbit_API import get_historical_close_api
+#from UPbit_API import get_candle_data_api
+from UPbit_API import UPbit
 
 # 2. 현재가 조회 함수
        
@@ -27,7 +28,9 @@ ticker = []
 ticker = [item for item in portfolio]
 days_ago = 7
 
-price_past_today = get_historical_close_api(ticker, days_ago)
+upbit = UPbit(ticker, days_ago)
+
+price_past_today = upbit.get_historical_close_api()
 #print(f"N일전과 현재 가격 : {price_past_today}")
 
 profit_rate = []
@@ -48,9 +51,9 @@ print(f"최고수익코인 : {coin_profit["ticker"]}")
 
 #4 특정 코인 1개의 최근 7일 가격 추이 그래프
 
-ticker_item = "KRW-BTC"
+#ticker_item = "KRW-BTC"
 
-coin_price_change = get_candle_data_api(ticker_item, days_ago)
+coin_price_change = upbit.get_candle_data_api()
 
 coin_price_change = coin_price_change[::-1]
 coin_price = []
