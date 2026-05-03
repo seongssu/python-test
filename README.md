@@ -3,6 +3,7 @@
 - **[2주차 프로젝트](#2주차-프로젝트)**
 
 # **1주차 프로젝트**
+- 📌 **[전체 요약 보기](#06-daily-report-portfolio)**
 <details>
 <summary>펼쳐보기</summary>
 
