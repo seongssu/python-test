@@ -49,7 +49,7 @@ class Analyzer_Portfolio:
             value = x["가치"]
             ratio = x["비중"]
             stocks_name = stocks.split("-")[1]
-            print(f"{stocks_name:<10} {volumes:>10}주 {current_price:>20}원 {value:>20}원 {ratio:>15.1f}%")
+            print(f"{stocks_name:<10} {volumes:>10}BTC {current_price:>20,.0f}원 {value:>20,.0f}원 {ratio:>15.1f}%")
             all_ratio.append(ratio)
             ratio_coin[ratio] = stocks_name
             
