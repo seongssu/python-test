@@ -52,14 +52,14 @@ class UPbit:
         # max( 데이터, key=lambda x: x["키값"]) : max함수의 딕셔너리 활용  
         coin_profit = max(profit_rate, key=lambda x: x["profit"])
         print(f"최고수익코인 : {coin_profit["ticker"]}")
+        
+        self.coin_profit_graph()
 
         #4 특정 코인 1개의 최근 7일 가격 추이 그래프
 
-        #ticker_item = "KRW-BTC"
+    def coin_profit_graph(self):
 
-        coin_price_change = self.get_candle_data_api()
-
-        coin_price_change = coin_price_change[::-1]
+        coin_price_change = self.get_candle_data_api()[::-1]
         coin_price = []
         coin_date = []
 
