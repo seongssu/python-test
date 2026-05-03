@@ -115,7 +115,7 @@
 - matplotlib : 가격 데이터 시각화
 - **객체 지향 프로그래밍(OOP)**
 : API를 이용한 데이터수집 / 분석 / 그래프 로 각각 3개의 클래스단위로 분리
-(UPbit, Analyzer_Portfolio / Graph)
+(UPbit/ Analyzer_Portfolio / Graph)
 - **모듈화**
 : 기능별로 py파일을 분리, main.py에서 각 클래스 제어
 
