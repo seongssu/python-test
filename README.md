@@ -121,7 +121,7 @@
 | UPbit | API 데이터 수집 |
 | Analyzer_Portfolio | 포트폴리오 분석 및 계산 |
 | Print_Message | 결과 출력 |
-| Graph | 데이터 시각화 |
+| Graph | 데이터 그래프 |
 | main | 전체 흐름 제어 및 실행 |
 
 #### **사용 기술**
