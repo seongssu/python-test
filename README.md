@@ -1,6 +1,6 @@
 <details>
-<summary># **1주차 프로젝트**</summary>
-
+# **1주차 프로젝트**
+<summary>펼쳐보기</summary>
 
 ### **01 Cryptocurrency Portfolio Analyzer**
 : 암호화폐 포트폴리오 분석기
