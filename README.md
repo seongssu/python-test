@@ -1,5 +1,6 @@
-<details>
+
 # **1주차 프로젝트**
+<details>
 <summary>펼쳐보기</summary>
 
 ### **01 Cryptocurrency Portfolio Analyzer**
