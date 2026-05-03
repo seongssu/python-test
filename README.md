@@ -132,7 +132,7 @@
 - pandas : 데이터프레임 생성 및 이동평균 계산
 - matplotlib : 가격 데이터 시각화
 - **객체 지향 프로그래밍(OOP)**
-: API를 이용한 데이터수집 / 분석 / 그래프 로 각각 5개의 클래스단위로 분리
+: API를 이용한 데이터수집 / 분석 / 그래프 / 출력 / main 으로 각각 5개의 클래스단위로 분리
 (UPbit/ Analyzer_Portfolio / Graph / Print_Message / main)
 
 - **모듈화**
