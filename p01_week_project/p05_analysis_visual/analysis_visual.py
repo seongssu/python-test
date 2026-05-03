@@ -31,11 +31,13 @@ data = data[::-1]
 
 for item in data:      
     date = item['candle_date_time_kst']
+    date_split = date.split("T")[0]
+    date_slice = date_split[2:]
     prices = item['trade_price']
-
+    
     #print(f"종가 : {prices}, 날짜 : {date} ")
     
-    prices_date.append([date, prices])
+    prices_date.append([date_slice, prices])
 
 #print(f"날짜 종가 리스트 : {prices_date}")
 pd_prices_date = pd.DataFrame(prices_date)
@@ -49,13 +51,12 @@ ten_data = pd_prices_date[1].rolling(10).mean()
 
 # 종가
 plt.plot(pd_prices_date[0], pd_prices_date[1], label="price")
-
 # 5일선
 plt.plot(pd_prices_date[0], five_data, label="MA5")
 
 # 10일선
 plt.plot(pd_prices_date[0], ten_data, label="MA10")
-
+plt.xticks(rotation=90)
 plt.show()
 
 if five_data.values[-1] > ten_data.values[-1]:

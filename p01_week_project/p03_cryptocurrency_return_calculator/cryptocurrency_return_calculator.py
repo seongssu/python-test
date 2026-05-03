@@ -39,20 +39,20 @@ def calculate_investment_return(money_invest, ticker, day_invest):
     #나의 투자시점 구매수량
     volumes = money_invest / money_past[-1]
     #현재 가치 계산
-    money_today = volumes * money_past[0]    
+    current_value = volumes * money_past[0]    
     
     #손익 및 수익률 계산
     #손익
-    profit_loss = money_today - money_invest
+    profit_loss = current_value - money_invest
     #수익률
     rate_profit = (profit_loss / money_invest) * 100
     
     print(f"{"투자일자"}        : {day_invest}일전")
-    print(f"{"투자금액"}        : {money_invest}원")
-    print(f"{"투자시점가격"}    : {money_past[-1]:.0f}원")
-    print(f"{"구매수량"}        : {volumes:.5f}주")
-    print(f"{"현재가격"}        : {money_today:.0f}원  ")
-    print(f"{"손익"}            : {profit_loss:.0f}원")
+    print(f"{"투자금액"}        : {money_invest:,}원")
+    print(f"{"투자시점가격"}    : {money_past[-1]:,.0f}원")
+    print(f"{"구매수량"}        : {volumes:.5f}BTC")
+    print(f"{"현재가격"}        : {current_value:,.0f}원  ")
+    print(f"{"손익"}            : {profit_loss:,.0f}원")
     print(f"{"수익률"}          : {rate_profit:.2f}%")
     
     

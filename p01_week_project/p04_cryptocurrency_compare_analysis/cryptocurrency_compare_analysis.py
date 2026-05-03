@@ -46,9 +46,9 @@ for ticker, price in current_past.items():
     return_rate = ((current - past) / past) * 100
      
     #print(f"수익률{return_rate}")
-    
+    ticker_name = ticker.split("-")[1]
     result.append({
-        "ticker" : ticker,
+        "ticker" : ticker_name,
         "수익률" : return_rate
     })
       
