@@ -5,57 +5,90 @@ import json
 import pandas as pd
 import matplotlib.pyplot as plt
 
-def get_current_prices_api(tickers):
+class UPbit:
+    def __init__(self, tickers, days_ago):
+        self.tickers = tickers
+        self.ticker = tickers[0]
+        self.days_ago = days_ago 
 
-    url = "https://api.upbit.com/v1/ticker"
-    headers = {"accept": "application/json"}
+    def get_historical_close_api(self):
+        url = "https://api.upbit.com/v1/candles/days"
 
-    markets_param = ",".join(tickers)
-    params = {"markets": markets_param}
+        result = {}
+        for ticker in self.tickers:
+            params = {
+                "market": ticker,
+                "count": self.days_ago
+            }
 
-    response = requests.get(url, headers=headers, params=params)
-    prices_data = response.json()
+            response = requests.get(url, params=params)
+            candle_data = response.json()
 
-    prices = {}
-    for data in prices_data:
-        prices[data['market']] = data['trade_price']
+            current_price = candle_data[0]["trade_price"]
+            past_price = candle_data[-1]["trade_price"]
+            ticker_name = ticker.split("-")[1]
+            result[ticker_name] = {
+                "current_price" : current_price,
+                "past_price" : past_price
+            }
+        self.get_profit_max_coin(result)
+        
+        return result
+    
+    def get_profit_max_coin(self,result):
+        
+        profit_rate = []
+        for ticker, price in result.items():
+            #print(f"ticker {ticker}, price {price}")
+            today = price["current_price"]
+            past = price["past_price"]
+            
+            profit_ratio = ((today - past) / past) * 100
+            
+            profit_rate.append({
+                "ticker": ticker,
+                "profit": profit_ratio
+            })
+        # max( 데이터, key=lambda x: x["키값"]) : max함수의 딕셔너리 활용  
+        coin_profit = max(profit_rate, key=lambda x: x["profit"])
+        print(f"최고수익코인 : {coin_profit["ticker"]}")
+        
+        self.get_graph_coin_profit()
+        
+        return profit_rate
 
-    return prices
+        #4 특정 코인 1개의 최근 7일 가격 추이 그래프
 
-def get_historical_close_api(portfolio, days_ago):
-    url = "https://api.upbit.com/v1/candles/days"
+    def get_graph_coin_profit(self):
 
-    result = {}
-    for ticker in portfolio:
+        coin_price_change = self.get_candle_data_api()[::-1]
+        coin_price = []
+        coin_date = []
+
+        for item in coin_price_change:
+            date = item["candle_date_time_kst"]
+            price = item["trade_price"]
+            split_date = date.split("T")[0]
+            slice_date = split_date[2:]
+            
+            coin_price.append(price)
+            coin_date.append(slice_date)
+
+        #print(f"날짜가격 : {coin_date}")
+        plt.plot(coin_date,coin_price, label="MA7")
+        plt.show()
+        
+
+    def get_candle_data_api(self):
+
+        url = "https://api.upbit.com/v1/candles/days"
+        headers = {"accept": "application/json"}
         params = {
-            "market": ticker,
-            "count": days_ago
+            "market" : self.ticker,
+            "count" : self.days_ago
         }
 
-        response = requests.get(url, params=params)
-        candle_data = response.json()
+        response = requests.get(url, headers=headers, params=params)
+        data = response.json()
 
-        current_price = candle_data[0]["trade_price"]
-        past_price = candle_data[-1]["trade_price"]
-
-        result[ticker] = {
-            "current_price" : current_price,
-            "past_price" : past_price
-        }
-
-
-    return result
-
-def get_candle_data_api(ticker, count):
-
-    url = "https://api.upbit.com/v1/candles/days"
-    headers = {"accept": "application/json"}
-    params = {
-        "market" : ticker,
-        "count" : count
-    }
-
-    response = requests.get(url, headers=headers, params=params)
-    data = response.json()
-
-    return data
+        return data
