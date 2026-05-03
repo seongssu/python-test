@@ -9,8 +9,7 @@ from Analyzer_Portfolio import Analyzer_Portfolio
 #from UPbit_API import get_candle_data_api
 from UPbit import UPbit
 from Graph import Graph
-
-# 2. 현재가 조회 함수
+from Print_Message import Print_Message
        
 portfolio = {
     "KRW-BTC":0.1,
@@ -28,12 +27,15 @@ price_past_today = upbit.get_historical_close_api()
 
 analyzer = Analyzer_Portfolio(portfolio, prices)
 
-max_coin = analyzer.analyze_portfolio()
-analyzer.print_message()
-analyzer.get_profit_max_coin(price_past_today)
+portfolio_analysis = analyzer.analyze_portfolio()
+#analyzer.print_message()
+max_coin_name = analyzer.get_max_coin()
 
-print(f"보유 비중 상위 1개 코인 : {max_coin}")
+profit_rate = analyzer.get_profit_max_coin(price_past_today)
 
+print_message = Print_Message(portfolio_analysis, max_coin_name, profit_rate)
+
+print_message.print_message()
 
 candle_data = upbit.get_candle_data_api()
 graph = Graph(candle_data)

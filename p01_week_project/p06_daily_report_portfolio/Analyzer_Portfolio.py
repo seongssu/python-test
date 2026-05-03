@@ -35,11 +35,10 @@ class Analyzer_Portfolio:
 
         for x in portfolio_analysis:
             x["비중"] = (x["가치"]/total_value) * 100
-                
-        self.portfolio_analysis = portfolio_analysis
-        max_coin_name = self.get_max_coin()
         
-        return max_coin_name
+        self.portfolio_analysis = portfolio_analysis
+        
+        return portfolio_analysis
     
     def get_max_coin(self):
         
@@ -48,20 +47,7 @@ class Analyzer_Portfolio:
         
         return max_coin_name.split("-")[1]
     
-    def print_message(self):
-        
-        print(f"\n\n {"코인":<10} {"수량":>5} {"현재가":>21} {"가치":>20} {"비중":>14}")
-        print("-" * 100)
-        
-        for x in self.portfolio_analysis:
-            stocks = x["코인"]
-            volumes = x["수량"]
-            current_price = x["현재가격"]
-            value = x["가치"]
-            ratio = x["비중"]
-            stocks_name = stocks.split("-")[1]
-            print(f"{stocks_name:<10} {volumes:>10}{stocks_name} {current_price:>20,.0f}원 {value:>20,.0f}원 {ratio:>15.1f}%")
-    
+
     def get_profit_max_coin(self,result):
         
         profit_rate = []
@@ -76,8 +62,5 @@ class Analyzer_Portfolio:
                 "ticker": ticker,
                 "profit": profit_ratio
             })
-        # max( 데이터, key=lambda x: x["키값"]) : max함수의 딕셔너리 활용  
-        coin_profit = max(profit_rate, key=lambda x: x["profit"])
-        print(f"\n최고수익코인 : {coin_profit["ticker"]}")       
-        
+                    
         return profit_rate
