@@ -109,11 +109,18 @@
 #### **사용 기술**
 - Python
 - requests : HTTP API 요청
-- REST API 연동
+- REST API : Upbit Open API 연동
 - JSON 데이터 처리
 - pandas : 데이터프레임 생성 및 이동평균 계산
 - matplotlib : 가격 데이터 시각화
+- **객체 지향 프로그래밍(OOP)**
+: API를 이용한 데이터수집 / 분석 / 그래프 로 각각 3개의 클래스단위로 분리
+(UPbit, Analyzer_Portfolio / Graph)
+- **모듈화**
+: 기능별로 py파일을 분리, main.py에서 각 클래스 제어
 
 #### **프로젝트 진행 중 배운 점**
 - max() 함수에서 key=lambda를 사용하는 방법
 - API 응답 데이터를 가공하는 방법
+- 모듈화를 통해 각 클래스의 역할을 설정하고, 그에 맞게 메서드 분리하는 설계
+- __init__을 활용한 매개변수의 초기화 및 self를 이용한 인스턴스 변수의 이해
