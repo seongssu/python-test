@@ -34,15 +34,21 @@ class Analyzer_Portfolio:
             total_value += value
 
         for x in portfolio_analysis:
-            x["비중"] = (x["가치"]/total_value) * 60
+            x["비중"] = (x["가치"]/total_value) * 100
 
         print(f"\n\n {"코인":<10} {"수량":>5} {"현재가":>21} {"가치":>20} {"비중":>14}")
-        print("-" * 100)
-
+        print("-" * 100)        
+        #print(f"최대 비중인 코인 : {max_coin}")
+        self.portfolio_analysis = portfolio_analysis
+        max_coin = self.get_max_coin()
+        return max_coin
+    
+    def get_max_coin(self):
+        
         ratio_coin = {}
         all_ratio = []
         #비중 = 내가보유중인 코인중의 현재 가치 비율
-        for x in portfolio_analysis:
+        for x in self.portfolio_analysis:
             stocks = x["코인"]
             volumes = x["수량"]
             current_price = x["현재가격"]
@@ -56,5 +62,4 @@ class Analyzer_Portfolio:
         max_ratio_coin = max(all_ratio)
         max_coin = ratio_coin[max_ratio_coin]
         
-        #print(f"최대 비중인 코인 : {max_coin}")
         return max_coin
