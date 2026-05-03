@@ -47,3 +47,20 @@ class UPbit:
         data = response.json()
 
         return data
+    
+    def get_current_prices_api(self):
+
+        url = "https://api.upbit.com/v1/ticker"
+        headers = {"accept": "application/json"}
+
+        markets_param = ",".join(self.tickers)
+        params = {"markets": markets_param}
+
+        response = requests.get(url, headers=headers, params=params)
+        prices_data = response.json()
+
+        prices = {}
+        for data in prices_data:
+            prices[data['market']] = data['trade_price']
+
+        return prices

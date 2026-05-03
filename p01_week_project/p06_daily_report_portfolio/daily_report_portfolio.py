@@ -16,23 +16,18 @@ portfolio = {
     "KRW-ETH":3,
     "KRW-XRP":1000
 }
-#1 오늘 기준 총 포트폴리오 가치
-#2 보유 비중 상위1개 코인
-analyzer = Analyzer_Portfolio(portfolio)
-max_coin = analyzer.analyze_portfolio()
-
-print(f"보유 비중 상위 1개 코인 : {max_coin}")
-
-#3 최근 7일 기준 가장 많이 오른 코인
 ticker = []
-#최근 7일중 가장 많이 오른 보유 코인
 ticker = [item for item in portfolio]
 days_ago = 7
 
 upbit = UPbit(ticker, days_ago)
+prices = upbit.get_current_prices_api()
+analyzer = Analyzer_Portfolio(portfolio, prices)
+max_coin = analyzer.analyze_portfolio()
 price_past_today = upbit.get_historical_close_api()
 analyzer.get_profit_max_coin(price_past_today)
 
+print(f"보유 비중 상위 1개 코인 : {max_coin}")
 # def get_graph_coin_profit(self):
 
 #         coin_price_change = self.get_candle_data_api()[::-1]

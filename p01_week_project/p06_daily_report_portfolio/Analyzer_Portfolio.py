@@ -6,22 +6,22 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 class Analyzer_Portfolio:
-    def __init__(self, portfolio):
+    def __init__(self, portfolio, prices):
         self.portfolio = portfolio
         self.tickers = list(portfolio.keys())
-
+        self.prices = prices
     def analyze_portfolio(self):
 
         #tickers = list(self.portfolio.keys())
         
-        prices = self.get_current_prices_api()
+        #prices = self.get_current_prices_api()
 
         portfolio_analysis = []
         total_value = 0
 
         for stocks, volumes in self.portfolio.items():
 
-            current_price = prices.get(stocks,0)
+            current_price = self.prices.get(stocks,0)
             value = current_price * volumes
 
             portfolio_analysis.append({
@@ -63,23 +63,6 @@ class Analyzer_Portfolio:
         max_coin = ratio_coin[max_ratio_coin]
         
         return max_coin
-    
-    def get_current_prices_api(self):
-
-        url = "https://api.upbit.com/v1/ticker"
-        headers = {"accept": "application/json"}
-
-        markets_param = ",".join(self.tickers)
-        params = {"markets": markets_param}
-
-        response = requests.get(url, headers=headers, params=params)
-        prices_data = response.json()
-
-        prices = {}
-        for data in prices_data:
-            prices[data['market']] = data['trade_price']
-
-        return prices
     
     def get_profit_max_coin(self,result):
         
