@@ -80,3 +80,23 @@ class Analyzer_Portfolio:
             prices[data['market']] = data['trade_price']
 
         return prices
+    
+    def get_profit_max_coin(self,result):
+        
+        profit_rate = []
+        for ticker, price in result.items():
+            #print(f"ticker {ticker}, price {price}")
+            today = price["current_price"]
+            past = price["past_price"]
+            
+            profit_ratio = ((today - past) / past) * 100
+            
+            profit_rate.append({
+                "ticker": ticker,
+                "profit": profit_ratio
+            })
+        # max( 데이터, key=lambda x: x["키값"]) : max함수의 딕셔너리 활용  
+        coin_profit = max(profit_rate, key=lambda x: x["profit"])
+        print(f"최고수익코인 : {coin_profit["ticker"]}")       
+        
+        return profit_rate

@@ -31,3 +31,24 @@ days_ago = 7
 
 upbit = UPbit(ticker, days_ago)
 price_past_today = upbit.get_historical_close_api()
+analyzer.get_profit_max_coin(price_past_today)
+
+# def get_graph_coin_profit(self):
+
+#         coin_price_change = self.get_candle_data_api()[::-1]
+#         coin_price = []
+#         coin_date = []
+
+#         for item in coin_price_change:
+#             date = item["candle_date_time_kst"]
+#             price = item["trade_price"]
+#             split_date = date.split("T")[0]
+#             slice_date = split_date[2:]
+            
+#             coin_price.append(price)
+#             coin_date.append(slice_date)
+
+#         #print(f"날짜가격 : {coin_date}")
+#         plt.plot(coin_date,coin_price, label="MA7")
+#         plt.show()
+        
