@@ -5,7 +5,7 @@
 # **1주차 프로젝트**
 - 📌 **[핵심 프로젝트 보기](#06-daily-report-portfolio)**
 <details>
-<summary>펼쳐보기</summary>
+<summary>1~5번 프로젝트 보기</summary>
 
 ### **01 Cryptocurrency Portfolio Analyzer**
 : 암호화폐 포트폴리오 분석기
