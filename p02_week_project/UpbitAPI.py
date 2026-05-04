@@ -1,11 +1,12 @@
 import requests
 import json
 import time
+import pandas as pd
 
 class Upbit_API:
-    def __init__(self, tickers, count):
+    def __init__(self, tickers):
         self.tickers = tickers
-        self.count = count
+        
     # 현재가 조회 : https://docs.upbit.com/kr/reference/list-tickers
     def get_current_prices(self):
         
@@ -38,12 +39,12 @@ class Upbit_API:
         return krw_tickers_list
     
     # 일 캔들 조회 : https://docs.upbit.com/kr/reference/list-candles-days
-    def get_candle_data(self):
+    def get_candle_data(self, count):
         
         url = "https://api.upbit.com/v1/candles/days"
         params = {
             "market" : self.tickers,
-            "count" : self.count
+            "count" : count
         }
         headers = {'accept': 'application/json'}
         
@@ -55,7 +56,7 @@ class Upbit_API:
         return candle_data
 
     # 일 캔들 조회(멀티)
-    def get_multi_candle_data(self):
+    def get_multi_candle_data(self, count):
         
         url = "https://api.upbit.com/v1/candles/days"
         headers = {'accept': 'application/json'}
@@ -66,7 +67,7 @@ class Upbit_API:
                 url,
                 params={
                     "market" : ticker,
-                    "count" : self.count                    
+                    "count" : count                    
                 },
                 headers= headers
             )
@@ -79,6 +80,7 @@ class Upbit_API:
             multi_candle_data.extend(data)
             
             #서버 과부화 방지
-            time.sleep(0.1)
+            time.sleep(0.1)          
+        df = pd.DataFrame(multi_candle_data)
             
-        return multi_candle_data        
+        return df        
