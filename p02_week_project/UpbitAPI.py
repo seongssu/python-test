@@ -1,5 +1,6 @@
 import requests
 import json
+import time
 
 class Upbit_API:
     def __init__(self, tickers, count):
@@ -52,4 +53,32 @@ class Upbit_API:
         candle_data = response.json()
         
         return candle_data
+
+    # 일 캔들 조회(멀티)
+    def get_multi_candle_data(self):
         
+        url = "https://api.upbit.com/v1/candles/days"
+        headers = {'accept': 'application/json'}
+        
+        multi_candle_data = []
+        for ticker in self.tickers:
+            response = requests.get(
+                url,
+                params={
+                    "market" : ticker,
+                    "count" : self.count                    
+                },
+                headers= headers
+            )
+            response.raise_for_status()
+            data = response.json()
+            
+            for item in data:
+                item['ticker'] = ticker    
+            
+            multi_candle_data.extend(data)
+            
+            #서버 과부화 방지
+            time.sleep(0.1)
+            
+        return multi_candle_data        
