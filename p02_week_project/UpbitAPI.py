@@ -81,6 +81,5 @@ class Upbit_API:
             
             #서버 과부화 방지
             time.sleep(0.1)          
-        df = pd.DataFrame(multi_candle_data)
             
-        return df        
+        return multi_candle_data        

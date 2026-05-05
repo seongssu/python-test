@@ -1,4 +1,6 @@
 from UpbitAPI import Upbit_API
+from IPython.display import display
+from basic_func import conversion_df
 
 def collect_market_data():
     #시장 데이터 수집 함수
@@ -19,9 +21,19 @@ def collect_market_data():
     count = 30
     candle_data = upbit_api.get_multi_candle_data(count)
     
-    print(f"수집된 데이터 행 수 : {len(candle_data)}")
-    print(f"데이터 컬럼 : {list(candle_data.columns)}")
-    return candle_data, current_prices
+    df_candle_data = conversion_df(candle_data)
+    
+    print(f"수집된 데이터 행 수 : {len(df_candle_data)}")
+    print(f"데이터 컬럼 : {list(df_candle_data.columns)}")
+    return df_candle_data, current_prices
 
 raw_data, prices = collect_market_data()
-print(raw_data.head(10))
+#print(raw_data.head(10))
+
+key = raw_data.groupby('ticker')
+print(key.groups.keys())
+print(key.groups.values())
+
+for key, each_df in raw_data.groupby('ticker'):
+    print(key)
+    display(each_df.head(2))
