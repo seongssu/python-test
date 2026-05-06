@@ -26,4 +26,11 @@ for market, group in db_close_five_days.groupby("market"):
 ##    db_close_five_days["ma5"] = ma5
     db_close_five_days.loc[group.index, "ma5"] = ma5
     
-print(db_close_five_days["ma5"])
+#print(db_close_five_days["ma5"])
+#print(f"컬럼명 : {db_close_five_days.columns}")
+db_close_five_days = db_close_five_days[[
+    "market",
+    "trade_price",
+    "ma5"
+]]
+print(db_close_five_days)
