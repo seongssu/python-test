@@ -16,5 +16,7 @@ df_multi_candle_prices = pd.DataFrame(multi_candle_prices)
 analyzer_upbit = Analyzer_Upbit(df_multi_candle_prices)
 price_minus_change = analyzer_upbit.get_price_change()
 
+#변동률 계산
+pct_price_minus_change = analyzer_upbit.get_price_change_pct()
 
 
