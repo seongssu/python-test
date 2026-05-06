@@ -29,13 +29,11 @@ def p_one():
     #일 중 변동폭 계산
     high_low_diff = analyzer_upbit.get_high_low_diff()
 
-    print(
-        analyzer_upbit.df_multi_candle_prices[
-            [
+    analyzed_upbit = analyzer_upbit.df_multi_candle_prices[[
                 "market",
                 "price_change",
                 "price_change_pct",
                 "high_low_diff"
-            ]
-        ]
-    )
+            ]]
+    
+    return analyzed_upbit
