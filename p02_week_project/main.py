@@ -1,39 +1,20 @@
 from UpbitAPI import Upbit_API
 from IPython.display import display
 from basic_func import conversion_df
+from Analyzer_Upbit import Analyzer_Upbit
+from basic_func import error_handling
+import pandas as pd
 
-def collect_market_data():
-    #시장 데이터 수집 함수
-    
-    #주요 암호화폐 선택
-    
-    major_tickers = ["KRW-BTC", "KRW-ETC", "KRW-XRP"]
-    print(f"분석 대상 티커 : {major_tickers} \n")
-    
-    upbit_api = Upbit_API(major_tickers)
-    #현재가 조회
-    current_prices = upbit_api.get_current_prices()
-    print(f"현재가 정보 \n")
-    for ticker, price in current_prices.items():
-        print(f"{ticker} : {price:.0f}원")
-        
-    #캔들데이터 수집(최근 30일)
-    count = 30
-    candle_data = upbit_api.get_multi_candle_data(count)
-    
-    df_candle_data = conversion_df(candle_data)
-    
-    print(f"수집된 데이터 행 수 : {len(df_candle_data)}")
-    print(f"데이터 컬럼 : {list(df_candle_data.columns)}")
-    return df_candle_data, current_prices
+tickers = ["KRW-BTC","KRW-ETC","KRW-XRP"]
+count = 30
+upbit_api = Upbit_API(tickers)
 
-raw_data, prices = collect_market_data()
-#print(raw_data.head(10))
+#30일간 tickers의 캔들 데이터 수집
+multi_candle_prices = upbit_api.get_multi_candle_data(count)
+df_multi_candle_prices = pd.DataFrame(multi_candle_prices)
+#(price-change) 컬럼 생성
+analyzer_upbit = Analyzer_Upbit(df_multi_candle_prices)
+price_minus_change = analyzer_upbit.get_price_change()
 
-key = raw_data.groupby('ticker')
-print(key.groups.keys())
-print(key.groups.values())
 
-for key, each_df in raw_data.groupby('ticker'):
-    print(key)
-    display(each_df.head(2))
+
