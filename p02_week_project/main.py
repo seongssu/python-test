@@ -9,6 +9,8 @@ tickers = ["KRW-BTC","KRW-ETC","KRW-XRP"]
 count = 30
 upbit_api = Upbit_API(tickers)
 
+###문제 1번###
+
 #30일간 tickers의 캔들 데이터 수집
 multi_candle_prices = upbit_api.get_multi_candle_data(count)
 df_multi_candle_prices = pd.DataFrame(multi_candle_prices)
@@ -37,3 +39,5 @@ print(
         ]
     ]
 )
+
+###문제 2번###
