@@ -2,6 +2,7 @@ import requests
 import json
 import time
 import pandas as pd
+from basic_func import error_handling
 
 class Upbit_API:
     def __init__(self, tickers):
@@ -14,9 +15,7 @@ class Upbit_API:
         params = {'markets' : ",".join(self.tickers)}
         headers = {'accept' : 'application/json'}
         
-        response = requests.get(url, params= params, headers= headers)
-        response.raise_for_status()
-        current_prices = response.json()
+        current_prices = error_handling(url, params, headers)
         
         current_prices_dict = {}
         for item in current_prices:
@@ -31,10 +30,7 @@ class Upbit_API:
         params = {"is_details" : False}
         headers = {'accept' : 'application/json'}
         
-        response = requests.get(url, params= params, headers= headers)
-        
-        response.raise_for_status()
-        krw_tickers_list = response.json()
+        krw_tickers_list = error_handling(url, params, headers)
         
         return krw_tickers_list
     
@@ -48,10 +44,7 @@ class Upbit_API:
         }
         headers = {'accept': 'application/json'}
         
-        response = requests.get(url, params=params, headers= headers)
-        
-        response.raise_for_status()
-        candle_data = response.json()
+        candle_data = error_handling(url, params, headers)
         
         return candle_data
 
@@ -63,16 +56,8 @@ class Upbit_API:
         
         multi_candle_data = []
         for ticker in self.tickers:
-            response = requests.get(
-                url,
-                params={
-                    "market" : ticker,
-                    "count" : count                    
-                },
-                headers= headers
-            )
-            response.raise_for_status()
-            data = response.json()
+            
+            data = error_handling(url, {"market" : ticker,"count" : count}, headers)
             
             for item in data:
                 item['ticker'] = ticker    
