@@ -24,12 +24,13 @@ def p_one():
     #변동률 계산
     pct_price_minus_change = analyzer_upbit.get_price_change_pct()
 
-    #print(f"컬럼확인 : {df_multi_candle_prices.columns}")
+    print(f"컬럼확인 : {df_multi_candle_prices.columns}")
 
     #일 중 변동폭 계산
     high_low_diff = analyzer_upbit.get_high_low_diff()
 
     analyzed_upbit = analyzer_upbit.df_multi_candle_prices[[
+                "candle_date_time_kst",
                 "ticker",
                 "price_change",
                 "price_change_pct",

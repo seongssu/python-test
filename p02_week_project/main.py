@@ -1,13 +1,19 @@
 from p01 import p_one
 from p02 import p_two
+import pandas as pd
+from basic_func import conversion_time
 ###문제 1번###
+# candle_date_time_kst : 거래 날짜
 # market : 코인명 / price_change : 종가 - 시가
 # price_change_pct : 변동률 / high_low_diff : 일일 변동폭
 result_p_one = p_one()
+result_p_one["candle_date_time_kst"] = conversion_time(result_p_one["candle_date_time_kst"])
 print(result_p_one)
 
 ###문제 2번###
+# candle_date_time_kst : 거래 날짜
 # market : 코인명 / trade_price : 종가
 # ma5 : 종가 기준 5일 이동 평균
 result_p_two = p_two()
+result_p_two["candle_date_time_kst"] = result_p_two["candle_date_time_kst"] = conversion_time(result_p_two["candle_date_time_kst"])
 print(result_p_two)

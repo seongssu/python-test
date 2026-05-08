@@ -1,5 +1,6 @@
 import pandas as pd
 import requests
+import pandas as pd
 
 def conversion_df (dict_data):
     df = pd.DataFrame(dict_data)
@@ -22,5 +23,8 @@ def error_handling(url, params, headers):
         print(f"ERROR : {e}")
         
     return None            
-        
+
+def conversion_time(time_data):
+    time_data = pd.to_datetime(time_data)
+    return time_data           
         

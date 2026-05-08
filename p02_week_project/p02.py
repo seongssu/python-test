@@ -19,6 +19,7 @@ def p_two():
     #print(db_close_five_days["ma5"])
     #print(f"컬럼명 : {db_close_five_days.columns}")
     db_close_five_days = calculated_isnull[[
+        "candle_date_time_kst",
         "ticker",
         "trade_price",
         "ma5"
