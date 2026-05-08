@@ -147,3 +147,125 @@
 
 
 # **2주차 프로젝트**
+
+## 📈 실행 결과
+BTC, ETC, XRP의 거래 가격과 5일 이동평균을 subplot으로 시각화한 결과입니다.
+![실행 결과](p02_week_project/images/p02_week_project.png)
+
+#### 프로젝트 1 : 가격 변동 계산
+: 암호화폐의 가격 변동과 변동률, 일일 가격 변동 폭을 계산합니다.
+
+#### 프로젝트 2 : 5일 이동평균 계산 및 결측치 처리
+: 종가를 기준으로 암호화폐 마다 5일 이동 평균을 계산합니다.
+결측치는 해당 날짜의 종가로 대체합니다.
+
+#### 프로젝트 3 : 프로젝트(1+2) 데이터의 시각화
+: 암호화폐별 데이터를 날짜순으로 정렬하고, subplot을 이용하여 그래프를 한 화면에서 볼 수 있도록 합니다.
+
+#### **사용 기술**
+- Python
+- Pandas
+- requests
+- matplotlib
+- Upbit API
+- **객체 지향 프로그래밍(OOP)**
+: API 데이터 수집(class UpbitAPI) / 분석&계산(class Analyzer_Upbit) / 유틸함수(basic_func.py ) / 그래프(graph.py) / 1번 프로젝트(p01.py) / 2번 프로젝트(p02.py) / 3번 프로젝트(p03.py) / 전체 프로그램 실행(main) 으로 각각 기능 분리
+- **모듈화**를 통해 각 클래스의 역할을 설정하고, 그에 맞게 메서드 분리하는 설계
+
+#### **프로젝트 진행 중 배운 점**
+- Pandas DataFrame 생성 및 칼럼 생성 및 선택
+- DataFrame 병합
+- 날짜 데이터 datetime 변환 및 포맷팅
+- 암호화폐별 그룹화
+- rolling()을 이용한 이동평균 계산
+- 결측치 데이터 대체 방법
+- Pandas의 subplot을 이용한 그래프의 시각화
+- 객체 지향 프로그래밍(OOP) 설계
+- 모듈화를 통한 역할 분리
+
+## 프로젝트의 구조
+
+```text
+p02_week_project/
+│
+├── main.py
+├── UpbitAPI.py
+├── Analyzer_Upbit.py
+├── basic_func.py
+├── graph.py
+├── p01.py
+├── p02.py
+├── p03.py
+```
+
+## 실행 방법
+```bash
+pip install pandas requests matplotlib
+python main.py
+```
+
+## 🧩 파일 및 함수별 역할
+
+### `UpbitAPI.py`
+
+| 클래스 / 함수 | 역할 |
+|---|---|
+| `class UpbitAPI` | Upbit API를 통해 데이터를 요청하고 받아옵니다. |
+| `get_current_prices()` | 현재가를 조회합니다. |
+| `get_krw_tickers()` | KRW 마켓 페어 목록을 조회합니다. |
+| `get_candle_data()` | 일 캔들 데이터를 조회합니다. |
+| `get_multi_candle_data()` | 여러 암호화폐의 일 캔들 데이터를 조회합니다. |
+
+### `Analyzer_Upbit.py`
+
+| 클래스 / 함수 | 역할 |
+|---|---|
+| `class Analyzer_Upbit` | API 응답 데이터를 이용해 필요한 계산을 합니다. |
+| `get_price_change()` | 종가 - 시가를 계산합니다. |
+| `get_price_change_pct()` | 변동률을 계산합니다. |
+| `get_high_low_diff()` | 일일 변동 가격 폭을 계산합니다. |
+
+### `basic_func.py`
+
+| 함수 | 역할 |
+|---|---|
+| `conversion_df()` | 데이터를 DataFrame으로 변환합니다. |
+| `error_handling()` | url, params, headers를 받아 GET 요청을 수행하고 예외 처리 후 데이터를 반환합니다. |
+| `conversion_datetime()` | 날짜를 datetime 형식으로 변환합니다. |
+| `formatting_time()` | 그래프 x축 날짜를 `%m-%d` 형식으로 포맷팅합니다. |
+| `sum_db()` | 두 개의 DataFrame을 병합합니다. |
+
+### `graph.py`
+
+| 함수 | 역할 |
+|---|---|
+| `graph()` | ticker별 거래가격과 5일 이동평균을 한 화면의 subplot 그래프로 보여줍니다. |
+
+### `p01.py`
+
+| 함수 | 역할 |
+|---|---|
+| `p_one()` | 거래 날짜, ticker, 종가-시가, 변동률, 일일 변동 가격 폭 컬럼을 생성합니다. |
+
+### `p02.py`
+
+| 함수 | 역할 |
+|---|---|
+| `p_two()` | ticker별 거래 가격을 이용해 5일 이동평균을 계산하고 필요한 컬럼을 반환합니다. |
+| `calculate_isnull()` | ticker별 5일 이동평균을 계산하고 결측치를 해당 날짜의 거래 가격으로 대체합니다. |
+
+### `p03.py`
+
+| 함수 | 역할 |
+|---|---|
+| `p_three()` | 데이터를 ticker와 날짜 순으로 정렬한 뒤 ticker별로 그룹화하여 그래프로 보여줍니다. |
+
+### `main.py`
+
+| 실행 흐름 | 역할 |
+|---|---|
+| `p_one()` | 1번 프로젝트를 실행합니다. |
+| `p_two()` | 2번 프로젝트를 실행합니다. |
+| `conversion_datetime()` | 날짜 컬럼을 datetime 형식으로 변환합니다. |
+| `sum_db()` | 1번, 2번 결과 DataFrame을 병합합니다. |
+| `p_three()` | 3번 프로젝트를 실행합니다. |
