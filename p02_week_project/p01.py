@@ -30,7 +30,8 @@ def p_one():
     high_low_diff = analyzer_upbit.get_high_low_diff()
 
     analyzed_upbit = analyzer_upbit.df_multi_candle_prices[[
-                "market",
+                "candle_date_time_kst",
+                "ticker",
                 "price_change",
                 "price_change_pct",
                 "high_low_diff"

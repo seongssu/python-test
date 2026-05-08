@@ -1,5 +1,3 @@
-import pandas as pd
-
 class Analyzer_Upbit:
     
     def __init__(self, df_multi_candle_prices):
