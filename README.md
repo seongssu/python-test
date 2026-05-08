@@ -198,6 +198,10 @@ p02_week_project/
 ├── p03.py
 ```
 
+## 실행 환경
+
+- Python 3.14
+
 ## 실행 방법
 ```bash
 pip install pandas requests matplotlib
