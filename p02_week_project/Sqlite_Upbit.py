@@ -26,4 +26,14 @@ class Sqlite_Upbit:
         
         return count
     
+    def load_from_database(self):
+        
+        conn = sqlite3.connect('crypto_data.db')
+        
+        query = "SELECT*FROM crypto_ohlcv ORDER BY candle_date_time_kst, ticker"
+        df = pd.read_sql_query(query, conn)
+        
+        conn.close()
+        return df
+    
     
