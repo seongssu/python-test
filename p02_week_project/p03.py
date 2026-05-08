@@ -12,7 +12,3 @@ def p_three(result_all_data):
     result_grouby_ticker = result_all_data.groupby("ticker")
     
     graph(result_grouby_ticker)
-        
-        
-        
-     

@@ -1,6 +1,7 @@
 import pandas as pd
 import requests
 import pandas as pd
+import matplotlib.dates as mdates
 
 def conversion_df (dict_data):
     df = pd.DataFrame(dict_data)
@@ -24,8 +25,11 @@ def error_handling(url, params, headers):
         
     return None            
 
-def conversion_time(time_data):
+def conversion_datetime(time_data):
     time_data = pd.to_datetime(time_data)
     return time_data           
 
-      
+def fomatting_time(chart_result):
+    chart_result.xaxis.set_major_formatter(
+            mdates.DateFormatter("%m-%d")
+        )
