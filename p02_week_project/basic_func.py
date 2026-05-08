@@ -1,7 +1,7 @@
 import pandas as pd
 import requests
-import pandas as pd
 import matplotlib.dates as mdates
+from Sqlite_Upbit import Sqlite_Upbit
 
 def conversion_df (dict_data):
     df = pd.DataFrame(dict_data)
@@ -29,7 +29,25 @@ def conversion_datetime(time_data):
     time_data = pd.to_datetime(time_data)
     return time_data           
 
-def fomatting_time(chart_result):
+def formatting_time(chart_result):
     chart_result.xaxis.set_major_formatter(
             mdates.DateFormatter("%m-%d")
         )
+    
+    
+def get_sqlite_db(result_p_one, result_p_two):
+    ### DataFrame 데이터 합치기 ###
+    result_all_data = pd.merge(result_p_one, result_p_two, on= ["ticker", "candle_date_time_kst"])
+    #print(result_all_data)
+
+    # ### SQLite DB ###
+
+    # # dataframe 모두 db에 저장하기
+    # sqlite_upbit = Sqlite_Upbit(result_all_data)
+    # sqlite_upbit.save_to_database()
+
+    # # db에 저장된 dataframe확인하기
+    # saved_data = sqlite_upbit.load_from_database()
+    # #print(f"저장된 데이터 \n{saved_data}")
+        
+    return result_all_data

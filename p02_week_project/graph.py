@@ -1,6 +1,5 @@
 import matplotlib.pyplot as plt
-import matplotlib.dates as mdates
-from basic_func import fomatting_time
+from basic_func import formatting_time
 def graph(result_grouby_ticker):
     
     for ticker, column in result_grouby_ticker:
@@ -16,6 +15,6 @@ def graph(result_grouby_ticker):
             alpha = 0.5
         )        
         
-        fomatting_time(chart_result)
+        formatting_time(chart_result)
         
         plt.show()

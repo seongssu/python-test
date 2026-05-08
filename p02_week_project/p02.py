@@ -1,8 +1,6 @@
 from UpbitAPI import Upbit_API
 from IPython.display import display
-from basic_func import conversion_df
-from Analyzer_Upbit import Analyzer_Upbit
-from basic_func import error_handling
+from basic_func import conversion_df, error_handling
 import pandas as pd
 
 def p_two():
