@@ -9,7 +9,11 @@ def graph(result_grouby_ticker):
             x = "candle_date_time_kst",
             y = ["trade_price", "ma5"],
             kind = "line",
-            title = ticker
+            title = ticker,
+            
+            style = ["-", "--"],
+            
+            alpha = 0.5
         )        
         
         fomatting_time(chart_result)
