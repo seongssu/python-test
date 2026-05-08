@@ -19,7 +19,7 @@ result_p_two["candle_date_time_kst"] = result_p_two["candle_date_time_kst"] = co
 print(result_p_two)
 
 ### DataFrame 데이터 합치기 ###
-result_all_data = pd.merge(result_p_one, result_p_two, on= "ticker")
+result_all_data = pd.merge(result_p_one, result_p_two, on= ["ticker", "candle_date_time_kst"])
 print(result_all_data)
 
 ### SQLite DB ###
