@@ -15,7 +15,8 @@ def p_three(result_all_data):
         column.plot(
             x = "candle_date_time_kst",
             y = ["trade_price", "ma5"],
-            kind = "bar"
+            kind = "line",
+            title = ticker
         )
         
         plt.show()

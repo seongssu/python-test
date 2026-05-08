@@ -27,4 +27,5 @@ def error_handling(url, params, headers):
 def conversion_time(time_data):
     time_data = pd.to_datetime(time_data)
     return time_data           
-        
+
+      
