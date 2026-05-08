@@ -1,5 +1,5 @@
 import sqlite3
-from pandas import pd
+import pandas as pd
 
 def create_database():
     
