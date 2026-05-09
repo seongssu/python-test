@@ -3,7 +3,7 @@ from basic_func import formatting_time
 def graph(result_grouby_ticker):
     
     fig, axes = plt.subplots(3, 1, figsize = (10, 20))
-    
+
     for ax, (ticker, column) in zip(axes, result_grouby_ticker):
         
         chart_result = column.plot(
