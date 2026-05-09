@@ -106,7 +106,7 @@
 </details>
 
 ### **06 Daily Report Portfolio** 
-BTC의 최근 7일 가격변화를 plot으로 시각화한 결과입니다.
+BTC의 최근 7일 가격변화를 plot으로 만든 그래프 입니다.
 ![실행 결과](p01_week_project/p06_daily_report_portfolio/images/p01_project.png)
 
 #### **내용**
@@ -150,7 +150,7 @@ BTC의 최근 7일 가격변화를 plot으로 시각화한 결과입니다.
 # **2주차 프로젝트**
 
 ## 📈 실행 결과
-BTC, ETC, XRP의 거래 가격과 5일 이동평균을 subplot으로 시각화한 결과입니다.
+BTC, ETC, XRP의 거래 가격과 5일 이동평균을 subplot으로 만든 그래프 입니다.
 ![실행 결과](p02_week_project/images/p02_project.png)
 
 #### 프로젝트 2.1 : 가격 변동 계산
