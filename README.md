@@ -150,7 +150,7 @@
 
 ## 📈 실행 결과
 BTC, ETC, XRP의 거래 가격과 5일 이동평균을 subplot으로 시각화한 결과입니다.
-![실행 결과](p02_week_project/images/p02_week_project.png)
+![실행 결과](p02_week_project/images/p02_project.png)
 
 #### 프로젝트 1 : 가격 변동 계산
 : 암호화폐의 가격 변동과 변동률, 일일 가격 변동 폭을 계산합니다.
