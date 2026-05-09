@@ -39,5 +39,6 @@ print_message.print_message()
 
 candle_data = upbit.get_candle_data_api()
 graph = Graph(candle_data)
+print(f"얘뭐지? : {candle_data}")
 graph.get_graph_coin_profit()
         
