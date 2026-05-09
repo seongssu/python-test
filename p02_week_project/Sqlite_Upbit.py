@@ -2,7 +2,7 @@ import sqlite3
 import pandas as pd
 
 class Sqlite_Upbit:
-    def __init__(self, dataframe):
+    def __init__(self, dataframe = None):   # dataframe 초기값을 None으로 지정해줘서 매개변수없어도 호출가능
         self.dataframe = dataframe
     def create_database(self):
         
