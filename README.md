@@ -107,7 +107,7 @@
 
 ### **06 Daily Report Portfolio** 
 BTC의 최근 7일 가격변화를 plot으로 시각화한 결과입니다.
-![실행 결과](p01_week_project/images/p01_project.png)
+![실행 결과](p01_week_project/p06_daily_report_portfolio/images/p01_project.png)
 
 #### **내용**
 - 오늘 기준 총 포트폴리오 가치 확인
