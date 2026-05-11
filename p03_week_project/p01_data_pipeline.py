@@ -1,5 +1,6 @@
 from PyUpbit_API import PyUpbit_Api
 from Analyzer_Upbit import Analyzer_Upbit
+from util_func import print_basic_statistics
 
 tickers = ["KRW-BTC", "KRW-ETH", "KRW-SOL", "KRW-XRP"]
 days = 180
@@ -16,8 +17,10 @@ analyzer_upbit = Analyzer_Upbit(current_prices, days_candle_data)
 
 one_days_ago = 1
 seven_days_ago = 7
-analyzer_upbit.get_return_rate_d(one_days_ago)
-analyzer_upbit.get_return_rate_d(seven_days_ago)
+thirty_days_ago = 30
+return_rate_one = analyzer_upbit.get_return_rate_d(one_days_ago)
+return_rate_seven = analyzer_upbit.get_return_rate_d(seven_days_ago)
+return_rate_thirty = analyzer_upbit.get_return_rate_d(thirty_days_ago)
 
 five_day = 5
 twenty_day = 20
@@ -30,6 +33,8 @@ volatility_n = analyzer_upbit.get_volatility(twenty_day)
 upper_band = analyzer_upbit.get_upper_band()
 lower_band = analyzer_upbit.get_lower_band()
 
-print(f"upper : {upper_band}")
-print(f"lower : {lower_band}")
-    
+current_day = days_candle_data[tickers[0]].index[-1].date()
+print_basic_statistics(current_day, tickers, current_prices, return_rate_seven, return_rate_thirty, volatility_n)
+
+
+ 
