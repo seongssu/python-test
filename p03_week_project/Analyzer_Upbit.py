@@ -21,20 +21,32 @@ class Analyzer_Upbit:
         return return_rate_d
     
     def get_ma(self, day):
-        ma_data = {}
+        self.ma_data = {}
     
         for ticker, data in self.days_candle_data.items():
-            ma_data[ticker] = data["close"].rolling(day).mean()
-        return ma_data
+            self.ma_data[ticker] = data["close"].rolling(day).mean()
+        return self.ma_data
     
     def get_volatility(self, day):
         
-        volatility_d = {}
+        self.volatility_d = {}
         for ticker, data in self.days_candle_data.items():
             
             change_price = data["close"].pct_change()
             profit_day = change_price.tail(20).std() * np.sqrt(252)
             
-            volatility_d[ticker] = round(float(profit_day), 2)
+            self.volatility_d [ticker] = round(float(profit_day), 2)
         
-        return volatility_d
+        return self.volatility_d 
+    
+    def get_upper_band(self):
+        upper_band = {}
+        for ticker in self.ma_data:
+            upper_band[ticker] = self.ma_data[ticker] + (self.volatility_d[ticker] * 2)
+        return upper_band
+    
+    def get_lower_band(self):
+        lower_band = {}
+        for ticker in self.ma_data:
+            lower_band[ticker] = self.ma_data[ticker] - (self.volatility_d[ticker] * 2) 
+        return lower_band

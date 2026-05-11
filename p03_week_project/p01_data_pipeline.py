@@ -27,6 +27,9 @@ ma20 = analyzer_upbit.get_ma(twenty_day)
 ma60 = analyzer_upbit.get_ma(sixty)
 
 volatility_n = analyzer_upbit.get_volatility(twenty_day)
+upper_band = analyzer_upbit.get_upper_band()
+lower_band = analyzer_upbit.get_lower_band()
 
-
+print(f"upper : {upper_band}")
+print(f"lower : {lower_band}")
     
