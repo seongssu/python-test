@@ -1,3 +1,5 @@
+import numpy as np
+import pandas as pd
 
 class Analyzer_Upbit:
     def __init__(self, current_price, days_candle_data):
@@ -24,4 +26,15 @@ class Analyzer_Upbit:
         for ticker, data in self.days_candle_data.items():
             ma_data[ticker] = data["close"].rolling(day).mean()
         return ma_data
+    
+    def get_volatility(self, day):
+        
+        volatility_d = {}
+        for ticker, data in self.days_candle_data.items():
             
+            change_price = data["close"].pct_change()
+            profit_day = change_price.tail(20).std() * np.sqrt(252)
+            
+            volatility_d[ticker] = round(float(profit_day), 2)
+        
+        return volatility_d

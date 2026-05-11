@@ -1,6 +1,5 @@
 from PyUpbit_API import PyUpbit_Api
 from Analyzer_Upbit import Analyzer_Upbit
-import pandas as pd
 
 tickers = ["KRW-BTC", "KRW-ETH", "KRW-SOL", "KRW-XRP"]
 days = 180
@@ -26,6 +25,8 @@ sixty = 60
 ma5 = analyzer_upbit.get_ma(five_day)
 ma20 = analyzer_upbit.get_ma(twenty_day)
 ma60 = analyzer_upbit.get_ma(sixty)
+
+volatility_n = analyzer_upbit.get_volatility(twenty_day)
 
 
     
