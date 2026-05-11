@@ -19,3 +19,13 @@ one_days_ago = 1
 seven_days_ago = 7
 analyzer_upbit.get_return_rate_d(one_days_ago)
 analyzer_upbit.get_return_rate_d(seven_days_ago)
+
+five_day = 5
+twenty_day = 20
+sixty = 60
+ma5 = analyzer_upbit.get_ma(five_day)
+ma20 = analyzer_upbit.get_ma(twenty_day)
+ma60 = analyzer_upbit.get_ma(sixty)
+
+
+    

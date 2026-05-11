@@ -17,4 +17,11 @@ class Analyzer_Upbit:
             
             return_rate_d[ticker] = round(float(days_age_profit_rate), 2)
         return return_rate_d
+    
+    def get_ma(self, day):
+        ma_data = {}
+    
+        for ticker, data in self.days_candle_data.items():
+            ma_data[ticker] = data["close"].rolling(day).mean()
+        return ma_data
             
