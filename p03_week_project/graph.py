@@ -5,17 +5,17 @@ def graph (days_candle_data):
     fig, axes = plt.subplots(2,2, figsize = (10, 20))
     
     for ax, (ticker, columns) in zip(axes.flatten(), days_candle_data.items()):
-        columns = columns.reset_index()
+        columns = columns.reset_index()        
         
         ax.fill_between(
-            columns["index"],
+            columns["date"],
             columns["lower_band"],
             columns["upper_band"],
             alpha = 0.2
         )
         
         columns.plot(
-            x = "index",
+            x = "date",
             y = ["close", "ma5", "ma20", "ma60"],
             kind = "line",
             title = "종목명 + 현재가 + 7일 수익률",
