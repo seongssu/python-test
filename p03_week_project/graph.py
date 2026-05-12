@@ -1,4 +1,8 @@
 import matplotlib.pyplot as plt
+import matplotlib.font_manager as fm
+
+plt.rcParams["font.family"] = "Malgun Gothic"
+plt.rcParams["axes.unicode_minus"] = False
 
 def graph (days_candle_data):
     
