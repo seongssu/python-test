@@ -7,6 +7,13 @@ def graph (days_candle_data):
     for ax, (ticker, columns) in zip(axes.flatten(), days_candle_data.items()):
         columns = columns.reset_index()
         
+        ax.fill_between(
+            columns["index"],
+            columns["lower_band"],
+            columns["upper_band"],
+            alpha = 0.2
+        )
+        
         columns.plot(
             x = "index",
             y = ["close", "ma5", "ma20", "ma60"],

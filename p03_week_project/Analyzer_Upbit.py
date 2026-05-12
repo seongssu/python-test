@@ -29,10 +29,13 @@ class AnalyzerUpbit:
     def get_volatility(self, day):
         
         self.volatility_d = {}
+        self.std = {}
         for ticker, data in self.days_candle_data.items():
             
             change_price = data["close"].pct_change()
-            profit_day = change_price.tail(20).std() * np.sqrt(252)
+            std_data = change_price.tail(day).std()
+            self.std[ticker] = data["close"].tail(day).std()
+            profit_day = std_data * np.sqrt(252)            
             
             self.volatility_d [ticker] = round(float(profit_day), 2)
         
@@ -41,11 +44,11 @@ class AnalyzerUpbit:
     def get_upper_band(self):
         upper_band = {}
         for ticker in self.ma_data:
-            upper_band[ticker] = self.ma_data[ticker] + (self.volatility_d[ticker] * 2)
+            upper_band[ticker] = self.ma_data[ticker] + (self.std[ticker] * 2)
         return upper_band
     
     def get_lower_band(self):
         lower_band = {}
         for ticker in self.ma_data:
-            lower_band[ticker] = self.ma_data[ticker] - (self.volatility_d[ticker] * 2) 
+            lower_band[ticker] = self.ma_data[ticker] - (self.std[ticker] * 2) 
         return lower_band
