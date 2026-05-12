@@ -41,14 +41,14 @@ class AnalyzerUpbit:
         
         return self.volatility_d 
     
-    def get_upper_band(self):
+    def get_upper_band(self, ma_data):
         upper_band = {}
-        for ticker in self.ma_data:
-            upper_band[ticker] = self.ma_data[ticker] + (self.std[ticker] * 2)
+        for ticker in ma_data:
+            upper_band[ticker] = ma_data[ticker] + (self.std[ticker] * 2)
         return upper_band
     
-    def get_lower_band(self):
+    def get_lower_band(self, ma_data):
         lower_band = {}
-        for ticker in self.ma_data:
-            lower_band[ticker] = self.ma_data[ticker] - (self.std[ticker] * 2) 
+        for ticker in ma_data:
+            lower_band[ticker] = ma_data[ticker] - (self.std[ticker] * 2) 
         return lower_band
