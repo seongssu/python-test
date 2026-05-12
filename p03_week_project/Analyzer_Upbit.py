@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 
-class Analyzer_Upbit:
+class AnalyzerUpbit:
     def __init__(self, current_price, days_candle_data):
         self.current_price = current_price
         self.days_candle_data = days_candle_data

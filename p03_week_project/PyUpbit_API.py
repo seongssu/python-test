@@ -1,7 +1,7 @@
 from util_func import convert_str_to_list, retry_call_api
 import pyupbit
 
-class PyUpbit_Api:
+class PyUpbitApi:
     
     def __init__(self, tickers, days):
         self.tickers = tickers
