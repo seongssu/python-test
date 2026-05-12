@@ -17,6 +17,8 @@ days_candle_data = pyupbit_api.get_candle_data()
 analyzer_upbit = AnalyzerUpbit(current_prices, days_candle_data)
 data_manager = DataManager(days_candle_data)
 
+data_manager.add_columns("current_prices", current_prices)
+
 one_days_ago = 1
 seven_days_ago = 7
 thirty_days_ago = 30
@@ -45,6 +47,6 @@ data_manager.add_columns("upper_band", upper_band)
 data_manager.add_columns("lower_band", lower_band)
 
 current_day = days_candle_data[tickers[0]].index[-1].date()
-print_basic_statistics(current_day, tickers, current_prices, return_rate_seven, return_rate_thirty, volatility_n)
+print_basic_statistics(days_candle_data)
 
-print(f"칼럼 : {days_candle_data[tickers[0]].columns}")
+#print(f"칼럼 : {days_candle_data[tickers[0]].columns}")

@@ -25,16 +25,17 @@ def convert_str_to_list(str_data):
         convert_data.append(data)
     return convert_data
 
-def print_basic_statistics(current_day, tickers, current_prices, return_rate_seven, return_rate_thirty, volatility_n):
-        
-    print(f"=== 암호화폐 현황 요약 (기준일 : {current_day}) ===\n")
+def print_basic_statistics(day_candle_data):
+    
+    print(f"=== 암호화폐 현황 요약 (기준일 : {list(day_candle_data.keys())[0]}) ===\n")
     print(f"종목{"현재가":>17}{"7일 수익률":>10}{"30일 수익률":>10}{"연환산 변동성":>10}")
     print("-"*80)
     
-    for ticker in tickers:
-        str_current_prices = current_prices[ticker]
-        str_return_rate_seven = return_rate_seven[ticker]
-        str_return_rate_thirty = return_rate_thirty[ticker]        
-        str_volatility_n_percent = volatility_n[ticker] * 100
+    for ticker, data in day_candle_data.items():
+        item = data.iloc[-1]
+        str_current_prices = item["current_prices"]
+        str_return_rate_seven = item["return_rate_seven"]
+        str_return_rate_thirty = item["return_rate_thirty"]  
+        str_volatility_n_percent = item["volatility_n"] * 100
         
         print(f"{ticker}{str_current_prices:>15,.0f}원{str_return_rate_seven:>+12}%{str_return_rate_thirty:>+13}%{str_volatility_n_percent:>15}%")
