@@ -2,6 +2,7 @@ from pyupbit_api import PyUpbitApi
 from analyzer_upbit import AnalyzerUpbit
 from data_manager import DataManager
 from util_func import print_basic_statistics
+from graph import graph
 
 tickers = ["KRW-BTC", "KRW-ETH", "KRW-SOL", "KRW-XRP"]
 days = 180
@@ -49,4 +50,6 @@ data_manager.add_columns("lower_band", lower_band)
 current_day = days_candle_data[tickers[0]].index[-1].date()
 print_basic_statistics(days_candle_data)
 
+graph(days_candle_data)
+#print(f"밴드: {days_candle_data}")
 #print(f"칼럼 : {days_candle_data[tickers[0]].columns}")
