@@ -51,5 +51,8 @@ current_day = days_candle_data[tickers[0]].index[-1].date()
 print_basic_statistics(days_candle_data)
 
 graph(days_candle_data)
+
+data_manager.save_to_database()
+sql_db_frame = data_manager.load_from_database()
 #print(f"밴드: {days_candle_data}")
-#print(f"칼럼 : {days_candle_data[tickers[0]].columns}")
+print(f"칼럼 : {sql_db_frame.columns}")
