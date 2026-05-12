@@ -17,7 +17,7 @@ class CacheManager:
         
         try:
             cursor = conn.cursor()
-            cursor.execute(query, (ticker, "2026-05-12"))
+            cursor.execute(query, (ticker, str(self.today)))
             count = cursor.fetchone()[0]
             
         except sqlite3.OperationalError:
