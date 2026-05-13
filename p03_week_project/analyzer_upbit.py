@@ -101,7 +101,7 @@ class AnalyzerUpbit:
                 "profit_total_money" : profit_total_money
             }
         for ticker, data in result_portfolio.items():
-            data["current_weight"] = (data["profit_total_money"] / current_total_money) * 100   
-        
+            data["current_weight"] = (data["profit_total_money"] / current_total_money) * 100  
+            data["current_profit_weight"] = (data["profit_money"] / invest_total_money) * 100
         total_profit = ((current_total_money/invest_total_money) - 1) * 100
         return result_portfolio, invest_total_money, current_total_money, total_profit

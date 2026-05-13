@@ -53,4 +53,4 @@ def print_portfolio(result_portfolio, invest_total_money, current_total_money, t
     print(f"MDD {":":>11} {mdd:+.2f}%\n")
     print(f"종목별 기여도:")
     for ticker, data in result_portfolio.items():
-        print(f"{ticker:>10} {"수익률":>5} {data["return_rate"]:>+7.2f}% {"기여":>5} {data["current_weight"]:+7.2f}%p")
+        print(f"{ticker:>10} {"수익률":>5} {data["return_rate"]:>+7.2f}% {"기여":>5} {data["current_profit_weight"]:+7.2f}%p")
