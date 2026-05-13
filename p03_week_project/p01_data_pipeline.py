@@ -59,7 +59,7 @@ def result_data(days_candle_data):
 
 def save_data(data_manager):
     
-    data_manager.save_to_database()
+    data_manager.db_pipeline()
     sql_db_frame = data_manager.load_from_database()
     
     return sql_db_frame
