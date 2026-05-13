@@ -19,16 +19,12 @@ def retry_call_api(py_func, retry, delay, *tickers, **days):
                 return None
             time.sleep(delay)
 
-
-def convert_str_to_list(str_data):
-    convert_data = []
-    for data in str_data:
-        convert_data.append(data)
-    return convert_data
-
 def print_data_pipeline(day_candle_data):
     
-    print(f"=== 암호화폐 현황 요약 (기준일 : {list(day_candle_data.keys())[0]}) ===\n")
+    first_ticker = list(day_candle_data.keys())[0]
+    base_date = day_candle_data[first_ticker].index[-1].date()
+    
+    print(f"=== 암호화폐 현황 요약 (기준일 : {base_date}) ===\n")
     print(f"종목{"현재가":>17}{"7일 수익률":>10}{"30일 수익률":>10}{"연환산 변동성":>10}")
     print("-"*80)
     
