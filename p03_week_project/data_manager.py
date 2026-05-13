@@ -57,7 +57,7 @@ class DataManager:
             'open', 'close', 'current_prices',
             'return_rate_one', 'return_rate_seven', 'return_rate_thirty',
             'ma5', 'ma20', 'ma60', 'volatility_n',
-            'upper_band', 'lower_band', 'category'
+            'upper_band', 'lower_band'
         ]
         
         db_data = []

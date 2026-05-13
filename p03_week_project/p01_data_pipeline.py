@@ -4,8 +4,8 @@ from data_manager import DataManager
 from util_func import print_data_pipeline
 from graph import graph_pipeline
 
-def api_data(tickers, days, category):
-    pyupbit_api = PyUpbitApi(tickers, days, category)
+def api_data(tickers, days):
+    pyupbit_api = PyUpbitApi(tickers, days)
 
     ticker_lists = pyupbit_api.get_ticker_lists()
 
@@ -67,9 +67,8 @@ def save_data(data_manager):
 def p_one_data_pipeline():
     tickers = ["KRW-BTC", "KRW-ETH", "KRW-SOL", "KRW-XRP"]
     days = 180
-    category = "data_pipeline"
 
-    ticker_lists, current_prices, days_candle_data = api_data(tickers, days, category)
+    ticker_lists, current_prices, days_candle_data = api_data(tickers, days)
     
     data_manager = add_columns(current_prices, days_candle_data)
     

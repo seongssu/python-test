@@ -14,12 +14,11 @@ fee_rate = 0.0005
 invest_day_ago = 90
 money_invest = 10000000
 
-category = "portfolio"
-pyupbit_api = PyUpbitApi(list(portfolio.keys()), invest_day_ago, category)
+pyupbit_api = PyUpbitApi(list(portfolio.keys()), invest_day_ago)
 
 current_prices = pyupbit_api.get_current_price()
 days_candle_data = pyupbit_api.get_candle_data()
-print(f"캔들데이터 : {days_candle_data}")
+
 analyzerupbit = AnalyzerUpbit(current_prices, days_candle_data)
 
 return_rate_ninety = analyzerupbit.get_return_rate_d(invest_day_ago)
