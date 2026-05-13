@@ -1,7 +1,7 @@
 from pyupbit_api import PyUpbitApi
 from analyzer_upbit import AnalyzerUpbit
 from data_manager import DataManager
-from util_func import print_basic_statistics
+from util_func import print_data_pipeline
 from graph import graph_pipeline
 
 def api_data(tickers, days, category):
@@ -53,7 +53,7 @@ def add_columns(current_prices, days_candle_data):
 
 def result_data(days_candle_data):    
     
-    print_basic_statistics(days_candle_data)
+    print_data_pipeline(days_candle_data)
 
     graph_pipeline(days_candle_data)
 
