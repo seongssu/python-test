@@ -4,12 +4,13 @@ from cache_manager import CacheManager
 
 class PyUpbitApi:
     
-    def __init__(self, tickers, days):
+    def __init__(self, tickers, days, category):
         self.tickers = tickers
         self.days = days    
         self.retry = 3
         self.delay = 1
         self.cache_manager = CacheManager()
+        self.category = category
     
     def get_ticker_lists(self):
         result_ticker_lists = retry_call_api(pyupbit.get_tickers, self.retry, self.delay)        
@@ -37,6 +38,8 @@ class PyUpbitApi:
             
             days_candle_data[ticker] = retry_call_api(pyupbit.get_ohlcv, self.retry, self.delay, ticker,self.days)
             days_candle_data[ticker].index.name = "date"
+            days_candle_data[ticker]["category"] = self.category
+        
         return days_candle_data
        
         
