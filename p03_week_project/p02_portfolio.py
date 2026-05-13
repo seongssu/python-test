@@ -4,35 +4,67 @@ from util_func import print_portfolio
 from data_manager import DataManager
 from graph import graph_portfolio
 
-portfolio = {
-    'KRW-BTC' : {'weight' : 0.4, 'amount' : 4_000_000},
-    'KRW-ETH' : {'weight' : 0.3, 'amount' : 3_000_000},
-    'KRW-SOL' : {'weight' : 0.2, 'amount' : 2_000_000},
-    'KRW-XRP' : {'weight' : 0.1, 'amount' : 1_000_000}
-}
-fee_rate = 0.0005
-invest_day_ago = 90
-money_invest = 10000000
+def create_portfolio():
+    return {
+        'KRW-BTC': {'weight': 0.4, 'amount': 4_000_000},
+        'KRW-ETH': {'weight': 0.3, 'amount': 3_000_000},
+        'KRW-SOL': {'weight': 0.2, 'amount': 2_000_000},
+        'KRW-XRP': {'weight': 0.1, 'amount': 1_000_000},
+    }
 
-category = "portfolio"
-pyupbit_api = PyUpbitApi(list(portfolio.keys()), invest_day_ago, category)
+def load_candle_data(data_manager, invest_day_ago):
+    df = data_manager.load_from_database()
 
-current_prices = pyupbit_api.get_current_price()
-days_candle_data = pyupbit_api.get_candle_data()
-print(f"캔들데이터 : {days_candle_data}")
-analyzerupbit = AnalyzerUpbit(current_prices, days_candle_data)
+    filter_df = data_manager.filter_days(df, invest_day_ago)
 
-return_rate_ninety = analyzerupbit.get_return_rate_d(invest_day_ago)
-result_portfolio, invest_total_money, current_total_money, total_profit = analyzerupbit.get_portfolio_values(portfolio, return_rate_ninety)
+    return data_manager.dict_from_dataframe(filter_df)
 
-mdd, days_portfolio_prices = analyzerupbit.get_mdd(portfolio)
+def analyze_portfolio(portfolio, invest_day_ago):
+    data_manager = DataManager()
+    pyupbit_api = PyUpbitApi(list(portfolio.keys()), invest_day_ago)
 
-print_portfolio(result_portfolio, invest_total_money, current_total_money, total_profit, mdd)
+    current_prices = pyupbit_api.get_current_price()
+    days_candle_data = load_candle_data(data_manager, invest_day_ago)
 
-datamanager = DataManager(days_candle_data)
+    analyzer = AnalyzerUpbit(current_prices, days_candle_data)
 
-db_days_candle_data = datamanager.to_dataframe(days_candle_data)
+    return_rate = analyzer.get_return_rate_d(invest_day_ago)
 
-filter_db = db_days_candle_data[["ticker", "close","portfolio_value"]]
+    result_portfolio, invest_total_money, current_total_money, total_profit = (
+        analyzer.get_portfolio_values(portfolio, return_rate)
+    )
 
-graph_portfolio(days_candle_data, days_portfolio_prices)
+    mdd, days_portfolio_prices = analyzer.get_mdd(portfolio)
+
+    return {
+        "result_portfolio": result_portfolio,
+        "invest_total_money": invest_total_money,
+        "current_total_money": current_total_money,
+        "total_profit": total_profit,
+        "mdd": mdd,
+        "days_candle_data": days_candle_data,
+        "days_portfolio_prices": days_portfolio_prices,
+    }
+
+def p_two_portfolio():
+    portfolio = create_portfolio()
+
+    invest_day_ago = 90
+
+    result = analyze_portfolio(
+        portfolio=portfolio,
+        invest_day_ago = invest_day_ago
+    )
+
+    print_portfolio(
+        result["result_portfolio"],
+        result["invest_total_money"],
+        result["current_total_money"],
+        result["total_profit"],
+        result["mdd"]
+    )
+
+    graph_portfolio(
+        result["days_candle_data"],
+        result["days_portfolio_prices"]
+    )

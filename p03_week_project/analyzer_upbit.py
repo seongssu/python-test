@@ -33,9 +33,10 @@ class AnalyzerUpbit:
         for ticker, data in self.days_candle_data.items():
             
             change_price = data["close"].pct_change()
-            std_data = change_price.tail(day).std()
+            #std_data :일별 수익률의 변동성
+            std_data = change_price.rolling(day).std()
             self.std[ticker] = data["close"].tail(day).std()
-            profit_day = std_data * np.sqrt(252)            
+            profit_day = std_data.iloc[-1] * np.sqrt(252)           
             
             self.volatility_d [ticker] = round(float(profit_day), 2)
         
@@ -101,7 +102,7 @@ class AnalyzerUpbit:
                 "profit_total_money" : profit_total_money
             }
         for ticker, data in result_portfolio.items():
-            data["current_weight"] = (data["profit_total_money"] / current_total_money) * 100   
-        
+            data["current_weight"] = (data["profit_total_money"] / current_total_money) * 100  
+            data["current_profit_weight"] = (data["profit_money"] / invest_total_money) * 100
         total_profit = ((current_total_money/invest_total_money) - 1) * 100
         return result_portfolio, invest_total_money, current_total_money, total_profit

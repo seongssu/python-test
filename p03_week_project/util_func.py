@@ -39,7 +39,7 @@ def print_data_pipeline(day_candle_data):
         str_return_rate_thirty = item["return_rate_thirty"]  
         str_volatility_n_percent = item["volatility_n"] * 100
         
-        print(f"{ticker}{str_current_prices:>15,.0f}원{str_return_rate_seven:>+12}%{str_return_rate_thirty:>+13}%{str_volatility_n_percent:>15}%")
+        print(f"{ticker}{str_current_prices:>15,.0f}원{str_return_rate_seven:>+12}%{str_return_rate_thirty:>+13}%{str_volatility_n_percent:>15.2f}%")
         
 def print_portfolio(result_portfolio, invest_total_money, current_total_money, total_profit, mdd):
     days = 90
@@ -53,4 +53,4 @@ def print_portfolio(result_portfolio, invest_total_money, current_total_money, t
     print(f"MDD {":":>11} {mdd:+.2f}%\n")
     print(f"종목별 기여도:")
     for ticker, data in result_portfolio.items():
-        print(f"{ticker:>10} {"수익률":>5} {data["return_rate"]:>+7.2f}% {"기여":>5} {data["current_weight"]:+7.2f}%p")
+        print(f"{ticker:>10} {"수익률":>5} {data["return_rate"]:>+7.2f}% {"기여":>5} {data["current_profit_weight"]:+7.2f}%p")

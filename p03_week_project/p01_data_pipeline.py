@@ -4,74 +4,78 @@ from data_manager import DataManager
 from util_func import print_data_pipeline
 from graph import graph_pipeline
 
-def api_data(tickers, days, category):
-    pyupbit_api = PyUpbitApi(tickers, days, category)
+def api_data(tickers, days):
+    pyupbit_api = PyUpbitApi(tickers, days)
 
     ticker_lists = pyupbit_api.get_ticker_lists()
-
     current_prices = pyupbit_api.get_current_price()
-
     days_candle_data = pyupbit_api.get_candle_data()
-    
+
     return ticker_lists, current_prices, days_candle_data
 
-def add_columns(current_prices, days_candle_data):
+
+def save_data(data_manager, days_candle_data):
+    db_df = data_manager.dataframe_from_dict(days_candle_data)
+    data_manager.save_to_database(db_df)
+    sql_db_frame = data_manager.load_from_database()
+    filter_sql_db_frame = data_manager.filter_days(sql_db_frame, 60)
     
+    return filter_sql_db_frame
+
+
+def add_analysis_columns(data_manager, current_prices, days_candle_data):
     analyzer_upbit = AnalyzerUpbit(current_prices, days_candle_data)
-    data_manager = DataManager(days_candle_data)
 
-    data_manager.add_columns("current_prices", current_prices)
+    data_manager.add_columns(days_candle_data, "current_prices", current_prices)
 
-    one_days_ago = 1
-    seven_days_ago = 7
-    thirty_days_ago = 30
-    return_rate_one = analyzer_upbit.get_return_rate_d(one_days_ago)
-    return_rate_seven = analyzer_upbit.get_return_rate_d(seven_days_ago)
-    return_rate_thirty = analyzer_upbit.get_return_rate_d(thirty_days_ago)
-    data_manager.add_columns("return_rate_one", return_rate_one)
-    data_manager.add_columns("return_rate_seven", return_rate_seven)
-    data_manager.add_columns("return_rate_thirty", return_rate_thirty)
+    return_rate_one = analyzer_upbit.get_return_rate_d(1)
+    return_rate_seven = analyzer_upbit.get_return_rate_d(7)
+    return_rate_thirty = analyzer_upbit.get_return_rate_d(30)
 
-    five_day = 5
-    twenty_day = 20
-    sixty = 60
-    ma5 = analyzer_upbit.get_ma(five_day)
-    ma20 = analyzer_upbit.get_ma(twenty_day)
-    ma60 = analyzer_upbit.get_ma(sixty)
-    data_manager.add_columns("ma5", ma5)
-    data_manager.add_columns("ma20", ma20)
-    data_manager.add_columns("ma60", ma60)
+    data_manager.add_columns(days_candle_data, "return_rate_one", return_rate_one)
+    data_manager.add_columns(days_candle_data, "return_rate_seven", return_rate_seven)
+    data_manager.add_columns(days_candle_data, "return_rate_thirty", return_rate_thirty)
 
-    volatility_n = analyzer_upbit.get_volatility(twenty_day)
+    ma5 = analyzer_upbit.get_ma(5)
+    ma20 = analyzer_upbit.get_ma(20)
+    ma60 = analyzer_upbit.get_ma(60)
+
+    data_manager.add_columns(days_candle_data, "ma5", ma5)
+    data_manager.add_columns(days_candle_data, "ma20", ma20)
+    data_manager.add_columns(days_candle_data, "ma60", ma60)
+
+    volatility_n = analyzer_upbit.get_volatility(20)
     upper_band = analyzer_upbit.get_upper_band(ma20)
     lower_band = analyzer_upbit.get_lower_band(ma20)
-    data_manager.add_columns("volatility_n", volatility_n)
-    data_manager.add_columns("upper_band", upper_band)
-    data_manager.add_columns("lower_band", lower_band)
-    
-    return data_manager
 
-def result_data(days_candle_data):    
-    
+    data_manager.add_columns(days_candle_data, "volatility_n", volatility_n)
+    data_manager.add_columns(days_candle_data, "upper_band", upper_band)
+    data_manager.add_columns(days_candle_data, "lower_band", lower_band)
+
+    return days_candle_data
+
+
+def result_data(days_candle_data):
     print_data_pipeline(days_candle_data)
-
     graph_pipeline(days_candle_data)
 
-def save_data(data_manager):
-    
-    data_manager.db_pipeline()
-    sql_db_frame = data_manager.load_from_database()
-    
-    return sql_db_frame
 
 def p_one_data_pipeline():
     tickers = ["KRW-BTC", "KRW-ETH", "KRW-SOL", "KRW-XRP"]
     days = 180
-    category = "data_pipeline"
 
-    ticker_lists, current_prices, days_candle_data = api_data(tickers, days, category)
+    ticker_lists, current_prices, days_candle_data = api_data(tickers, days)
+
+    data_manager = DataManager()
     
-    data_manager = add_columns(current_prices, days_candle_data)
-    
+    sql_db_frame = save_data(data_manager, days_candle_data)
+
+    days_candle_data = add_analysis_columns(
+        data_manager,
+        current_prices,
+        days_candle_data
+    )
+
     result_data(days_candle_data)
-    save_data(data_manager)
+
+    return sql_db_frame
