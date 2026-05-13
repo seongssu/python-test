@@ -1,11 +1,11 @@
 from pyupbit_api import PyUpbitApi
 from analyzer_upbit import AnalyzerUpbit
 from data_manager import DataManager
-from util_func import print_basic_statistics
-from graph import graph
+from util_func import print_data_pipeline
+from graph import graph_pipeline
 
-def api_data(tickers, days):
-    pyupbit_api = PyUpbitApi(tickers, days)
+def api_data(tickers, days, category):
+    pyupbit_api = PyUpbitApi(tickers, days, category)
 
     ticker_lists = pyupbit_api.get_ticker_lists()
 
@@ -53,13 +53,13 @@ def add_columns(current_prices, days_candle_data):
 
 def result_data(days_candle_data):    
     
-    print_basic_statistics(days_candle_data)
+    print_data_pipeline(days_candle_data)
 
-    graph(days_candle_data)
+    graph_pipeline(days_candle_data)
 
 def save_data(data_manager):
     
-    data_manager.save_to_database()
+    data_manager.db_pipeline()
     sql_db_frame = data_manager.load_from_database()
     
     return sql_db_frame
@@ -67,11 +67,11 @@ def save_data(data_manager):
 def p_one_data_pipeline():
     tickers = ["KRW-BTC", "KRW-ETH", "KRW-SOL", "KRW-XRP"]
     days = 180
+    category = "data_pipeline"
 
-    ticker_lists, current_prices, days_candle_data = api_data(tickers, days)
-
+    ticker_lists, current_prices, days_candle_data = api_data(tickers, days, category)
+    
     data_manager = add_columns(current_prices, days_candle_data)
-
+    
     result_data(days_candle_data)
-
     save_data(data_manager)

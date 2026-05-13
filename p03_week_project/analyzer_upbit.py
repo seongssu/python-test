@@ -52,3 +52,56 @@ class AnalyzerUpbit:
         for ticker in ma_data:
             lower_band[ticker] = ma_data[ticker] - (self.std[ticker] * 2) 
         return lower_band
+    
+    # 90일 전에 구매한 코인 종목들의 최대낙폭(mdd) 계산
+    def get_mdd(self, portfolio):
+        days_portfolio_prices = None
+        
+        for ticker, data in portfolio.items():
+            amount = data["amount"]
+            df = self.days_candle_data[ticker]
+            
+            close_price = df["close"].iloc[0]
+            buy_coin_count = amount / close_price
+            
+            days_my_coin_prices = df["close"] * buy_coin_count
+            
+            if days_portfolio_prices is None:
+                days_portfolio_prices = days_my_coin_prices
+            else:
+                days_portfolio_prices += days_my_coin_prices
+                
+            self.days_candle_data[ticker]["portfolio_value"] = days_my_coin_prices
+        days_max_coin_prices = days_portfolio_prices.cummax()
+        drop_from_max = ((days_portfolio_prices - days_max_coin_prices)) / days_max_coin_prices
+        mdd = drop_from_max.min() * 100
+        
+        return mdd, days_portfolio_prices
+    
+    def get_portfolio_values(self,portfolio, return_rate_ninety):
+        current_total_money = 0
+        invest_total_money = 0
+        result_portfolio = {}
+        for ticker, data in portfolio.items():
+            amount = data["amount"]
+            weight = data["weight"]
+            return_rate = return_rate_ninety[ticker]
+            
+            profit_money = (amount * return_rate) /100
+            profit_total_money = amount + profit_money
+            
+            invest_total_money += amount
+            current_total_money += profit_total_money
+            
+            result_portfolio[ticker] = {
+                "portfolio_weight" : weight * 100,
+                "invest_money" : amount,
+                "return_rate" : return_rate,
+                "profit_money" : profit_money,
+                "profit_total_money" : profit_total_money
+            }
+        for ticker, data in result_portfolio.items():
+            data["current_weight"] = (data["profit_total_money"] / current_total_money) * 100   
+        
+        total_profit = ((current_total_money/invest_total_money) - 1) * 100
+        return result_portfolio, invest_total_money, current_total_money, total_profit

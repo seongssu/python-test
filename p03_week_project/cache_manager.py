@@ -5,19 +5,20 @@ class CacheManager:
     def __init__(self):
         self.today = datetime.date.today()
     
-    def get_cache(self, ticker):
+    def get_cache(self, ticker, category):
         conn = sqlite3.connect("three_weeks_crypto_data.db")
         
         query = """
         SELECT COUNT(*)
         FROM three_weeks_crypto_data
         WHERE ticker =?
+        AND category = ?
         AND substr(date, 1, 10) = ?
         """
         
         try:
             cursor = conn.cursor()
-            cursor.execute(query, (ticker, str(self.today)))
+            cursor.execute(query, (ticker, category, str(self.today)))
             count = cursor.fetchone()[0]
             
         except sqlite3.OperationalError:
@@ -27,17 +28,18 @@ class CacheManager:
         
         return count > 0
     
-    def load_cache(self, ticker):
+    def load_cache(self, ticker, category):
         conn = sqlite3.connect("three_weeks_crypto_data.db")
         
         query = """
         SELECT *
         FROM three_weeks_crypto_data
         WHERE ticker = ?
+        AND category = ?
         ORDER BY date
         """
         
-        df = pd.read_sql_query(query, conn, params=(ticker,))
+        df = pd.read_sql_query(query, conn, params=(ticker, category))
         conn.close()
         
         df["date"] = pd.to_datetime(df["date"])
