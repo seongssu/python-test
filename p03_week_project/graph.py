@@ -1,7 +1,7 @@
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
-def graph (days_candle_data):
+def graph_pipeline (days_candle_data):
     
     subplot_titles = [
         f"{ticker}   "
@@ -68,4 +68,5 @@ def graph (days_candle_data):
             )
 
     fig.show()
+    
     
