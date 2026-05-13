@@ -29,9 +29,9 @@ class PyUpbitApi:
             
         for ticker in self.tickers:
             
-            if self.cache_manager and self.cache_manager.get_cache(ticker):
+            if self.cache_manager and self.cache_manager.get_cache(ticker, self.category):
                 print(f"캐시가 존재합니다 : {ticker}")
-                days_candle_data[ticker] = self.cache_manager.load_cache(ticker)
+                days_candle_data[ticker] = self.cache_manager.load_cache(ticker, self.category)
                 continue
             
             print(f"API를 호출합니다 : {ticker}")
