@@ -70,11 +70,13 @@ class AnalyzerUpbit:
                 days_portfolio_prices = days_my_coin_prices
             else:
                 days_portfolio_prices += days_my_coin_prices
+                
+            self.days_candle_data[ticker]["portfolio_value"] = days_my_coin_prices
         days_max_coin_prices = days_portfolio_prices.cummax()
         drop_from_max = ((days_portfolio_prices - days_max_coin_prices)) / days_max_coin_prices
         mdd = drop_from_max.min() * 100
         
-        return mdd
+        return mdd, days_portfolio_prices
     
     def get_portfolio_values(self,portfolio, return_rate_ninety):
         current_total_money = 0

@@ -36,7 +36,7 @@ class PyUpbitApi:
             
             print(f"API를 호출합니다 : {ticker}")
             
-            days_candle_data[ticker] = retry_call_api(pyupbit.get_ohlcv, self.retry, self.delay, ticker,self.days)
+            days_candle_data[ticker] = retry_call_api(pyupbit.get_ohlcv, self.retry, self.delay, ticker, count = self.days + 1)
             days_candle_data[ticker].index.name = "date"
             days_candle_data[ticker]["category"] = self.category
         

@@ -69,4 +69,74 @@ def graph_pipeline (days_candle_data):
 
     fig.show()
     
+def graph_portfolio(days_candle_data, days_portfolio_prices):
+    fig = make_subplots(
+        rows = 3,
+        cols = 1,
+        shared_xaxes= True,
+        vertical_spacing= 0.08,
+        subplot_titles= [
+            "포트폴리오 일별 총 자산",
+            "종목별 누적 수익률 비교(시작: 100)",
+            "포트폴리오 일별 수익률"
+        ]
+    )
     
+    fig.add_trace(
+        go.Scatter(
+            x = days_portfolio_prices.index,
+            y = days_portfolio_prices,
+            mode = "lines",
+            name="포트폴리오 일별 총 자산"
+        ),
+        row = 1,
+        col = 1
+    )
+    
+    for ticker, df in days_candle_data.items():
+        df = df.sort_index()
+
+        profit_from_onehundred = df["close"] / df["close"].iloc[0] * 100
+
+        fig.add_trace(
+            go.Scatter(
+                x=df.index,
+                y=profit_from_onehundred,
+                mode="lines",
+                name=ticker
+            ),
+            row=2,
+            col=1
+        )
+
+    day_profit = days_portfolio_prices.pct_change() * 100
+
+    colors = [
+        "red" if value >= 0 else "blue"
+        for value in day_profit
+    ]
+
+    fig.add_trace(
+        go.Bar(
+            x=day_profit.index,
+            y=day_profit.values,
+            marker_color=colors,
+            name="일별 수익률"
+        ),
+        row=3,
+        col=1
+    )
+
+    fig.update_layout(
+        title="포트폴리오 성과 대시보드",
+        height=900,
+        showlegend=True,
+        template="plotly_white"
+    )
+
+    fig.update_yaxes(title_text="원", row=1, col=1)
+    fig.update_yaxes(title_text="지수", row=2, col=1)
+    fig.update_yaxes(title_text="일별 수익률(%)", row=3, col=1)
+    fig.update_xaxes(title_text="날짜", row=3, col=1)
+
+    fig.show()

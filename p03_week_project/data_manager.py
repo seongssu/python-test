@@ -10,6 +10,17 @@ class DataManager:
             self.days_candle_data[ticker][column_name] = data
         return self.days_candle_data
     
+    def to_dataframe(self, dict_data):
+        db_from_dict = []
+        for ticker, data in dict_data.items():
+            df_from_dict = data.copy()
+            df_from_dict["ticker"] = ticker
+            df_from_dict["date"] = df_from_dict.index
+            
+            db_from_dict.append(df_from_dict)
+            result_db = pd.concat(db_from_dict, ignore_index= False)
+        return result_db
+    
     def create_database(self):
         
         conn = sqlite3.connect('three_weeks_crypto_data.db')
