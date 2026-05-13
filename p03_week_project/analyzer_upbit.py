@@ -20,38 +20,38 @@ class AnalyzerUpbit:
         return return_rate_d
     
     def get_ma(self, day):
-        self.ma_data = {}
+        ma_data = {}
     
         for ticker, data in self.days_candle_data.items():
-            self.ma_data[ticker] = data["close"].rolling(day).mean()
-        return self.ma_data
+            ma_data[ticker] = data["close"].rolling(day).mean()
+        return ma_data
     
     def get_volatility(self, day):
         
-        self.volatility_d = {}
-        self.std = {}
+        volatility_d = {}
+        std = {}
         for ticker, data in self.days_candle_data.items():
             
             change_price = data["close"].pct_change()
             #std_data :일별 수익률의 변동성
             std_data = change_price.rolling(day).std()
-            self.std[ticker] = data["close"].tail(day).std()
+            std[ticker] = data["close"].tail(day).std()
             profit_day = std_data.iloc[-1] * np.sqrt(252)           
             
-            self.volatility_d [ticker] = round(float(profit_day), 2)
+            volatility_d [ticker] = round(float(profit_day), 2)
         
-        return self.volatility_d 
+        return volatility_d, std 
     
-    def get_upper_band(self, ma_data):
+    def get_upper_band(self, ma_data, std):
         upper_band = {}
         for ticker in ma_data:
-            upper_band[ticker] = ma_data[ticker] + (self.std[ticker] * 2)
+            upper_band[ticker] = ma_data[ticker] + (std[ticker] * 2)
         return upper_band
     
-    def get_lower_band(self, ma_data):
+    def get_lower_band(self, ma_data, std):
         lower_band = {}
         for ticker in ma_data:
-            lower_band[ticker] = ma_data[ticker] - (self.std[ticker] * 2) 
+            lower_band[ticker] = ma_data[ticker] - (std[ticker] * 2) 
         return lower_band
     
     # 90일 전에 구매한 코인 종목들의 최대낙폭(mdd) 계산

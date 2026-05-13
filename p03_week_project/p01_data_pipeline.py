@@ -20,6 +20,7 @@ def save_data(data_manager, days_candle_data):
     sql_db_frame = data_manager.load_from_database()
     filter_sql_db_frame = data_manager.filter_days(sql_db_frame, 60)
     
+    filter_sql_db_frame = filter_sql_db_frame.dropna()
     return filter_sql_db_frame
 
 
@@ -44,9 +45,9 @@ def add_analysis_columns(data_manager, current_prices, days_candle_data):
     data_manager.add_columns(days_candle_data, "ma20", ma20)
     data_manager.add_columns(days_candle_data, "ma60", ma60)
 
-    volatility_n = analyzer_upbit.get_volatility(20)
-    upper_band = analyzer_upbit.get_upper_band(ma20)
-    lower_band = analyzer_upbit.get_lower_band(ma20)
+    volatility_n, std = analyzer_upbit.get_volatility(20)
+    upper_band = analyzer_upbit.get_upper_band(ma20, std)
+    lower_band = analyzer_upbit.get_lower_band(ma20, std)
 
     data_manager.add_columns(days_candle_data, "volatility_n", volatility_n)
     data_manager.add_columns(days_candle_data, "upper_band", upper_band)
@@ -69,6 +70,7 @@ def p_one_data_pipeline():
     data_manager = DataManager()
     
     sql_db_frame = save_data(data_manager, days_candle_data)
+    days_candle_data = data_manager.dict_from_dataframe(sql_db_frame)
 
     days_candle_data = add_analysis_columns(
         data_manager,
