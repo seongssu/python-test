@@ -113,6 +113,52 @@ class AnalyzerUpbit:
             profit_days_by_ticker[ticker] = data["close"].pct_change()
         return profit_days_by_ticker
     
+    def get_trade_history(self, portfolio, coin_count = 0, have_coin = False):
+        condition_buy_sell = self.get_back_test()
+        fee_rate = portfolio["fee"] / 100
+        have_money = portfolio["have_money"]
+        
+        trade_history = {}
+        num = 0
+        for index, data in condition_buy_sell.iterrows():
+            
+            if data["buy_condition"] and not have_coin:
+                buy_money = have_money * (1 - fee_rate)
+                coin_count = buy_money / data["close"]
+                have_money = 0
+                have_coin = True
+                num += 1
+                trade_history[num] = {
+                    "state": "매수",
+                    "date": index,
+                    "close": data["close"],
+                    "coin_count": coin_count,
+                    "trade_money": buy_money
+                }              
+                
+            elif data["sell_condition"] and have_coin:
+                have_money = coin_count * data["close"] * (1 - fee_rate )            
+                have_coin = False
+                num +=1
+                trade_history[num] = {
+                    "state": "매도",
+                    "date": index,
+                    "close": data["close"],
+                    "coin_count": coin_count,
+                    "trade_money": have_money
+                }    
+                coin_count = 0
+                
+        if have_coin:
+            last_price = condition_buy_sell.iloc[-1]["close"]
+            have_money = coin_count * last_price * (1 - fee_rate)
+            coin_count = 0
+            have_coin = False
+            
+        profit_rate = ((have_money / portfolio["have_money"]) - 1) * 100
+
+        return trade_history, have_money, profit_rate
+
     def get_back_test(self):
         days_candle_data = self.days_candle_data["KRW-BTC"]
         days_candle_data["buy_condition"] = (
