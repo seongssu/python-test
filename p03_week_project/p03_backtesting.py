@@ -3,9 +3,6 @@ from pyupbit_api import PyUpbitApi
 from analyzer_upbit import AnalyzerUpbit
 from util_func import print_back_test
 
-
-
-
 portfolio = {
     "ticker" : "KRW-BTC",
     "period" : 365,

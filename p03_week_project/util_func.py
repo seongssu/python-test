@@ -54,8 +54,12 @@ def print_portfolio(result_portfolio, invest_total_money, current_total_money, t
 def print_back_test(result_back_test):
     print("=== 거래 내역 ===")
     print(f"{"#":>3} {"유형":>3}{"날짜":>10}{"단가":>16}{"수량":>8}{"금액":>15}")  
-    print(f"-"*65)  
-    for index, data in result_back_test.items():        
-        print(f"{index:>3} {data['state']:>3}{data['date'].strftime('%Y-%m-%d'):>12}{data['close']:>15,.0f} 원{data['coin_count']:>10.5f}{data['trade_money']:>15,.0f} 원")
+    print(f"-"*65)        
+    for index, data in result_back_test.items():  
+        if data["profit_have_buy"] == "":
+            profit_have_buy = ""
+        else:
+            profit_have_buy = f"({data["profit_have_buy"]:+.2f})%"      
+        print(f"{index:>3} {data['state']:>3}{data['date'].strftime('%Y-%m-%d'):>12}{data['close']:>15,.0f} 원{data['coin_count']:>10.5f}{data['trade_money']:>15,.0f} 원 {profit_have_buy:>5}")
     print(f"총 {len(result_back_test)}번 거래")
     

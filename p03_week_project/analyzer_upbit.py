@@ -133,19 +133,22 @@ class AnalyzerUpbit:
                     "date": index,
                     "close": data["close"],
                     "coin_count": coin_count,
-                    "trade_money": buy_money
+                    "trade_money": buy_money,
+                    "profit_have_buy" : ""
                 }              
                 
             elif data["sell_condition"] and have_coin:
                 have_money = coin_count * data["close"] * (1 - fee_rate )            
                 have_coin = False
+                profit_have_buy = ((have_money / buy_money) - 1) * 100
                 num +=1
                 trade_history[num] = {
                     "state": "매도",
                     "date": index,
                     "close": data["close"],
                     "coin_count": coin_count,
-                    "trade_money": have_money
+                    "trade_money": have_money,
+                    "profit_have_buy" : profit_have_buy
                 }    
                 coin_count = 0
                 
