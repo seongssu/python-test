@@ -59,11 +59,11 @@ class AnalyzerUpbit:
         days_portfolio_prices = None
         
         for ticker, data in portfolio.items():
-            amount = data["amount"]
+            have_money = data["have_money"]
             df = self.days_candle_data[ticker]
             
             close_price = df["close"].iloc[0]
-            buy_coin_count = amount / close_price
+            buy_coin_count = have_money / close_price
             
             days_my_coin_prices = df["close"] * buy_coin_count
             
@@ -84,19 +84,19 @@ class AnalyzerUpbit:
         invest_total_money = 0
         result_portfolio = {}
         for ticker, data in portfolio.items():
-            amount = data["amount"]
+            have_money = data["have_money"]
             weight = data["weight"]
             return_rate = return_rate_ninety[ticker]
             
-            profit_money = (amount * return_rate) /100
-            profit_total_money = amount + profit_money
+            profit_money = (have_money * return_rate) /100
+            profit_total_money = have_money + profit_money
             
-            invest_total_money += amount
+            invest_total_money += have_money
             current_total_money += profit_total_money
             
             result_portfolio[ticker] = {
                 "portfolio_weight" : weight * 100,
-                "invest_money" : amount,
+                "invest_money" : have_money,
                 "return_rate" : return_rate,
                 "profit_money" : profit_money,
                 "profit_total_money" : profit_total_money
@@ -120,6 +120,13 @@ class AnalyzerUpbit:
         
         trade_history = {}
         num = 0
+        
+        num_buy = 0
+        num_sell = 0
+        win_count = 0
+        
+        win_profit = 0
+        loss_profit = 0
         for index, data in condition_buy_sell.iterrows():
             
             if data["buy_condition"] and not have_coin:
@@ -128,39 +135,75 @@ class AnalyzerUpbit:
                 have_money = 0
                 have_coin = True
                 num += 1
+                num_buy += 1
                 trade_history[num] = {
                     "state": "매수",
                     "date": index,
                     "close": data["close"],
                     "coin_count": coin_count,
                     "trade_money": buy_money,
-                    "profit_have_buy" : ""
+                    "profit_have_buy" : "",
+                    "num_buy" : num_buy
                 }              
                 
             elif data["sell_condition"] and have_coin:
                 have_money = coin_count * data["close"] * (1 - fee_rate )            
                 have_coin = False
-                profit_have_buy = ((have_money / buy_money) - 1) * 100
-                num +=1
+                profit_have_buy = ((have_money / buy_money) - 1) * 100                
+                
+                num += 1
+                num_sell +=1
+                
+                if profit_have_buy > 0:
+                    win_count +=1
+                    win_profit += profit_have_buy
+                elif profit_have_buy < 0:
+                    loss_profit += profit_have_buy
+                    
                 trade_history[num] = {
                     "state": "매도",
                     "date": index,
                     "close": data["close"],
                     "coin_count": coin_count,
                     "trade_money": have_money,
-                    "profit_have_buy" : profit_have_buy
+                    "profit_have_buy" : profit_have_buy,
+                    "num_sell" : num_sell
                 }    
                 coin_count = 0
-                
+        if num_sell > 0:
+            win_rate = (win_count / num_sell) * 100
+        else:
+            win_rate = 0
+        
+        avg_win_profit = (win_profit / win_count) if win_count > 0 else 0
+        avg_loss_profit = (loss_profit / (num_sell - win_count)) if win_count > 0 else 0
+        
+        first_price = condition_buy_sell.iloc[0]["close"]
+        last_price = condition_buy_sell.iloc[-1]["close"]
+        buy_hold_rate = ((last_price / first_price) - 1) * 100        
+            
         if have_coin:
-            last_price = condition_buy_sell.iloc[-1]["close"]
             have_money = coin_count * last_price * (1 - fee_rate)
             coin_count = 0
             have_coin = False
             
         profit_rate = ((have_money / portfolio["have_money"]) - 1) * 100
 
-        return trade_history, have_money, profit_rate
+        over_rate = profit_rate - buy_hold_rate
+        
+        result_back_test = {
+            "have_money" : have_money,
+            "profit_rate" : profit_rate,
+            "total_trade" : num_buy + num_sell,
+            "win_rate" : win_rate,
+            "avg_win_profit" : avg_win_profit,
+            "avg_loss_profit" : avg_loss_profit,
+            "buy_hold_rate" : buy_hold_rate,
+            "over_rate" : over_rate
+            
+        }
+
+        return trade_history, result_back_test
 
     def get_back_test(self):
         days_candle_data = self.days_candle_data["KRW-BTC"]

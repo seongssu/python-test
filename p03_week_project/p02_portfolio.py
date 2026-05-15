@@ -44,10 +44,10 @@ def analyze_portfolio(portfolio, invest_day_ago):
 def p_two_portfolio():
     
     portfolio = {
-        'KRW-BTC': {'weight': 0.4, 'amount': 4_000_000},
-        'KRW-ETH': {'weight': 0.3, 'amount': 3_000_000},
-        'KRW-SOL': {'weight': 0.2, 'amount': 2_000_000},
-        'KRW-XRP': {'weight': 0.1, 'amount': 1_000_000},
+        'KRW-BTC': {'weight': 0.4, 'have_money': 4_000_000},
+        'KRW-ETH': {'weight': 0.3, 'have_money': 3_000_000},
+        'KRW-SOL': {'weight': 0.2, 'have_money': 2_000_000},
+        'KRW-XRP': {'weight': 0.1, 'have_money': 1_000_000},
     }
 
     invest_day_ago = 90

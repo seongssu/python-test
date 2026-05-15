@@ -27,5 +27,8 @@ ma20 = analyzer_upbit.get_ma(20)
 data_manager.add_columns(days_candle_data, "ma5", ma5)
 data_manager.add_columns(days_candle_data, "ma20", ma20)
 
-result_back_test, have_money, profit_rate = analyzer_upbit.get_trade_history(portfolio)
-print_back_test(result_back_test)
+trade_history, result_back_test = analyzer_upbit.get_trade_history(portfolio)
+print_back_test(trade_history)
+
+mdd = analyzer_upbit.get_mdd(portfolio)
+# print_result_back_test(portfolio, have_money, profit_rate, mdd, result_back_test)
