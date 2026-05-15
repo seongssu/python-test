@@ -3,6 +3,7 @@ from analyzer_upbit import AnalyzerUpbit
 from util_func import print_portfolio
 from data_manager import DataManager
 from graph import graph_portfolio
+from heat_map import heat_map_portfolio
 
 def create_portfolio():
     return {
@@ -29,6 +30,7 @@ def analyze_portfolio(portfolio, invest_day_ago):
     analyzer = AnalyzerUpbit(current_prices, days_candle_data)
 
     return_rate = analyzer.get_return_rate_d(invest_day_ago)
+    profit_days_by_ticker = analyzer.get_profit_days()
 
     result_portfolio, invest_total_money, current_total_money, total_profit = (
         analyzer.get_portfolio_values(portfolio, return_rate)
@@ -38,6 +40,7 @@ def analyze_portfolio(portfolio, invest_day_ago):
 
     return {
         "result_portfolio": result_portfolio,
+        "profit_days_by_ticker" : profit_days_by_ticker,
         "invest_total_money": invest_total_money,
         "current_total_money": current_total_money,
         "total_profit": total_profit,
@@ -67,4 +70,8 @@ def p_two_portfolio():
     graph_portfolio(
         result["days_candle_data"],
         result["days_portfolio_prices"]
+    )
+    
+    heat_map_portfolio(
+        result["profit_days_by_ticker"]
     )

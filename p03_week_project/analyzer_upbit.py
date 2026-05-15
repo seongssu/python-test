@@ -106,3 +106,9 @@ class AnalyzerUpbit:
             data["current_profit_weight"] = (data["profit_money"] / invest_total_money) * 100
         total_profit = ((current_total_money/invest_total_money) - 1) * 100
         return result_portfolio, invest_total_money, current_total_money, total_profit
+    
+    def get_profit_days(self):
+        profit_days_by_ticker = {}
+        for ticker, data in self.days_candle_data.items():
+            profit_days_by_ticker[ticker] = data["close"].pct_change()
+        return profit_days_by_ticker
