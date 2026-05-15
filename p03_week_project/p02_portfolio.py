@@ -5,14 +5,6 @@ from data_manager import DataManager
 from graph import graph_portfolio
 from heat_map import heat_map_portfolio
 
-def create_portfolio():
-    return {
-        'KRW-BTC': {'weight': 0.4, 'amount': 4_000_000},
-        'KRW-ETH': {'weight': 0.3, 'amount': 3_000_000},
-        'KRW-SOL': {'weight': 0.2, 'amount': 2_000_000},
-        'KRW-XRP': {'weight': 0.1, 'amount': 1_000_000},
-    }
-
 def load_candle_data(data_manager, invest_day_ago):
     df = data_manager.load_from_database()
 
@@ -50,7 +42,13 @@ def analyze_portfolio(portfolio, invest_day_ago):
     }
 
 def p_two_portfolio():
-    portfolio = create_portfolio()
+    
+    portfolio = {
+        'KRW-BTC': {'weight': 0.4, 'amount': 4_000_000},
+        'KRW-ETH': {'weight': 0.3, 'amount': 3_000_000},
+        'KRW-SOL': {'weight': 0.2, 'amount': 2_000_000},
+        'KRW-XRP': {'weight': 0.1, 'amount': 1_000_000},
+    }
 
     invest_day_ago = 90
 

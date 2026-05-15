@@ -112,3 +112,16 @@ class AnalyzerUpbit:
         for ticker, data in self.days_candle_data.items():
             profit_days_by_ticker[ticker] = data["close"].pct_change()
         return profit_days_by_ticker
+    
+    def get_back_test(self):
+        days_candle_data = self.days_candle_data["KRW-BTC"]
+        days_candle_data["buy_condition"] = (
+            (days_candle_data["ma5"].shift(1) <= days_candle_data["ma20"].shift(1)) &
+            (days_candle_data["ma5"] > days_candle_data["ma20"])
+        )
+        
+        days_candle_data["sell_condition"] = (
+            (days_candle_data["ma5"].shift(1) >= days_candle_data["ma20"].shift(1)) &
+            (days_candle_data["ma5"] < days_candle_data["ma20"])
+        )
+        return days_candle_data
