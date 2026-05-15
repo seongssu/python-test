@@ -1,7 +1,7 @@
 from data_manager import DataManager
 from pyupbit_api import PyUpbitApi
 from analyzer_upbit import AnalyzerUpbit
-from util_func import print_back_test
+from util_func import print_back_test, print_result_back_test
 
 portfolio = {
     "ticker" : "KRW-BTC",
@@ -17,7 +17,7 @@ days_candle_data = {
     "KRW-BTC" : days_candle_data_filter["KRW-BTC"]
 }
 
-pyupbit_api = PyUpbitApi(portfolio["ticker"], portfolio["period"])
+pyupbit_api = PyUpbitApi(portfolio['ticker'], portfolio['period'])
 current_price = pyupbit_api.get_current_price()
 
 analyzer_upbit = AnalyzerUpbit(current_price, days_candle_data)
@@ -30,5 +30,10 @@ data_manager.add_columns(days_candle_data, "ma20", ma20)
 trade_history, result_back_test = analyzer_upbit.get_trade_history(portfolio)
 print_back_test(trade_history)
 
-mdd = analyzer_upbit.get_mdd(portfolio)
-# print_result_back_test(portfolio, have_money, profit_rate, mdd, result_back_test)
+mdd_portfolio = {
+    portfolio["ticker"]: {
+        "have_money": portfolio["have_money"]
+    }
+}
+mdd, days_portfolio_prices = analyzer_upbit.get_mdd(mdd_portfolio)
+print_result_back_test(portfolio, trade_history, result_back_test, mdd)

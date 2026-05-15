@@ -142,8 +142,7 @@ class AnalyzerUpbit:
                     "close": data["close"],
                     "coin_count": coin_count,
                     "trade_money": buy_money,
-                    "profit_have_buy" : "",
-                    "num_buy" : num_buy
+                    "profit_have_buy" : ""
                 }              
                 
             elif data["sell_condition"] and have_coin:
@@ -166,8 +165,7 @@ class AnalyzerUpbit:
                     "close": data["close"],
                     "coin_count": coin_count,
                     "trade_money": have_money,
-                    "profit_have_buy" : profit_have_buy,
-                    "num_sell" : num_sell
+                    "profit_have_buy" : profit_have_buy                 
                 }    
                 coin_count = 0
         if num_sell > 0:
@@ -176,13 +174,13 @@ class AnalyzerUpbit:
             win_rate = 0
         
         avg_win_profit = (win_profit / win_count) if win_count > 0 else 0
-        avg_loss_profit = (loss_profit / (num_sell - win_count)) if win_count > 0 else 0
+        avg_loss_profit = (loss_profit / (num_sell - win_count)) if (num_sell - win_count) > 0 else 0
         
         first_price = condition_buy_sell.iloc[0]["close"]
         last_price = condition_buy_sell.iloc[-1]["close"]
         buy_hold_rate = ((last_price / first_price) - 1) * 100        
             
-        if have_coin:
+        if have_coin:            
             have_money = coin_count * last_price * (1 - fee_rate)
             coin_count = 0
             have_coin = False
@@ -199,8 +197,10 @@ class AnalyzerUpbit:
             "avg_win_profit" : avg_win_profit,
             "avg_loss_profit" : avg_loss_profit,
             "buy_hold_rate" : buy_hold_rate,
-            "over_rate" : over_rate
-            
+            "over_rate" : over_rate,
+            "num_buy" : num_buy,            
+            "num_sell" : num_sell   
+                        
         }
 
         return trade_history, result_back_test
