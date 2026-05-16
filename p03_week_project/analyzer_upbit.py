@@ -203,7 +203,7 @@ class AnalyzerUpbit:
                         
         }
 
-        return trade_history, result_back_test
+        return trade_history, result_back_test, condition_buy_sell
 
     def get_back_test(self):
         days_candle_data = self.days_candle_data["KRW-BTC"]

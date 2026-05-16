@@ -140,3 +140,90 @@ def graph_portfolio(days_candle_data, days_portfolio_prices):
     fig.update_xaxes(title_text="날짜", row=3, col=1)
 
     fig.show()
+    
+def graph_back_test(condition_buy_sell, trade_history, result_back_test):
+    
+    fig = make_subplots(
+        rows = 2,
+        cols = 1,
+        subplot_titles=(
+            "비트코인 종가 / ma5 / ma20",
+            "전략 자산 곡선 vs Buy & Hold 자산 곡선"
+        )
+    )
+    
+    fig.add_trace(
+        go.Scatter(
+            x = condition_buy_sell.index,
+            y = condition_buy_sell["close"],
+            mode = "lines",
+            name = "close"
+        ),
+        row= 1,
+        col= 1
+    )
+    
+    fig.add_trace(
+        go.Scatter(
+            x = condition_buy_sell.index,
+            y = condition_buy_sell["ma5"],
+            mode = "lines",
+            name= "ma5"
+        ),
+        row= 1,
+        col= 1
+    )
+    
+    fig.add_trace(
+        go.Scatter(
+            x = condition_buy_sell.index,
+            y = condition_buy_sell["ma20"],
+            mode= "lines",
+            name= "ma20"
+        ),
+        row= 1,
+        col= 1
+    )
+    buy_history = [
+        trade for trade in trade_history.values()
+        if trade["state"] == "매수"
+    ]
+    sell_history = [
+        trade for trade in trade_history.values()
+        if trade["state"] == "매도"
+    ]
+    
+    fig.add_trace(
+        go.Scatter(
+            x = [trade["date"] for trade in buy_history],
+            y = [trade["close"] for trade in buy_history],
+            mode= "markers",
+            name= "매수",
+            marker=dict(
+                symbol = "triangle-up",
+                size = 13,
+                color = "green"
+            )
+        ),
+        row= 1,
+        col= 1
+    )
+    fig.add_trace(
+        go.Scatter(
+            x = [trade["date"] for trade in sell_history],
+            y = [trade["close"] for trade in sell_history],
+            mode = "markers",
+            name = "매도",
+            marker = dict(
+                symbol = "triangle-down",
+                size = 13,
+                color = "red"
+            )            
+        ),
+        row = 1,
+        col = 1
+    )
+    print(f"데이터 {result_back_test}")
+    fig.show()
+    #for num, trade in trade_history.items():
+        
