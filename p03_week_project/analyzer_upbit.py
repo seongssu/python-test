@@ -35,7 +35,7 @@ class AnalyzerUpbit:
             change_price = data["close"].pct_change()
             #std_data :일별 수익률의 변동성
             std_data = change_price.rolling(day).std()
-            std[ticker] = data["close"].tail(day).std()
+            std[ticker] = data["close"].rolling(day).std()
             profit_day = std_data.iloc[-1] * np.sqrt(252)           
             
             volatility_d [ticker] = round(float(profit_day), 2)
@@ -175,8 +175,7 @@ class AnalyzerUpbit:
                     "profit_have_buy" : profit_have_buy                 
                 }    
                 coin_count = 0
-            condition_buy_sell.loc[index, "strategy_value"] = (coin_count * data["close"] if have_coin else have_money)
-            print(f"전략재산 : {condition_buy_sell["strategy_value"]}")       
+            condition_buy_sell.loc[index, "strategy_value"] = (coin_count * data["close"] if have_coin else have_money)            
         if num_sell > 0:
             win_rate = (win_count / num_sell) * 100
         else:

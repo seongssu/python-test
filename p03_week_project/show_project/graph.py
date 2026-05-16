@@ -67,13 +67,15 @@ def graph_pipeline (days_candle_data):
                 col=col
             )
 
-    fig.show()
+    #fig.show()
+    return fig
     
 def graph_portfolio(days_candle_data, days_portfolio_prices):
+    
     fig = make_subplots(
         rows = 3,
         cols = 1,
-        shared_xaxes= True,
+        shared_xaxes= False,
         vertical_spacing= 0.08,
         subplot_titles= [
             "포트폴리오 일별 총 자산",
@@ -92,7 +94,6 @@ def graph_portfolio(days_candle_data, days_portfolio_prices):
         row = 1,
         col = 1
     )
-    
     for ticker, df in days_candle_data.items():
         df = df.sort_index()
 
@@ -139,9 +140,10 @@ def graph_portfolio(days_candle_data, days_portfolio_prices):
     fig.update_yaxes(title_text="일별 수익률(%)", row=3, col=1)
     fig.update_xaxes(title_text="날짜", row=3, col=1)
 
-    fig.show()
+    #fig.show()
+    return fig
     
-def graph_back_test(condition_buy_sell, trade_history, result_back_test):
+def graph_back_test(condition_buy_sell, trade_history):
     
     fig = make_subplots(
         rows = 2,
@@ -243,6 +245,6 @@ def graph_back_test(condition_buy_sell, trade_history, result_back_test):
         row= 2,
         col= 1
     )
-    fig.show()
-    #for num, trade in trade_history.items():
+    #fig.show()
+    return fig
         

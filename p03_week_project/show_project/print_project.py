@@ -1,23 +1,4 @@
-import time
 import datetime
-
-def retry_call_api(py_func, retry, delay, *tickers, **days):
-    for index in range(1, retry + 1):
-        try:
-            result_py_data = py_func(*tickers, **days)
-            
-            if result_py_data is None:
-                raise ValueError("데이터가 없습니다.")
-            
-            return result_py_data
-        
-        except Exception as e:
-            print(f"{index}번째 호출 실패 : {e}\n")
-            
-            if index == retry:
-                print("3회 호출에 실패했습니다.")
-                return None
-            time.sleep(delay)
 
 def print_data_pipeline(day_candle_data):
     
@@ -77,5 +58,3 @@ def print_result_back_test(portfolio, trade_history, result_back_test, mdd):
     print(f"-" * 60 )
     print(f"Buy & Hold{':':>9} {result_back_test['buy_hold_rate']:+.2f}%")
     print(f"전략 초과 수익{':':>5} {result_back_test['over_rate']:+.2f}%p")
-    
-    

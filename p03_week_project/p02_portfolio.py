@@ -1,9 +1,9 @@
-from pyupbit_api import PyUpbitApi
+from remote.pyupbit_api import PyUpbitApi
 from analyzer_upbit import AnalyzerUpbit
-from util_func import print_portfolio
-from data_manager import DataManager
-from graph import graph_portfolio
-from heat_map import heat_map_portfolio
+from show_project.print_project import print_portfolio
+from db_manager.data_manager import DataManager
+from show_project.graph import graph_portfolio
+from show_project.heat_map import heat_map_portfolio
 
 def load_candle_data(data_manager, invest_day_ago):
     df = data_manager.load_from_database()
@@ -73,3 +73,12 @@ def p_two_portfolio():
     heat_map_portfolio(
         result["profit_days_by_ticker"]
     )
+    return (
+    result["days_portfolio_prices"],
+    result["mdd"],
+    result["profit_days_by_ticker"],
+    result["invest_total_money"],
+    result["current_total_money"],
+    result["total_profit"],
+    result["result_portfolio"]
+)
