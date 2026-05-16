@@ -21,7 +21,7 @@ def p_four_backtesting():
     trade_history, 
     backtest_mdd, 
     result_back_test, 
-    becktest_portfolio) = p_three_backtesting()
+    backtest_portfolio) = p_three_backtesting()
 
     fig_pipeline = graph_pipeline(days_candle_data)
     fig_portfolio = graph_portfolio(days_candle_data, days_portfolio_prices)
@@ -45,7 +45,7 @@ def p_four_backtesting():
 
     trade_rows = get_trade_rows(trade_history)
     trade_table = get_trade_table(trade_rows)
-    backtest_cards = get_backtest_cards(becktest_portfolio, 
+    backtest_cards = get_backtest_cards(backtest_portfolio, 
                                         result_back_test, 
                                         backtest_mdd)
     backtesting_html = fig_backtesting.to_html(

@@ -113,8 +113,8 @@ class AnalyzerUpbit:
             profit_days_by_ticker[ticker] = data["close"].pct_change()
         return profit_days_by_ticker
     
-    def get_trade_history(self, portfolio, coin_count = 0, have_coin = False):
-        condition_buy_sell = self.get_back_test()
+    def get_trade_history(self, days_candle_data, portfolio, coin_count = 0, have_coin = False):
+        
         fee_rate = portfolio["fee"] / 100
         have_money = portfolio["have_money"]
         
@@ -128,13 +128,13 @@ class AnalyzerUpbit:
         win_profit = 0
         loss_profit = 0
         
-        first_price = condition_buy_sell.iloc[0]["close"]
-        last_price = condition_buy_sell.iloc[-1]["close"]
+        first_price = days_candle_data.iloc[0]["close"]
+        last_price = days_candle_data.iloc[-1]["close"]
         buy_hold_rate = ((last_price / first_price) - 1) * 100 
         
-        condition_buy_sell["buy_hold_value"] = portfolio["have_money"] * (condition_buy_sell["close"] / first_price)
+        days_candle_data["buy_hold_value"] = portfolio["have_money"] * (days_candle_data["close"] / first_price)
         
-        for index, data in condition_buy_sell.iterrows():
+        for index, data in days_candle_data.iterrows():
             
             if data["buy_condition"] and not have_coin:
                 buy_money = have_money * (1 - fee_rate)
@@ -175,7 +175,7 @@ class AnalyzerUpbit:
                     "profit_have_buy" : profit_have_buy                 
                 }    
                 coin_count = 0
-            condition_buy_sell.loc[index, "strategy_value"] = (coin_count * data["close"] if have_coin else have_money)            
+            days_candle_data.loc[index, "strategy_value"] = (coin_count * data["close"] if have_coin else have_money)            
         if num_sell > 0:
             win_rate = (win_count / num_sell) * 100
         else:
@@ -183,6 +183,7 @@ class AnalyzerUpbit:
         
         avg_win_profit = (win_profit / win_count) if win_count > 0 else 0
         avg_loss_profit = (loss_profit / (num_sell - win_count)) if (num_sell - win_count) > 0 else 0            
+        
         if have_coin:            
             have_money = coin_count * last_price * (1 - fee_rate)
             coin_count = 0
@@ -206,7 +207,7 @@ class AnalyzerUpbit:
                         
         }
 
-        return trade_history, result_back_test, condition_buy_sell
+        return trade_history, result_back_test, days_candle_data
 
     def get_back_test(self):
         days_candle_data = self.days_candle_data["KRW-BTC"]
