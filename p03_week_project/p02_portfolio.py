@@ -73,4 +73,4 @@ def p_two_portfolio():
     heat_map_portfolio(
         result["profit_days_by_ticker"]
     )
-    return result["days_portfolio_prices"], result["mdd"]
+    return result["days_portfolio_prices"], result["mdd"], result["profit_days_by_ticker"]

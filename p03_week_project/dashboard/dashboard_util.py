@@ -100,7 +100,7 @@ def get_backtest_cards(becktest_portfolio, result_back_test, backtest_mdd):
     </div>
     """
     return backtest_cards
-def get_charts_html(portfolio_cards, pipeline_html, portfolio_html, backtest_cards, backtesting_html, trade_table):
+def get_charts_html(portfolio_cards, pipeline_html, portfolio_html, backtest_cards, backtesting_html, trade_table, heatmap_html):
     charts_html = [
         f"""
         <div class="section">
@@ -114,7 +114,8 @@ def get_charts_html(portfolio_cards, pipeline_html, portfolio_html, backtest_car
         f"""
         <div class="section">
             <h2>[섹션 2] 포트폴리오</h2>        
-            {portfolio_html}        
+            {portfolio_html}
+            {heatmap_html}    
         </div>
         """,
         f"""

@@ -1,4 +1,5 @@
 from show_project.graph import graph_pipeline, graph_portfolio, graph_back_test
+from show_project.heat_map import heat_map_portfolio
 from p01_data_pipeline import p_one_data_pipeline
 from p02_portfolio import p_two_portfolio
 from p03_backtesting import p_three_backtesting
@@ -6,7 +7,7 @@ from dashboard.dashboard_util import get_backtest_cards, get_trade_table, get_tr
 from datetime import datetime
 import webbrowser
 days_candle_data = p_one_data_pipeline()
-days_portfolio_prices, days_portfolio_mdd = p_two_portfolio()
+days_portfolio_prices, days_portfolio_mdd, profit_days = p_two_portfolio()
 condition_buy_sell, trade_history, backtest_mdd, result_back_test, becktest_portfolio = p_three_backtesting()
 
 fig_pipeline = graph_pipeline(days_candle_data)
@@ -32,7 +33,8 @@ trade_rows = get_trade_rows(trade_history)
 trade_table = get_trade_table(trade_rows)
 backtest_cards = get_backtest_cards(becktest_portfolio, result_back_test, backtest_mdd)    
 
-charts_html = get_charts_html(portfolio_cards, pipeline_html, portfolio_html, backtest_cards, backtesting_html, trade_table)
+heatmap_html = heat_map_portfolio(profit_days)
+charts_html = get_charts_html(portfolio_cards, pipeline_html, portfolio_html, backtest_cards, backtesting_html, trade_table, heatmap_html)
 html = get_html(today, charts_html)
     
 webbrowser.open("dashboard.html")
