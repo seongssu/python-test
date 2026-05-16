@@ -175,8 +175,7 @@ class AnalyzerUpbit:
                     "profit_have_buy" : profit_have_buy                 
                 }    
                 coin_count = 0
-            condition_buy_sell.loc[index, "strategy_value"] = (coin_count * data["close"] if have_coin else have_money)
-            print(f"전략재산 : {condition_buy_sell["strategy_value"]}")       
+            condition_buy_sell.loc[index, "strategy_value"] = (coin_count * data["close"] if have_coin else have_money)            
         if num_sell > 0:
             win_rate = (win_count / num_sell) * 100
         else:

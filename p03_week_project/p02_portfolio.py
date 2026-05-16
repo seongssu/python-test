@@ -1,6 +1,6 @@
 from pyupbit_api import PyUpbitApi
 from analyzer_upbit import AnalyzerUpbit
-from util_func import print_portfolio
+from print_project import print_portfolio
 from data_manager import DataManager
 from graph import graph_portfolio
 from heat_map import heat_map_portfolio

@@ -1,7 +1,7 @@
 from data_manager import DataManager
 from pyupbit_api import PyUpbitApi
 from analyzer_upbit import AnalyzerUpbit
-from util_func import print_back_test, print_result_back_test
+from print_project import print_back_test, print_result_back_test
 from graph import graph_back_test
 
 def p_three_backtesting():
@@ -41,4 +41,4 @@ def p_three_backtesting():
     print_result_back_test(portfolio, trade_history, result_back_test, mdd)
     graph_back_test(condition_buy_sell, trade_history)
     
-    return condition_buy_sell, trade_history, mdd
+    return condition_buy_sell, trade_history, mdd, result_back_test, portfolio

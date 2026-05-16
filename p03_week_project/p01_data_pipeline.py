@@ -1,7 +1,7 @@
 from pyupbit_api import PyUpbitApi
 from analyzer_upbit import AnalyzerUpbit
 from data_manager import DataManager
-from util_func import print_data_pipeline
+from print_project import print_data_pipeline
 from graph import graph_pipeline
 
 def api_data(tickers, days):
@@ -77,7 +77,7 @@ def p_one_data_pipeline():
         current_prices,
         days_candle_data
     )
-    
+
     result_data(days_candle_data)
 
     return days_candle_data
