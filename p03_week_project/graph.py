@@ -223,7 +223,26 @@ def graph_back_test(condition_buy_sell, trade_history, result_back_test):
         row = 1,
         col = 1
     )
-    print(f"데이터 {result_back_test}")
+    fig.add_trace(
+        go.Scatter(
+            x = condition_buy_sell.index,
+            y = condition_buy_sell["buy_hold_value"],
+            mode = "lines",
+            name = "Buy & Hold 자산 곡선"
+        ),
+        row= 2,
+        col= 1
+    )
+    fig.add_trace(
+        go.Scatter(
+            x = condition_buy_sell.index,
+            y = condition_buy_sell["strategy_value"],
+            mode = "lines",
+            name = "전략 자산 곡선"
+        ),
+        row= 2,
+        col= 1
+    )
     fig.show()
     #for num, trade in trade_history.items():
         

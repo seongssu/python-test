@@ -127,6 +127,13 @@ class AnalyzerUpbit:
         
         win_profit = 0
         loss_profit = 0
+        
+        first_price = condition_buy_sell.iloc[0]["close"]
+        last_price = condition_buy_sell.iloc[-1]["close"]
+        buy_hold_rate = ((last_price / first_price) - 1) * 100 
+        
+        condition_buy_sell["buy_hold_value"] = portfolio["have_money"] * (condition_buy_sell["close"] / first_price)
+        
         for index, data in condition_buy_sell.iterrows():
             
             if data["buy_condition"] and not have_coin:
@@ -168,18 +175,15 @@ class AnalyzerUpbit:
                     "profit_have_buy" : profit_have_buy                 
                 }    
                 coin_count = 0
+            condition_buy_sell.loc[index, "strategy_value"] = (coin_count * data["close"] if have_coin else have_money)
+            print(f"전략재산 : {condition_buy_sell["strategy_value"]}")       
         if num_sell > 0:
             win_rate = (win_count / num_sell) * 100
         else:
             win_rate = 0
         
         avg_win_profit = (win_profit / win_count) if win_count > 0 else 0
-        avg_loss_profit = (loss_profit / (num_sell - win_count)) if (num_sell - win_count) > 0 else 0
-        
-        first_price = condition_buy_sell.iloc[0]["close"]
-        last_price = condition_buy_sell.iloc[-1]["close"]
-        buy_hold_rate = ((last_price / first_price) - 1) * 100        
-            
+        avg_loss_profit = (loss_profit / (num_sell - win_count)) if (num_sell - win_count) > 0 else 0            
         if have_coin:            
             have_money = coin_count * last_price * (1 - fee_rate)
             coin_count = 0
