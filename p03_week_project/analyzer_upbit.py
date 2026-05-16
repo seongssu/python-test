@@ -35,7 +35,7 @@ class AnalyzerUpbit:
             change_price = data["close"].pct_change()
             #std_data :일별 수익률의 변동성
             std_data = change_price.rolling(day).std()
-            std[ticker] = data["close"].tail(day).std()
+            std[ticker] = data["close"].rolling(day).std()
             profit_day = std_data.iloc[-1] * np.sqrt(252)           
             
             volatility_d [ticker] = round(float(profit_day), 2)
