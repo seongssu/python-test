@@ -28,8 +28,9 @@ def p_three_backtesting():
 
     data_manager.add_columns(days_candle_data, "ma5", ma5)
     data_manager.add_columns(days_candle_data, "ma20", ma20)
-
-    trade_history, result_back_test, condition_buy_sell = analyzer_upbit.get_trade_history(portfolio)
+    
+    condition_buy_sell = analyzer_upbit.get_back_test()
+    trade_history, result_back_test, condition_buy_sell = analyzer_upbit.get_trade_history(condition_buy_sell, portfolio)
     print_back_test(trade_history)
 
     mdd_portfolio = {
