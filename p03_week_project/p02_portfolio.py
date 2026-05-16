@@ -79,5 +79,6 @@ def p_two_portfolio():
     result["profit_days_by_ticker"],
     result["invest_total_money"],
     result["current_total_money"],
-    result["total_profit"]
+    result["total_profit"],
+    result["result_portfolio"]
 )
