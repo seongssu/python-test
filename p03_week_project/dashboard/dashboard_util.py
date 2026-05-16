@@ -1,4 +1,5 @@
-def get_portfolio_cards(days_candle_data):    
+import datetime
+def get_pipeline_cards(days_candle_data):    
     portfolio_cards = ""
 
     for ticker, df in days_candle_data.items():
@@ -14,6 +15,44 @@ def get_portfolio_cards(days_candle_data):
         </div>
         """
     return portfolio_cards
+def get_portfolio_cards(
+    invest_total_money,
+    current_total_money,
+    total_profit,
+    mdd
+):
+    days = 90
+    date_today = datetime.date.today()
+    date_start = date_today - datetime.timedelta(days= days)
+    
+    return f"""
+    <div class="cards">
+        
+        <div class="card">
+            <div class="card-label">투자 기간</div>
+            <div class="card-value">{date_start} ~ {date_today} ({days}일)</div>
+        </div>
+        <div class="card">
+            <div class="card-label">초기 자산</div>
+            <div class="card-value">{invest_total_money:,.0f}원</div>
+        </div>
+
+        <div class="card">
+            <div class="card-label">현재 자산</div>
+            <div class="card-value">{current_total_money:,.0f}원</div>
+        </div>
+
+        <div class="card">
+            <div class="card-label">총 수익률</div>
+            <div class="card-value">{total_profit:+.2f}%</div>
+        </div>
+
+        <div class="card">
+            <div class="card-label">MDD</div>
+            <div class="card-value">{mdd:+.2f}%</div>
+        </div>
+    </div>
+    """
 def get_trade_rows(trade_history):
     trade_rows = ""
 
@@ -100,20 +139,23 @@ def get_backtest_cards(becktest_portfolio, result_back_test, backtest_mdd):
     </div>
     """
     return backtest_cards
-def get_charts_html(portfolio_cards, pipeline_html, portfolio_html, backtest_cards, backtesting_html, trade_table, heatmap_html):
+def get_charts_html(pipeline_cards, pipeline_html, portfolio_cards,portfolio_html, backtest_cards, backtesting_html, trade_table, heatmap_html):
     charts_html = [
         f"""
         <div class="section">
             <h2>[섹션 1] 시세 현황</h2>
             <div class="cards">
-                {portfolio_cards}
+                {pipeline_cards}
             </div>
             {pipeline_html}
         </div>
         """,
         f"""
         <div class="section">
-            <h2>[섹션 2] 포트폴리오</h2>        
+            <h2>[섹션 2] 포트폴리오</h2> 
+            <div class="cards">
+                {portfolio_cards}
+            </div>       
             {portfolio_html}
             {heatmap_html}    
         </div>
@@ -129,7 +171,8 @@ def get_charts_html(portfolio_cards, pipeline_html, portfolio_html, backtest_car
         """
     ]
     return charts_html
-def get_html(today, charts_html):
+def get_html(charts_html):
+    today = datetime.date.today().strftime("%Y-%m-%d")
     html = f"""
         <!DOCTYPE html>
         <html lang="ko">

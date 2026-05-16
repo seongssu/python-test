@@ -75,7 +75,7 @@ def graph_portfolio(days_candle_data, days_portfolio_prices):
     fig = make_subplots(
         rows = 3,
         cols = 1,
-        shared_xaxes= True,
+        shared_xaxes= False,
         vertical_spacing= 0.08,
         subplot_titles= [
             "포트폴리오 일별 총 자산",
@@ -94,7 +94,6 @@ def graph_portfolio(days_candle_data, days_portfolio_prices):
         row = 1,
         col = 1
     )
-    
     for ticker, df in days_candle_data.items():
         df = df.sort_index()
 
