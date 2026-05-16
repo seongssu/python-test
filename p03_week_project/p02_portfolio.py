@@ -3,14 +3,7 @@ from analyzer_upbit import AnalyzerUpbit
 from util_func import print_portfolio
 from data_manager import DataManager
 from graph import graph_portfolio
-
-def create_portfolio():
-    return {
-        'KRW-BTC': {'weight': 0.4, 'amount': 4_000_000},
-        'KRW-ETH': {'weight': 0.3, 'amount': 3_000_000},
-        'KRW-SOL': {'weight': 0.2, 'amount': 2_000_000},
-        'KRW-XRP': {'weight': 0.1, 'amount': 1_000_000},
-    }
+from heat_map import heat_map_portfolio
 
 def load_candle_data(data_manager, invest_day_ago):
     df = data_manager.load_from_database()
@@ -29,6 +22,7 @@ def analyze_portfolio(portfolio, invest_day_ago):
     analyzer = AnalyzerUpbit(current_prices, days_candle_data)
 
     return_rate = analyzer.get_return_rate_d(invest_day_ago)
+    profit_days_by_ticker = analyzer.get_profit_days()
 
     result_portfolio, invest_total_money, current_total_money, total_profit = (
         analyzer.get_portfolio_values(portfolio, return_rate)
@@ -38,6 +32,7 @@ def analyze_portfolio(portfolio, invest_day_ago):
 
     return {
         "result_portfolio": result_portfolio,
+        "profit_days_by_ticker" : profit_days_by_ticker,
         "invest_total_money": invest_total_money,
         "current_total_money": current_total_money,
         "total_profit": total_profit,
@@ -47,7 +42,13 @@ def analyze_portfolio(portfolio, invest_day_ago):
     }
 
 def p_two_portfolio():
-    portfolio = create_portfolio()
+    
+    portfolio = {
+        'KRW-BTC': {'weight': 0.4, 'have_money': 4_000_000},
+        'KRW-ETH': {'weight': 0.3, 'have_money': 3_000_000},
+        'KRW-SOL': {'weight': 0.2, 'have_money': 2_000_000},
+        'KRW-XRP': {'weight': 0.1, 'have_money': 1_000_000},
+    }
 
     invest_day_ago = 90
 
@@ -67,4 +68,8 @@ def p_two_portfolio():
     graph_portfolio(
         result["days_candle_data"],
         result["days_portfolio_prices"]
+    )
+    
+    heat_map_portfolio(
+        result["profit_days_by_ticker"]
     )

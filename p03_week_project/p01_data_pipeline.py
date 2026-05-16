@@ -63,7 +63,7 @@ def result_data(days_candle_data):
 
 def p_one_data_pipeline():
     tickers = ["KRW-BTC", "KRW-ETH", "KRW-SOL", "KRW-XRP"]
-    days = 180
+    days = 365
 
     ticker_lists, current_prices, days_candle_data = api_data(tickers, days)
 

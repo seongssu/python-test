@@ -37,7 +37,7 @@ class CacheManager:
         ORDER BY date
         """
         
-        df = pd.read_sql_query(query, conn, params=(ticker))
+        df = pd.read_sql_query(query, conn, params=(ticker,))
         conn.close()
         
         df["date"] = pd.to_datetime(df["date"])
