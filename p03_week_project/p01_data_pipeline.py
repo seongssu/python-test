@@ -20,7 +20,7 @@ def save_data(data_manager, days_candle_data):
     sql_db_frame = data_manager.load_from_database()
     filter_sql_db_frame = data_manager.filter_days(sql_db_frame, 60)
     
-    filter_sql_db_frame = filter_sql_db_frame.dropna()
+    filter_sql_db_frame = filter_sql_db_frame
     return filter_sql_db_frame
 
 
@@ -77,7 +77,7 @@ def p_one_data_pipeline():
         current_prices,
         days_candle_data
     )
-
+    
     result_data(days_candle_data)
 
-    return sql_db_frame
+    return days_candle_data
