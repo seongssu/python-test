@@ -1,8 +1,8 @@
-from pyupbit_api import PyUpbitApi
+from remote.pyupbit_api import PyUpbitApi
 from analyzer_upbit import AnalyzerUpbit
-from data_manager import DataManager
-from print_project import print_data_pipeline
-from graph import graph_pipeline
+from db_manager.data_manager import DataManager
+from show_project.print_project import print_data_pipeline
+from show_project.graph import graph_pipeline
 
 def api_data(tickers, days):
     pyupbit_api = PyUpbitApi(tickers, days)
