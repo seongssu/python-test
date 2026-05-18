@@ -17,16 +17,16 @@ def print_data_pipeline(result_current_prices):
         
         print(f"{ticker}{str_current_prices:>15,.0f}원{str_return_rate_seven:>+12}%{str_return_rate_thirty:>+13}%{str_volatility_n_percent:>15.2f}%")
         
-def print_portfolio(result_portfolio, invest_total_money, current_total_money, total_profit, mdd):
+def print_portfolio( result_portfolio, result_single):
     days = 90
     date_today = datetime.date.today()
     date_start = date_today - datetime.timedelta(days= days)
     print("=== 포트폴리오 성과 요약 ===")
     print(f"투자 기간 {":":>5} {date_start} ~ {date_today} ({days}일)" )
-    print(f"초기 자산 {":":>5} {invest_total_money:,.0f} 원")
-    print(f"현재 자산 {":":>5} {current_total_money:,.0f} 원")
-    print(f"총 수익률 {":":>5} {total_profit:+.2f}%")
-    print(f"MDD {":":>11} {mdd:+.2f}%\n")
+    print(f"초기 자산 {":":>5} {result_single['result_single_portfolio']['invest_total_money']:,.0f} 원")
+    print(f"현재 자산 {":":>5} {result_single['result_single_portfolio']['current_total_money']:,.0f} 원")
+    print(f"총 수익률 {":":>5} {result_single['result_single_portfolio']['total_profit']:+.2f}%")
+    print(f"MDD {":":>11} {result_single['result_single_portfolio']['mdd']:+.2f}%\n")
     print(f"종목별 기여도:")
     for ticker, data in result_portfolio.items():
         print(f"{ticker:>10} {"수익률":>5} {data["return_rate"]:>+7.2f}% {"기여":>5} {data["current_profit_weight"]:+7.2f}%p")

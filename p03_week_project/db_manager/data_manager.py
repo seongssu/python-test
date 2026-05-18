@@ -26,15 +26,29 @@ class DataManager:
         return count
     
     def load_from_database(self, table_name):
-        
         conn = sqlite3.connect('three_weeks_crypto_data.db')
-        
-        query = f"SELECT * FROM {table_name} ORDER BY date, ticker"
+
+        columns_info = pd.read_sql_query(
+            f"PRAGMA table_info({table_name})",
+            conn
+        )
+        columns = columns_info["name"].tolist()
+
+        query = f"SELECT * FROM {table_name}"
+
+        order_columns = []
+        if "date" in columns:
+            order_columns.append("date")
+        if "ticker" in columns:
+            order_columns.append("ticker")
+
+        if order_columns:
+            query += " ORDER BY " + ", ".join(order_columns)
+
         df = pd.read_sql_query(query, conn)
-        
+
         conn.close()
-        
-        return df    
+        return df
     
     def db_pipeline(self):
                 
@@ -97,11 +111,22 @@ class DataManager:
         result_db = pd.DataFrame(db_from_dict)
 
         return result_db
+    def dict_from_dataframe(self, df):
+        result_dict = {}
+
+        for _, row in df.iterrows():
+            row_dict = row.to_dict()
+
+            ticker = row_dict.pop("ticker")
+
+            result_dict[ticker] = row_dict
+
+        return result_dict
     
-    def conversion_from_current_prices(self, current_prices):
+    def conversion_from_current_prices(self, data_dict, column_name):
         return {
-        ticker: {"current_prices": price}
-        for ticker, price in current_prices.items()
+        ticker: {column_name: value}
+        for ticker, value in data_dict.items()
         }
     def filter_days(self, df, days):
         return (

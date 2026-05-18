@@ -16,8 +16,8 @@ def api_data(tickers, days, table_name):
 
 def save_candle_data(data_manager, days_candle_data):
     db_df = data_manager.dataframe_from_dicts(days_candle_data)
-    data_manager.save_to_database(db_df, "api_data")
-    candle_df = data_manager.load_from_database("api_data")
+    data_manager.save_to_database(db_df, "candle_api_data")
+    candle_df = data_manager.load_from_database("candle_api_data")
     filter_candle_df = data_manager.filter_days(candle_df, 60)
     return filter_candle_df
 
@@ -47,7 +47,7 @@ def add_analysis_columns(data_manager, current_prices, days_candle_data):
     data_manager.add_columns(days_candle_data, "upper_band", upper_band)
     data_manager.add_columns(days_candle_data, "lower_band", lower_band)  
 
-    conversion_current_data = data_manager.conversion_from_current_prices(current_prices)
+    conversion_current_data = data_manager.conversion_from_current_prices(current_prices, "current_prices")
     data_manager.add_columns(conversion_current_data, "return_rate_one", return_rate_one)
     data_manager.add_columns(conversion_current_data, "return_rate_seven", return_rate_seven)
     data_manager.add_columns(conversion_current_data, "return_rate_thirty", return_rate_thirty)
@@ -65,7 +65,7 @@ def p_one_data_pipeline():
     tickers = ["KRW-BTC", "KRW-ETH", "KRW-SOL", "KRW-XRP"]
     days = 365
 
-    _, current_prices, days_candle_data = api_data(tickers, days, table_name = "api_data")
+    _, current_prices, days_candle_data = api_data(tickers, days, table_name = "candle_api_data")
 
     data_manager = DataManager()
     
@@ -81,5 +81,3 @@ def p_one_data_pipeline():
     result_data(days_candle_data, current_summary)    
     
     save_current_result_data(data_manager, current_summary)
-
-p_one_data_pipeline()
