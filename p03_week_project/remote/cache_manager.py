@@ -5,12 +5,12 @@ class CacheManager:
     def __init__(self):
         self.today = datetime.date.today()
     
-    def get_cache(self, ticker):
+    def get_cache(self, ticker, table_name):
         conn = sqlite3.connect("three_weeks_crypto_data.db")
         
-        query = """
+        query = f"""
         SELECT COUNT(*)
-        FROM three_weeks_crypto_data
+        FROM {table_name}
         WHERE ticker =?
         AND substr(date, 1, 10) = ?
         """
@@ -27,12 +27,12 @@ class CacheManager:
         
         return count > 0
     
-    def load_cache(self, ticker):
+    def load_cache(self, ticker, table_name):
         conn = sqlite3.connect("three_weeks_crypto_data.db")
         
-        query = """
+        query = f"""
         SELECT *
-        FROM three_weeks_crypto_data
+        FROM {table_name}
         WHERE ticker = ?
         ORDER BY date
         """

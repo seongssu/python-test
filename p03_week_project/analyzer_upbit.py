@@ -2,14 +2,13 @@ import numpy as np
 import pandas as pd
 
 class AnalyzerUpbit:
-    def __init__(self, current_price, days_candle_data):
-        self.current_price = current_price
+    def __init__(self, days_candle_data):
         self.days_candle_data = days_candle_data
 
-    def get_return_rate_d(self, days_ago):
+    def get_return_rate_d(self, current_prices, days_ago):
         
         return_rate_d = {}
-        for ticker, current_price in self.current_price.items():
+        for ticker, current_price in current_prices.items():
             
             df = self.days_candle_data[ticker]
             days_ago_price = df.iloc[-(days_ago + 1)]["close"]
