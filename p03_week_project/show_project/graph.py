@@ -1,12 +1,12 @@
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
-def graph_pipeline (days_candle_data, current_prices):
+def graph_pipeline (days_candle_data):
     
     subplot_titles = [
-        f"{ticker}"
-        f"{current_prices[ticker]['current_prices']:,.0f}원"
-        f"{current_prices[ticker]['return_rate_seven']:+.2f}%"
+        f"{ticker}   "
+        f"{df['current_prices'].iloc[-1]:,.0f}원   "
+        f"{df['return_rate_seven'].iloc[-1]:+.2f}%"
         for ticker, df in days_candle_data.items()
     ]
     

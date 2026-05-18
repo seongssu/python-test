@@ -22,15 +22,15 @@ class PyUpbitApi:
         
         
         
-    def get_candle_data(self, table_name):
+    def get_candle_data(self):
         
         days_candle_data = {}
             
         for ticker in self.tickers:
             
-            if self.cache_manager.get_cache(ticker, table_name):
+            if self.cache_manager.get_cache(ticker):
                 print(f"캐시가 존재합니다 : {ticker}")
-                days_candle_data[ticker] = self.cache_manager.load_cache(ticker, table_name)
+                days_candle_data[ticker] = self.cache_manager.load_cache(ticker)
                 continue
             
             print(f"API를 호출합니다 : {ticker}")
