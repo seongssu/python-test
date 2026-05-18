@@ -16,14 +16,11 @@ def api_data(tickers, days, table_name):
 
 def save_candle_data(data_manager, days_candle_data):
     db_df = data_manager.dataframe_from_dicts(days_candle_data)
-    data_manager.save_to_database(db_df, "candle_api_data")
-    candle_df = data_manager.load_from_database("candle_api_data")
-    filter_candle_df = data_manager.filter_days(candle_df, 60)
-    return filter_candle_df
+    data_manager.save_to_database(db_df, "one_result_multi_data")
 
-def save_current_result_data(data_manager, current_summary):
+def save_current_data(data_manager, current_summary):
     df_current_prices = data_manager.dataframe_from_dict(current_summary)
-    data_manager.save_to_database(df_current_prices, "result_current_data")
+    data_manager.save_to_database(df_current_prices, "one_result_single_data")
 
 
 def add_analysis_columns(data_manager, current_prices, days_candle_data):
@@ -69,8 +66,8 @@ def p_one_data_pipeline():
 
     data_manager = DataManager()
     
-    candle_df = save_candle_data(data_manager, days_candle_data)
-    days_candle_data = data_manager.dicts_from_dataframe(candle_df)
+    # candle_df = save_candle_data(data_manager, days_candle_data)
+    # days_candle_data = data_manager.dicts_from_dataframe(candle_df)
 
     days_candle_data, current_summary = add_analysis_columns(
         data_manager,
@@ -79,5 +76,5 @@ def p_one_data_pipeline():
     )
 
     result_data(days_candle_data, current_summary)    
-    
-    save_current_result_data(data_manager, current_summary)
+    save_candle_data(data_manager, days_candle_data)
+    save_current_data(data_manager, current_summary)

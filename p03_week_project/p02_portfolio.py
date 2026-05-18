@@ -6,8 +6,8 @@ from show_project.graph import graph_portfolio
 from show_project.heat_map import heat_map_portfolio
 
 def load_candle_data(data_manager, days_ago):
-    df = data_manager.load_from_database("candle_api_data")
-    current_data = data_manager.load_from_database("result_current_data")
+    df = data_manager.load_from_database("one_result_multi_data")
+    current_data = data_manager.load_from_database("one_result_single_data")
     filter_df = data_manager.filter_days(df, days_ago)
     filter_current_data = data_manager.dict_from_dataframe(current_data)    
 
@@ -24,7 +24,7 @@ def analyze_portfolio(portfolio, days_ago):
     profit_days_by_ticker = analyzer.get_profit_days()
     data_manager.add_columns(days_candle_data, "profit_days_by_ticker", profit_days_by_ticker)
     db_days_candle_data = data_manager.dataframe_from_dicts(days_candle_data)
-    data_manager.save_to_database(db_days_candle_data, "result_multi_data")
+    data_manager.save_to_database(db_days_candle_data, "two_result_multi_data")
 
     result_portfolio, invest_total_money, current_total_money, total_profit = (
         analyzer.get_portfolio_values(portfolio, return_rate)
@@ -35,7 +35,7 @@ def analyze_portfolio(portfolio, days_ago):
     for ticker, data in result_portfolio.items():
         filter_current_data[ticker].update(data)
     db_filter_current_data = data_manager.dataframe_from_dict(filter_current_data)
-    data_manager.save_to_database(db_filter_current_data, "result_current_data")     
+    data_manager.save_to_database(db_filter_current_data, "two_result_single_data")     
     
     result_single = {
     "result_single_portfolio":{
@@ -44,10 +44,10 @@ def analyze_portfolio(portfolio, days_ago):
     "total_profit": total_profit,
     "mdd": float(mdd)}}   
     df_result_single = data_manager.dataframe_from_dict(result_single)
-    data_manager.save_to_database(df_result_single, "result_single_data")
+    data_manager.save_to_database(df_result_single, "two_result_total_single_data")
     
     days_portfolio_df = days_portfolio_prices.rename("days_portfolio_prices").reset_index()
-    data_manager.save_to_database(days_portfolio_df, "daily_portfolio_data")
+    data_manager.save_to_database(days_portfolio_df, "two_daily_portfolio_data")
     return result_portfolio, days_candle_data, result_single, days_portfolio_prices, profit_days_by_ticker
 
 def p_two_portfolio():
