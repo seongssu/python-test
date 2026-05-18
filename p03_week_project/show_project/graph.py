@@ -245,6 +245,6 @@ def graph_back_test(condition_buy_sell, trade_history):
         row= 2,
         col= 1
     )
-    #fig.show()
+    # fig.show()
     return fig
         
