@@ -100,5 +100,3 @@ def p_four_backtesting():
     html = get_html(charts_html)
         
     webbrowser.open("dashboard.html")
-    
-p_four_backtesting()

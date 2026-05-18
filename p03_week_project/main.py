@@ -12,4 +12,4 @@ p_two_portfolio()
 p_three_backtesting()
 
 #4번 문제
-#p_four_backtesting()
+p_four_backtesting()
