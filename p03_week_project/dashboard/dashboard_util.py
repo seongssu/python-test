@@ -1,5 +1,5 @@
 import datetime
-def get_pipeline_cards(days_candle_data):    
+def get_pipeline_cards(days_candle_data):   
     portfolio_cards = ""
 
     for ticker, df in days_candle_data.items():
@@ -15,12 +15,7 @@ def get_pipeline_cards(days_candle_data):
         </div>
         """
     return portfolio_cards
-def get_portfolio_cards(
-    invest_total_money,
-    current_total_money,
-    total_profit,
-    mdd
-):
+def get_portfolio_cards(dict_data):
     days = 90
     date_today = datetime.date.today()
     date_start = date_today - datetime.timedelta(days= days)
@@ -34,22 +29,22 @@ def get_portfolio_cards(
         </div>
         <div class="card">
             <div class="card-label">초기 자산</div>
-            <div class="card-value">{invest_total_money:,.0f}원</div>
+            <div class="card-value">{dict_data['invest_total_money']:,.0f}원</div>
         </div>
 
         <div class="card">
             <div class="card-label">현재 자산</div>
-            <div class="card-value">{current_total_money:,.0f}원</div>
+            <div class="card-value">{dict_data['current_total_money']:,.0f}원</div>
         </div>
 
         <div class="card">
             <div class="card-label">총 수익률</div>
-            <div class="card-value">{total_profit:+.2f}%</div>
+            <div class="card-value">{dict_data['total_profit']:+.2f}%</div>
         </div>
 
         <div class="card">
             <div class="card-label">MDD</div>
-            <div class="card-value">{mdd:+.2f}%</div>
+            <div class="card-value">{dict_data['mdd']:+.2f}%</div>
         </div>
     </div>
     """
@@ -77,7 +72,7 @@ def get_trade_rows(trade_history):
     trade_rows = ""
 
     for index, data in trade_history.items():
-        profit = "" if data["profit_have_buy"] == "" else f'{data["profit_have_buy"]:+.2f}%'
+        profit = "" if data["profit_have_buy"] == "" else f'{float(data["profit_have_buy"]):+.2f}%'
 
         trade_rows += f"""
         <tr>
@@ -109,52 +104,52 @@ def get_trade_table(trade_rows):
     """
     return trade_table
 
-def get_backtest_cards(becktest_portfolio, result_back_test, backtest_mdd):
+def get_backtest_cards(dict_data):
     backtest_cards = f"""
     <div class="cards">
         <div class="card">
             <div class="card-label">기간</div>
-            <div class="card-value">{becktest_portfolio["period"]}일</div>
+            <div class="card-value">{dict_data['period']}일</div>
         </div>
         <div class="card">
             <div class="card-label">초기 자본</div>
-            <div class="card-value">{becktest_portfolio["have_money"]:,.0f}원</div>
+            <div class="card-value">{dict_data['have_money']:,.0f}원</div>
         </div>
         <div class="card">
             <div class="card-label">최종 자산</div>
-            <div class="card-value">{result_back_test["have_money"]:,.0f}원</div>
+            <div class="card-value">{dict_data['have_money']:,.0f}원</div>
         </div>
         <div class="card">
             <div class="card-label">총 수익률</div>
-            <div class="card-value">{result_back_test["profit_rate"]:+.2f}%</div>
+            <div class="card-value">{dict_data['profit_rate']:+.2f}%</div>
         </div>
         <div class="card">
             <div class="card-label">MDD</div>
-            <div class="card-value">{backtest_mdd:+.2f}%</div>
+            <div class="card-value">{dict_data['mdd']:+.2f}%</div>
         </div>
         <div class="card">
             <div class="card-label">거래 회수</div>
-            <div class="card-value">(매수 {result_back_test['num_buy']} / 매도 {result_back_test['num_sell']})</div>
+            <div class="card-value">(매수 {dict_data['num_buy']} / 매도 {dict_data['num_sell']})</div>
         </div>
         <div class="card">
             <div class="card-label">승률</div>
-            <div class="card-value">{result_back_test["win_rate"]:.2f}%</div>
+            <div class="card-value">{dict_data["win_rate"]:.2f}%</div>
         </div>
         <div class="card">
             <div class="card-label">평균 수익 거래</div>
-            <div class="card-value">{result_back_test['avg_win_profit']:+.2f}%</div>
+            <div class="card-value">{dict_data['avg_win_profit']:+.2f}%</div>
         </div>
         <div class="card">
             <div class="card-label">평균 손실 거래</div>
-            <div class="card-value">{result_back_test['avg_loss_profit']:+.2f}%</div>
+            <div class="card-value">{dict_data['avg_loss_profit']:+.2f}%</div>
         </div>
         <div class="card">
             <div class="card-label">Buy & Hold</div>
-            <div class="card-value">{result_back_test["buy_hold_rate"]:+.2f}%</div>
+            <div class="card-value">{dict_data["buy_hold_rate"]:+.2f}%</div>
         </div>    
         <div class="card">
             <div class="card-label">전략 초과 수익</div>
-            <div class="card-value">{result_back_test["over_rate"]:+.2f}%p</div>
+            <div class="card-value">{dict_data["over_rate"]:+.2f}%p</div>
         </div>    
     </div>
     """

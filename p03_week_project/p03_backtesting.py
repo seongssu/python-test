@@ -1,5 +1,4 @@
 from db_manager.data_manager import DataManager
-from remote.pyupbit_api import PyUpbitApi
 from analyzer_upbit import AnalyzerUpbit
 from show_project.print_project import print_back_test, print_result_back_test
 from show_project.graph import graph_back_test
@@ -13,22 +12,10 @@ def p_three_backtesting():
     }
 
     data_manager = DataManager()
-    days_candle_data_db = data_manager.load_from_database()
-    days_candle_data_filter = data_manager.dict_from_dataframe(days_candle_data_db)
-    days_candle_data = {
-        "KRW-BTC" : days_candle_data_filter["KRW-BTC"]
-    }
-
-    pyupbit_api = PyUpbitApi(portfolio['ticker'], portfolio['period'])
-    current_price = pyupbit_api.get_current_price()
-
-    analyzer_upbit = AnalyzerUpbit(current_price, days_candle_data)
-    ma5 = analyzer_upbit.get_ma(5)
-    ma20 = analyzer_upbit.get_ma(20)
-
-    data_manager.add_columns(days_candle_data, "ma5", ma5)
-    data_manager.add_columns(days_candle_data, "ma20", ma20)
+    days_candle_data_db = data_manager.load_from_database("one_result_multi_data")
+    days_candle_data_filter = data_manager.dicts_from_dataframe(days_candle_data_db)    
     
+    analyzer_upbit = AnalyzerUpbit(days_candle_data_filter)
     condition_buy_sell = analyzer_upbit.get_back_test()
     trade_history, result_back_test, condition_buy_sell = analyzer_upbit.get_trade_history(condition_buy_sell, portfolio)
     print_back_test(trade_history)
@@ -38,8 +25,26 @@ def p_three_backtesting():
             "have_money": portfolio["have_money"]
         }
     }
-    mdd, days_portfolio_prices = analyzer_upbit.get_mdd(mdd_portfolio)
-    print_result_back_test(portfolio, trade_history, result_back_test, mdd)
-    graph_back_test(condition_buy_sell, trade_history)
+    mdd, _ = analyzer_upbit.get_mdd(mdd_portfolio)
+    print_result_back_test(portfolio, result_back_test, mdd)
+    graph_back_test(condition_buy_sell, trade_history)  
     
-    return condition_buy_sell, trade_history, mdd, result_back_test, portfolio
+    result_single = {
+    "result_single_back_test":{
+        **result_back_test,
+        **portfolio,
+        "mdd": float(mdd)
+    }}   
+    df_result_single = data_manager.dataframe_from_dict(result_single)
+    data_manager.save_to_database(df_result_single, "three_result_single_data")
+    df_trade_history = data_manager.dataframe_from_dict(trade_history)
+    data_manager.save_to_database(
+    df_trade_history,
+    "three_trade_history_data"
+    )
+    
+    df_condition_buy_sell = (
+    condition_buy_sell
+    .reset_index()
+    .rename(columns={"index": "date"}))
+    data_manager.save_to_database(df_condition_buy_sell, "three_result_multi_data")
