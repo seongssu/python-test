@@ -11,30 +11,30 @@ class DataManager:
         
         return conn
     
-    def save_to_database(self, db_df):
+    def save_to_database(self, db_df, table_name):
         
         conn = self.create_database()        
         
-        db_df.to_sql("three_weeks_crypto_data", conn, if_exists = 'replace', index = False)
+        db_df.to_sql(f"{table_name}", conn, if_exists = 'replace', index = False)
                     
         cursor = conn.cursor()
-        cursor.execute("SELECT COUNT(*) FROM three_weeks_crypto_data")
+        cursor.execute(f"SELECT COUNT(*) FROM {table_name}")
         count = cursor.fetchone()[0]
         
         conn.close()
         
         return count
     
-    def load_from_database(self):
+    def load_from_database(self, table_name):
         
         conn = sqlite3.connect('three_weeks_crypto_data.db')
         
-        query = "SELECT * FROM three_weeks_crypto_data ORDER BY date, ticker"
+        query = f"SELECT * FROM {table_name} ORDER BY date, ticker"
         df = pd.read_sql_query(query, conn)
         
         conn.close()
         
-        return df
+        return df    
     
     def db_pipeline(self):
                 
@@ -58,7 +58,7 @@ class DataManager:
             days_candle_data[ticker][column_name] = data
         return days_candle_data  
     
-    def dataframe_from_dict(self, dict_data):
+    def dataframe_from_dicts(self, dict_data):
         db_from_dict = []
         for ticker, data in dict_data.items():
             df_from_dict = data.copy()
@@ -69,7 +69,7 @@ class DataManager:
         result_db = pd.concat(db_from_dict, ignore_index= False)
         return result_db
     
-    def dict_from_dataframe(self, db_days_candle_data):
+    def dicts_from_dataframe(self, db_days_candle_data):
         db_days_candle_data["date"] = pd.to_datetime(db_days_candle_data["date"])
 
         dict_from_db = {}
@@ -83,6 +83,26 @@ class DataManager:
 
         return dict_from_db
     
+    def dataframe_from_dict(self, current_prices):        
+
+        db_from_dict = []
+
+        for ticker, data in current_prices.items():
+            row = data.copy()
+
+            row["ticker"] = ticker
+
+            db_from_dict.append(row)
+
+        result_db = pd.DataFrame(db_from_dict)
+
+        return result_db
+    
+    def conversion_from_current_prices(self, current_prices):
+        return {
+        ticker: {"current_prices": price}
+        for ticker, price in current_prices.items()
+        }
     def filter_days(self, df, days):
         return (
             df

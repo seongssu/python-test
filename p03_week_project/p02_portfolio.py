@@ -6,7 +6,7 @@ from show_project.graph import graph_portfolio
 from show_project.heat_map import heat_map_portfolio
 
 def load_candle_data(data_manager, invest_day_ago):
-    df = data_manager.load_from_database()
+    df = data_manager.load_from_database("api_data")
 
     filter_df = data_manager.filter_days(df, invest_day_ago)
 
