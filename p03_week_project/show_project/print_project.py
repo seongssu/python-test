@@ -43,7 +43,7 @@ def print_back_test(trade_history):
         print(f"{index:>3} {data['state']:>3}{data['date'].strftime('%Y-%m-%d'):>12}{data['close']:>15,.0f} 원{data['coin_count']:>10.5f}{data['trade_money']:>15,.0f} 원 {profit_have_buy:>5}")
     print(f"총 {len(trade_history)}번 거래")
 
-def print_result_back_test(portfolio, trade_history, result_back_test, mdd):
+def print_result_back_test(portfolio, result_back_test, mdd):
     print("=== 백테스팅 결과 ===")
     print(f"기간{':':>15} {portfolio['period']}일")
     print(f"초기 자본{':':>10} {portfolio['have_money']:,.0f}원")

@@ -1,5 +1,6 @@
 from show_project.graph import graph_pipeline, graph_portfolio, graph_back_test
 from show_project.heat_map import heat_map_portfolio
+from db_manager.data_manager import DataManager
 from p01_data_pipeline import p_one_data_pipeline
 from p02_portfolio import p_two_portfolio
 from p03_backtesting import p_three_backtesting
@@ -7,7 +8,10 @@ from dashboard.dashboard_util import get_backtest_cards, get_trade_table, get_tr
 import webbrowser
 
 def p_four_backtesting():
-    days_candle_data = p_one_data_pipeline()
+    
+    data_manager = DataManager()
+    days_candle_data_db = data_manager.load_from_database("one_result_multi_data")
+    days_candle_data = data_manager.dicts_from_dataframe(days_candle_data_db)
 
     (days_portfolio_prices,
     days_portfolio_mdd,

@@ -1,5 +1,4 @@
 from db_manager.data_manager import DataManager
-from remote.pyupbit_api import PyUpbitApi
 from analyzer_upbit import AnalyzerUpbit
 from show_project.print_project import print_back_test, print_result_back_test
 from show_project.graph import graph_back_test
@@ -27,5 +26,21 @@ def p_three_backtesting():
         }
     }
     mdd, _ = analyzer_upbit.get_mdd(mdd_portfolio)
-    print_result_back_test(portfolio, trade_history, result_back_test, mdd)
+    print_result_back_test(portfolio, result_back_test, mdd)
     graph_back_test(condition_buy_sell, trade_history)  
+    
+    result_single = {
+    "result_single_back_test":{
+        **result_back_test,
+        **portfolio,
+        "mdd": float(mdd)
+    }}   
+    df_result_single = data_manager.dataframe_from_dict(result_single)
+    data_manager.save_to_database(df_result_single, "three_result_total_single_data")
+    df_trade_history = data_manager.dataframe_from_dict(trade_history)
+    data_manager.save_to_database(
+    df_trade_history,
+    "three_trade_history_data"
+)
+    
+p_three_backtesting()
