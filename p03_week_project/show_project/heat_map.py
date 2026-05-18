@@ -7,9 +7,9 @@ import base64
 plt.rcParams["font.family"] = "Malgun Gothic"
 plt.rcParams["axes.unicode_minus"] = False
 
-def heat_map_portfolio(profit_days):
+def heat_map_portfolio(two_days_candle_data):
     
-    returns_df = pd.DataFrame(profit_days)
+    returns_df = pd.DataFrame(two_days_candle_data)
     
     returns_df = returns_df.dropna()
     

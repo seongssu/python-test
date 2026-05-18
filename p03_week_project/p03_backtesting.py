@@ -36,11 +36,15 @@ def p_three_backtesting():
         "mdd": float(mdd)
     }}   
     df_result_single = data_manager.dataframe_from_dict(result_single)
-    data_manager.save_to_database(df_result_single, "three_result_total_single_data")
+    data_manager.save_to_database(df_result_single, "three_result_single_data")
     df_trade_history = data_manager.dataframe_from_dict(trade_history)
     data_manager.save_to_database(
     df_trade_history,
     "three_trade_history_data"
-)
+    )
     
-p_three_backtesting()
+    df_condition_buy_sell = (
+    condition_buy_sell
+    .reset_index()
+    .rename(columns={"index": "date"}))
+    data_manager.save_to_database(df_condition_buy_sell, "three_result_multi_data")

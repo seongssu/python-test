@@ -1,8 +1,7 @@
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
-def graph_pipeline (days_candle_data, current_prices):
-    
+def graph_pipeline (days_candle_data, current_prices):    
     subplot_titles = [
         f"{ticker}"
         f"{current_prices[ticker]['current_prices']:,.0f}원"
@@ -70,8 +69,7 @@ def graph_pipeline (days_candle_data, current_prices):
     #fig.show()
     return fig
     
-def graph_portfolio(days_candle_data, days_portfolio_prices):
-    
+def graph_portfolio(days_candle_data, days_portfolio_prices):  
     fig = make_subplots(
         rows = 3,
         cols = 1,
@@ -140,11 +138,10 @@ def graph_portfolio(days_candle_data, days_portfolio_prices):
     fig.update_yaxes(title_text="일별 수익률(%)", row=3, col=1)
     fig.update_xaxes(title_text="날짜", row=3, col=1)
 
-    #fig.show()
+    # fig.show()
     return fig
     
-def graph_back_test(condition_buy_sell, trade_history):
-    
+def graph_back_test(condition_buy_sell, trade_history):    
     fig = make_subplots(
         rows = 2,
         cols = 1,
