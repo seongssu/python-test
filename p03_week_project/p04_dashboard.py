@@ -1,9 +1,6 @@
 from show_project.graph import graph_pipeline, graph_portfolio, graph_back_test
 from show_project.heat_map import heat_map_portfolio
 from db_manager.data_manager import DataManager
-from p01_data_pipeline import p_one_data_pipeline
-from p02_portfolio import p_two_portfolio
-from p03_backtesting import p_three_backtesting
 from dashboard.dashboard_util import get_backtest_cards, get_trade_table, get_trade_rows, get_pipeline_cards, get_charts_html, get_html, get_portfolio_cards,get_result_portfolio_card
 import webbrowser
 import pandas as pd
@@ -33,28 +30,6 @@ def p_four_backtesting():
     two_result_single_data = data_manager.dict_from_dataframe(two_result_single_data_df)
     three_result_single_data = data_manager.dict_from_dataframe(three_result_single_data_df)
     
-    # days_portfolio_prices = data_manager.dict_from_dataframe(days_portfolio_prices_df)
-    # print(f"타입:{type(asdf)}")
-    # (days_portfolio_prices,
-    
-    # days_portfolio_mdd,
-    # invest_total_money, 
-    # current_total_money,
-    # total_profit,
-    
-    # result_portfolio) = p_two_portfolio()
-    # profit_days_by_ticker,
-    
-
-    # (condition_buy_sell, 
-    
-    # trade_history, 
-    
-    # backtest_mdd,     
-    # result_back_test,     
-    # backtest_portfolio) = p_three_backtesting()
-    # ========================================================
-    # print(f"one_result_single_data_df: {one_result_single_data_df} 타입2 : {type(one_result_single_data_df)}")
     fig_pipeline = graph_pipeline(three_days_candle_data, one_result_single_data)
     fig_portfolio = graph_portfolio(two_days_candle_data, days_portfolio_prices)
     fig_backtesting = graph_back_test(condition_buy_sell, trade_history)
