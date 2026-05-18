@@ -34,7 +34,7 @@ class DataManager:
         
         conn.close()
         
-        return df
+        return df    
     
     def db_pipeline(self):
                 
@@ -58,7 +58,7 @@ class DataManager:
             days_candle_data[ticker][column_name] = data
         return days_candle_data  
     
-    def dataframe_from_dict(self, dict_data):
+    def dataframe_from_dicts(self, dict_data):
         db_from_dict = []
         for ticker, data in dict_data.items():
             df_from_dict = data.copy()
@@ -69,7 +69,7 @@ class DataManager:
         result_db = pd.concat(db_from_dict, ignore_index= False)
         return result_db
     
-    def dict_from_dataframe(self, db_days_candle_data):
+    def dicts_from_dataframe(self, db_days_candle_data):
         db_days_candle_data["date"] = pd.to_datetime(db_days_candle_data["date"])
 
         dict_from_db = {}
@@ -83,6 +83,26 @@ class DataManager:
 
         return dict_from_db
     
+    def dataframe_from_dict(self, current_prices):        
+
+        db_from_dict = []
+
+        for ticker, data in current_prices.items():
+            row = data.copy()
+
+            row["ticker"] = ticker
+
+            db_from_dict.append(row)
+
+        result_db = pd.DataFrame(db_from_dict)
+
+        return result_db
+    
+    def conversion_from_current_prices(self, current_prices):
+        return {
+        ticker: {"current_prices": price}
+        for ticker, price in current_prices.items()
+        }
     def filter_days(self, df, days):
         return (
             df
