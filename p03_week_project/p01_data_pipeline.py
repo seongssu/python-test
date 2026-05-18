@@ -16,8 +16,8 @@ def api_data(tickers, days):
 
 def save_data(data_manager, days_candle_data):
     db_df = data_manager.dataframe_from_dict(days_candle_data)
-    data_manager.save_to_database(db_df)
-    sql_db_frame = data_manager.load_from_database()
+    data_manager.save_to_apidb(db_df)
+    sql_db_frame = data_manager.load_from_apidb()
     filter_sql_db_frame = data_manager.filter_days(sql_db_frame, 60)
     
     filter_sql_db_frame = filter_sql_db_frame
@@ -79,5 +79,5 @@ def p_one_data_pipeline():
     )
 
     result_data(days_candle_data)
-
+    
     return days_candle_data

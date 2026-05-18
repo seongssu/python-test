@@ -11,7 +11,7 @@ class DataManager:
         
         return conn
     
-    def save_to_database(self, db_df):
+    def save_to_apidb(self, db_df):
         
         conn = self.create_database()        
         
@@ -25,7 +25,7 @@ class DataManager:
         
         return count
     
-    def load_from_database(self):
+    def load_from_apidb(self):
         
         conn = sqlite3.connect('three_weeks_crypto_data.db')
         
