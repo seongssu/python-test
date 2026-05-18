@@ -4,20 +4,20 @@ from db_manager.data_manager import DataManager
 from show_project.print_project import print_data_pipeline
 from show_project.graph import graph_pipeline
 
-def api_data(tickers, days):
+def api_data(tickers, days, table_name):
     pyupbit_api = PyUpbitApi(tickers, days)
 
     ticker_lists = pyupbit_api.get_ticker_lists()
     current_prices = pyupbit_api.get_current_price()
-    days_candle_data = pyupbit_api.get_candle_data()
+    days_candle_data = pyupbit_api.get_candle_data(table_name)
 
     return ticker_lists, current_prices, days_candle_data
 
 
 def save_data(data_manager, days_candle_data):
     db_df = data_manager.dataframe_from_dict(days_candle_data)
-    data_manager.save_to_apidb(db_df)
-    sql_db_frame = data_manager.load_from_apidb()
+    data_manager.save_to_database(db_df, "api_data")
+    sql_db_frame = data_manager.load_from_database("api_data")
     filter_sql_db_frame = data_manager.filter_days(sql_db_frame, 60)
     
     filter_sql_db_frame = filter_sql_db_frame
@@ -65,7 +65,7 @@ def p_one_data_pipeline():
     tickers = ["KRW-BTC", "KRW-ETH", "KRW-SOL", "KRW-XRP"]
     days = 365
 
-    ticker_lists, current_prices, days_candle_data = api_data(tickers, days)
+    ticker_lists, current_prices, days_candle_data = api_data(tickers, days, table_name = "api_data")
 
     data_manager = DataManager()
     
@@ -79,5 +79,5 @@ def p_one_data_pipeline():
     )
 
     result_data(days_candle_data)
-    
+
     return days_candle_data

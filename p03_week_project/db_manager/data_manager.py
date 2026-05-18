@@ -11,25 +11,25 @@ class DataManager:
         
         return conn
     
-    def save_to_apidb(self, db_df):
+    def save_to_database(self, db_df, table_name):
         
         conn = self.create_database()        
         
-        db_df.to_sql("three_weeks_crypto_data", conn, if_exists = 'replace', index = False)
+        db_df.to_sql(f"{table_name}", conn, if_exists = 'replace', index = False)
                     
         cursor = conn.cursor()
-        cursor.execute("SELECT COUNT(*) FROM three_weeks_crypto_data")
+        cursor.execute(f"SELECT COUNT(*) FROM {table_name}")
         count = cursor.fetchone()[0]
         
         conn.close()
         
         return count
     
-    def load_from_apidb(self):
+    def load_from_database(self, table_name):
         
         conn = sqlite3.connect('three_weeks_crypto_data.db')
         
-        query = "SELECT * FROM three_weeks_crypto_data ORDER BY date, ticker"
+        query = f"SELECT * FROM {table_name} ORDER BY date, ticker"
         df = pd.read_sql_query(query, conn)
         
         conn.close()

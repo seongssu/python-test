@@ -13,7 +13,7 @@ def p_three_backtesting():
     }
 
     data_manager = DataManager()
-    days_candle_data_db = data_manager.load_from_apidb()
+    days_candle_data_db = data_manager.load_from_database("api_data")
     days_candle_data_filter = data_manager.dict_from_dataframe(days_candle_data_db)
     days_candle_data = {
         "KRW-BTC" : days_candle_data_filter["KRW-BTC"]
